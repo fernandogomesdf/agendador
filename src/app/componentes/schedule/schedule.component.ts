@@ -1,7 +1,7 @@
 import { NgModule, Component, ElementRef, OnDestroy, DoCheck, OnChanges, Input, Output, EventEmitter, IterableDiffers, OnInit, AfterViewChecked, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-declare const FullCalendar: any;
+declare var jQuery: any;
 
 @Component({
   selector: 'rn-schedule',
@@ -10,6 +10,8 @@ declare const FullCalendar: any;
 export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterViewChecked {
 
   @Input() events: any[];
+
+  @Input() resources: any[];
 
   @Input() header: any;
 
@@ -129,7 +131,7 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
 
   differ: any;
 
-  calendar: any;
+  schedule: any;
 
   config: any;
 
@@ -305,82 +307,85 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.calendar) {
-      for (let propName in changes) {
-        if (propName !== 'events') {
-          this.calendar.option(propName, changes[propName].currentValue);
+    if (this.schedule) {
+      let options = {};
+      for (let change in changes) {
+        if (change !== 'events') {
+          options[change] = changes[change].currentValue;
         }
+      }
+
+      if (Object.keys(options).length) {
+        this.schedule.fullCalendar('option', options);
       }
     }
   }
 
   initialize() {
-    this.calendar = new FullCalendar.Calendar(this.el.nativeElement.children[0], this.config);
-    this.calendar.render();
-    this.initialized = true;
+    this.schedule = jQuery(this.el.nativeElement.children[0]);
+    this.schedule.fullCalendar(this.config);
     if (this.events) {
-      this.calendar.addEventSource(this.events);
+      this.schedule.fullCalendar('addEventSource', this.events);
     }
+    this.initialized = true;
   }
 
   ngDoCheck() {
     let changes = this.differ.diff(this.events);
 
-    if (this.calendar && changes) {
-      this.calendar.removeEventSources();
+    if (this.schedule && changes) {
+      this.schedule.fullCalendar('removeEventSources');
 
       if (this.events) {
-        this.calendar.addEventSource(this.events);
+        this.schedule.fullCalendar('addEventSource', this.events);
       }
     }
   }
 
   ngOnDestroy() {
-    if (this.calendar) {
-      this.calendar.destroy;
-      this.initialized = false;
-      this.calendar = null;
-    }
+    jQuery(this.el.nativeElement.children[0]).fullCalendar('destroy');
+    this.initialized = false;
+    this.schedule = null;
   }
 
   gotoDate(date: any) {
-    this.calendar.gotoDate(date);
+    this.schedule.fullCalendar('gotoDate', date);
   }
 
   prev() {
-    this.calendar.prev();
+    this.schedule.fullCalendar('prev');
   }
 
   next() {
-    this.calendar.next();
+    this.schedule.fullCalendar('next');
   }
 
   prevYear() {
-    this.calendar.prevYear();
+    this.schedule.fullCalendar('prevYear');
   }
 
   nextYear() {
-    this.calendar.nextYear();
+    this.schedule.fullCalendar('nextYear');
   }
 
   today() {
-    this.calendar.today();
+    this.schedule.fullCalendar('today');
   }
 
   incrementDate(duration: any) {
-    this.calendar.incrementDate(duration);
+    this.schedule.fullCalendar('incrementDate', duration);
   }
 
-  changeView(viewName: string, dateOrRange: any) {
-    this.calendar.changeView(viewName, dateOrRange);
+  changeView(viewName: string) {
+    this.schedule.fullCalendar('changeView', viewName);
   }
 
   getDate() {
-    return this.calendar.getDate();
+    return this.schedule.fullCalendar('getDate');
   }
 
   updateEvent(event: any) {
-    this.calendar.updateEvent(event);
+    this.schedule.fullCalendar('updateEvent', event);
   }
 
   _findEvent(id: string) {

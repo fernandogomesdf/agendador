@@ -1,5 +1,4 @@
-import { TestBed, ComponentFixture, async } from '@angular/core/testing';
-
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Schedule } from './schedule.component';
 
@@ -21,19 +20,4 @@ describe('Schedule', () => {
     fixture = TestBed.createComponent(Schedule);
     schedule = fixture.componentInstance;
   });
-
-  it('should render events on component init', async(() => {
-    schedule.defaultDate = '2016-01-01';
-    schedule.events = [
-      {
-        "title": "All Day Event",
-        "start": "2016-01-01"
-      }
-    ];
-    fixture.detectChanges();
-    fixture.whenRenderingDone().then(() => {
-      const element = fixture.nativeElement.querySelector('.fc-event');
-      expect(element).toBeTruthy();
-    });
-  }));
 });
