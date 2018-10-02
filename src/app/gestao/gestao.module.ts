@@ -1,17 +1,18 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { GestaoRoutingModule } from './gestao-routing.module';
 import { AgendamentoComponent } from './agendamento/agendamento.component';
+import { ComponentesModule } from '../componentes/componentes.module';
 
-import { ScheduleModule } from 'primeng/schedule';
 
 @NgModule({
   imports: [
     CommonModule,
     GestaoRoutingModule,
-    ScheduleModule
+    ComponentesModule
   ],
-  declarations: [AgendamentoComponent]
+  declarations: [AgendamentoComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class GestaoModule { }
