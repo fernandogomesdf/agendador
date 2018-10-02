@@ -1,16 +1,25 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { GestaoModule } from './gestao/gestao.module';
+import { CursosModule } from './cursos/cursos.module';
+import { PublicoModule } from './publico/publico.module';
+import { routing } from './routes/app.routes';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule
+    routing,
+    BrowserModule,
+    GestaoModule,
+    CursosModule,
+    PublicoModule
   ],
   providers: [],
+  schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
