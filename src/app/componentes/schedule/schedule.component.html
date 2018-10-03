@@ -1,14 +1,16 @@
 <table width="100%">
   <tr>
-    <th>hora</th>
-    <th>2</th>
-    <th>3</th>
-    <th>4</th>
+    <th></th>
+    <th>Recurso 1</th>
+    <th>Recurso 2</th>
+    <th>Recurso 3</th>
   </tr>
-  <tr *ngFor="let periodo of periodos">
-    <td>{{periodo.hora}}</td>
-    <td>2</td>
-    <td>3</td>
-    <td>4</td>
+  <tr *ngFor="let periodo of periodos; let even = even" style="height: 22px;">
+    <td [class.even]="even"><span *ngIf="even">{{periodo.hora}}</span></td>
+    <td [class.even]="even">
+
+    </td>
+    <td [class.even]="even"></td>
+    <td [class.even]="even"></td>
   </tr>
 </table>

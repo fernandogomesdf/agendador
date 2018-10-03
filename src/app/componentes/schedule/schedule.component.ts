@@ -16,9 +16,10 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
   constructor() {
     moment.locale('pt-br');
     var momento = moment();
-    for (var _i = 0; _i < 10; _i++) {
-      momento = momento.add(0.5, 'hour');
+    momento.set({ hour: 8, minute: 0, second: 0, millisecond: 0 })
+    for (var _i = 0; _i < 30; _i++) {
       this.periodos.push({ hora: momento.calendar() });
+      momento = momento.add(0.5, 'hour');
     }
   }
 
