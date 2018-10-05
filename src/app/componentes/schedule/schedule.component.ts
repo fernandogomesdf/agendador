@@ -2,8 +2,11 @@ import { NgModule, Component, ElementRef, OnDestroy, DoCheck, OnChanges, Input, 
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DragDropModule } from 'primeng/dragdrop';
+import { CalendarModule } from 'primeng/calendar';
 
 import * as interact from 'interactjs';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 declare const moment: any;
 
@@ -14,9 +17,9 @@ declare const moment: any;
 })
 export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterViewChecked {
 
+  data: Date = new Date();
   resources = new Array();
   periodos = new Array();
-  today = new Date();
   dndElement: any;
   static alturaDivEvento = 22;
   static alturaEntreLinha = 3;
@@ -27,17 +30,11 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
       // resize from all edges and corners
       edges: { left: false, right: false, bottom: true, top: false },
     }).on('resizemove', function (event: any) {
-      var target = event.target,
-        x = (parseFloat(target.getAttribute('data-x')) || 0),
-        y = (parseFloat(target.getAttribute('data-y')) || 0);
-
+      var target = event.target;
       target.style.height = event.rect.height + 'px';
 
     }).on('resizeend', function (event: any) {
-      var target = event.target,
-        x = (parseFloat(target.getAttribute('data-x')) || 0),
-        y = (parseFloat(target.getAttribute('data-y')) || 0);
-
+      var target = event.target;
       let alturaRequerida = event.target.clientHeight;
 
       if (event.target.clientHeight < Schedule.alturaDivEvento) {
@@ -51,7 +48,7 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
     });
 
     moment.locale('pt-br');
-    var momento = moment();
+    var momento = moment(this.data);
     momento.set({ hour: 8, minute: 0, second: 0, millisecond: 0 })
     for (var _i = 0; _i < 30; _i++) {
       this.periodos.push({ hora: momento.format('LT') });
@@ -110,7 +107,7 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
 }
 
 @NgModule({
-  imports: [CommonModule, ButtonModule, DragDropModule],
+  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, CalendarModule],
   exports: [Schedule],
   declarations: [Schedule]
 })

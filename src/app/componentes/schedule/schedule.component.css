@@ -1,8 +1,13 @@
-table {
-    border-collapse: collapse;
+.calendario {
+    border: none;
 }
 
-table, td, th {
+table.agenda {
+    border-collapse: collapse;
+    border: 1px solid gray;
+}
+
+td, th {
     border: 1px solid gray;
 }
 

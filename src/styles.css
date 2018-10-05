@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    font-family: "Open Sans", "Helvetica Neue", sans-serif;
+    font-size: 12px;
+}
+
+.ui-datepicker {
+    padding: 0px !important;
+}
+
+body .ui-datepicker table td {
+    padding: 0px !important;
+}

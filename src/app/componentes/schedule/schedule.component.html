@@ -1,16 +1,23 @@
-<br /><br />
-<div class="evento" (onDragStart)="dragStart($event)" pDraggable="ev"></div>
-<br />
+<!--div class="evento" (onDragStart)="dragStart($event)" pDraggable="ev"></div-->
 
-<table width="100%">
-  <tr>
-    <th width="1%"></th>
-    <th *ngFor="let resource of resources;">{{resource.title}}</th>
-  </tr>
-  <tr *ngFor="let periodo of periodos; let even = even" style="height: 25px;">
-    <td [class.even]="even" style="padding : 3px"><span *ngIf="even">{{periodo.hora}}</span></td>
-    <td [class.even]="even" *ngFor="let resource of resources;" [attr.data-resourceid]="resource.id"
-      [attr.data-periodo]="periodo.hora" (mouseover)="overTd($event)" (mouseout)="outTd($event)" pDroppable="ev"
-      (onDrop)="drop($event)" valign="top"></td>
+<table width="100%" class="calendario">
+  <tr class="calendario">
+    <td valign="top" class="calendario">
+      <p-calendar [(ngModel)]="data" [inline]="true"></p-calendar>
+    </td>
+    <td width="100%" class="calendario">
+      <table width="100%" class="agenda">
+        <tr>
+          <th width="1%"></th>
+          <th *ngFor="let resource of resources;">{{resource.title}}</th>
+        </tr>
+        <tr *ngFor="let periodo of periodos; let even = even" style="height: 25px;">
+          <td [class.even]="even" style="padding : 3px"><span *ngIf="even">{{periodo.hora}}</span></td>
+          <td [class.even]="even" *ngFor="let resource of resources;" [attr.data-resourceid]="resource.id"
+            [attr.data-periodo]="periodo.hora" (mouseover)="overTd($event)" (mouseout)="outTd($event)" pDroppable="ev"
+            (onDrop)="drop($event)" valign="top"></td>
+        </tr>
+      </table>
+    </td>
   </tr>
 </table>
