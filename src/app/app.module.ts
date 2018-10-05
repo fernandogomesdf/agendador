@@ -7,6 +7,9 @@ import { CursosModule } from './cursos/cursos.module';
 import { PublicoModule } from './publico/publico.module';
 import { routing } from './routes/app.routes';
 
+import { DragDropModule } from 'primeng/dragdrop';
+import { ButtonModule } from 'primeng/button';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -16,7 +19,9 @@ import { routing } from './routes/app.routes';
     BrowserModule,
     GestaoModule,
     CursosModule,
-    PublicoModule
+    PublicoModule,
+    ButtonModule,
+    DragDropModule
   ],
   providers: [],
   schemas: [NO_ERRORS_SCHEMA],

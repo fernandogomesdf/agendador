@@ -1,16 +1,16 @@
+<br /><br />
+<div class="evento" (onDragStart)="dragStart($event)" pDraggable="ev"></div>
+<br />
+
 <table width="100%">
   <tr>
-    <th></th>
-    <th>Recurso 1</th>
-    <th>Recurso 2</th>
-    <th>Recurso 3</th>
+    <th width="1%"></th>
+    <th *ngFor="let resource of resources;">{{resource.title}}</th>
   </tr>
-  <tr *ngFor="let periodo of periodos; let even = even" style="height: 22px;">
-    <td [class.even]="even"><span *ngIf="even">{{periodo.hora}}</span></td>
-    <td [class.even]="even">
-
-    </td>
-    <td [class.even]="even"></td>
-    <td [class.even]="even"></td>
+  <tr *ngFor="let periodo of periodos; let even = even" style="height: 25px;">
+    <td [class.even]="even" style="padding : 3px"><span *ngIf="even">{{periodo.hora}}</span></td>
+    <td [class.even]="even" *ngFor="let resource of resources;" [attr.data-resourceid]="resource.id"
+      [attr.data-periodo]="periodo.hora" (mouseover)="overTd($event)" (mouseout)="outTd($event)" pDroppable="ev"
+      (onDrop)="drop($event)" valign="top"></td>
   </tr>
 </table>
