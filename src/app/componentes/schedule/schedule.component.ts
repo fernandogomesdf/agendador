@@ -1,4 +1,4 @@
-import { NgModule, Component, ElementRef, OnDestroy, DoCheck, OnChanges, Input, Output, EventEmitter, IterableDiffers, OnInit, AfterViewChecked, SimpleChanges, AfterViewInit } from '@angular/core';
+import { NgModule, Component, ElementRef, OnDestroy, DoCheck, OnChanges, Input, Output, EventEmitter, IterableDiffers, OnInit, AfterViewChecked, SimpleChanges, AfterViewInit, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DragDropModule } from 'primeng/dragdrop';
@@ -25,7 +25,7 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
   static alturaDivEvento = 22;
   static alturaEntreLinha = 3;
 
-  constructor() {
+  constructor(private renderer: Renderer2) {
 
     interact('.evento').resizable({
       // resize from all edges and corners
@@ -64,7 +64,7 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
     ];
 
     this.events = [
-      { id: '2', resourceId: 'a', start: '2018-04-07T09:00:00', end: '2018-04-07T14:00:00', title: 'event 2' },
+      { id: '2', resourceId: 'a', start: '2018-04-07T09:29:00', end: '2018-04-07T14:00:00', title: 'event 2' },
       { id: '3', resourceId: 'b', start: '2018-04-07T12:00:00', end: '2018-04-08T06:00:00', title: 'event 3' },
       { id: '4', resourceId: 'c', start: '2018-04-07T07:30:00', end: '2018-04-07T09:30:00', title: 'event 4' },
     ];
@@ -117,7 +117,11 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
 
   plotarEventos() {
     this.events.forEach(evento => {
-      console.log(evento);
+      var resourceId = evento.resourceId;
+      var momentoInicio = moment(evento.start);
+      var hora = momentoInicio.format('HH');
+      var minutos = +momentoInicio.format('mm') >= 30 ? '30' : '00';
+      console.log(document.querySelector("td[data-resourceid='" + resourceId + "'][data-periodo='" + hora + ":" + minutos + "']"));
     });
   }
 
