@@ -1,4 +1,4 @@
-import { NgModule, Component, ElementRef, OnDestroy, DoCheck, OnChanges, Input, Output, EventEmitter, IterableDiffers, OnInit, AfterViewChecked, SimpleChanges } from '@angular/core';
+import { NgModule, Component, ElementRef, OnDestroy, DoCheck, OnChanges, Input, Output, EventEmitter, IterableDiffers, OnInit, AfterViewChecked, SimpleChanges, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DragDropModule } from 'primeng/dragdrop';
@@ -15,11 +15,12 @@ declare const moment: any;
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.css']
 })
-export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterViewChecked {
+export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterViewChecked, AfterViewInit {
 
   data: Date = new Date();
   resources = new Array();
   periodos = new Array();
+  events = new Array();
   dndElement: any;
   static alturaDivEvento = 22;
   static alturaEntreLinha = 3;
@@ -62,6 +63,12 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
       { id: 'd', title: 'Recurso D', eventColor: 'blue' }
     ];
 
+    this.events = [
+      { id: '2', resourceId: 'a', start: '2018-04-07T09:00:00', end: '2018-04-07T14:00:00', title: 'event 2' },
+      { id: '3', resourceId: 'b', start: '2018-04-07T12:00:00', end: '2018-04-08T06:00:00', title: 'event 3' },
+      { id: '4', resourceId: 'c', start: '2018-04-07T07:30:00', end: '2018-04-07T09:30:00', title: 'event 4' },
+    ];
+
   }
 
   ngOnInit() {
@@ -70,6 +77,10 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
 
   ngAfterViewChecked() {
 
+  }
+
+  ngAfterViewInit() {
+    this.plotarEventos();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -102,6 +113,12 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
 
   outTd(event) {
     event.srcElement.bgColor = '#FFFFFF';
+  }
+
+  plotarEventos() {
+    this.events.forEach(evento => {
+      console.log(evento);
+    });
   }
 
 }

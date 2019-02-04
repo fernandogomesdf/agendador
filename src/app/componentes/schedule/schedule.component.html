@@ -1,8 +1,10 @@
-<!--div class="evento" (onDragStart)="dragStart($event)" pDraggable="ev"></div-->
-
 <table width="100%" class="calendario">
   <tr class="calendario">
     <td valign="top" class="calendario">
+
+      <div class="evento" (onDragStart)="dragStart($event)" pDraggable="ev"></div>
+      <br /><br /><br />
+
       <p-calendar [(ngModel)]="data" [inline]="true"></p-calendar>
     </td>
     <td width="100%" class="calendario">
@@ -15,7 +17,9 @@
           <td [class.even]="even" style="padding : 3px"><span *ngIf="even">{{periodo.hora}}</span></td>
           <td [class.even]="even" *ngFor="let resource of resources;" [attr.data-resourceid]="resource.id"
             [attr.data-periodo]="periodo.hora" (mouseover)="overTd($event)" (mouseout)="outTd($event)" pDroppable="ev"
-            (onDrop)="drop($event)" valign="top"></td>
+            (onDrop)="drop($event)" valign="top">
+
+          </td>
         </tr>
       </table>
     </td>
