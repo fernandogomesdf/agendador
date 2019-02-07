@@ -22,7 +22,7 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
   resources = new Array();
   periodos = new Array();
   events = new Array();
-  dndElement: any;
+
 
 
   constructor(private renderer: Renderer2) {
@@ -76,18 +76,6 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
 
   ngOnDestroy() {
 
-  }
-
-  dragStart(event) {
-    this.dndElement = event.srcElement;
-  }
-
-  drop(event) {
-    event.srcElement.appendChild(this.dndElement)
-  }
-
-  overTd(event) {
-    event.srcElement.bgColor = '#F2F2F2';
   }
 
   outTd(event) {

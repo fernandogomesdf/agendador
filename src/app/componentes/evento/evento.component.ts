@@ -15,6 +15,7 @@ export class Evento implements OnInit {
 
   static alturaDivEvento = 22;
   static alturaEntreLinha = 3;
+  dndElement: any;
 
   constructor() {
 
@@ -41,6 +42,18 @@ export class Evento implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  dragStart(event) {
+    this.dndElement = event.srcElement;
+  }
+
+  drop(event) {
+    event.srcElement.appendChild(this.dndElement)
+  }
+
+  overTd(event) {
+    event.srcElement.bgColor = '#F2F2F2';
   }
 
 }
