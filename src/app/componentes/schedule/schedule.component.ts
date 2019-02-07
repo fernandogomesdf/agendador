@@ -82,6 +82,10 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
     event.srcElement.bgColor = '#FFFFFF';
   }
 
+  overTd(event) {
+    event.srcElement.bgColor = '#F2F2F2';
+  }
+
   plotarEventos() {
     this.events.forEach(evento => {
       var resourceId = evento.resourceId;

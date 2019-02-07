@@ -52,9 +52,7 @@ export class Evento implements OnInit {
     event.srcElement.appendChild(this.dndElement)
   }
 
-  overTd(event) {
-    event.srcElement.bgColor = '#F2F2F2';
-  }
+
 
 }
 
