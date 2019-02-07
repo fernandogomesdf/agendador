@@ -121,7 +121,15 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
       var momentoInicio = moment(evento.start);
       var hora = momentoInicio.format('HH');
       var minutos = +momentoInicio.format('mm') >= 30 ? '30' : '00';
-      console.log(document.querySelector("td[data-resourceid='" + resourceId + "'][data-periodo='" + hora + ":" + minutos + "']"));
+      var celulasEvento = document.querySelectorAll("td[data-resourceid='" + resourceId + "'][data-periodo='" + hora + ":" + minutos + "']");
+      if (celulasEvento) {
+        celulasEvento.forEach(celula => {
+          const text = this.renderer.createText('Hello world!');
+          this.renderer.appendChild(celula, text);
+          console.log(celula);
+        });
+      }
+
     });
   }
 
