@@ -1,4 +1,4 @@
-import { NgModule, Component, ElementRef, OnDestroy, DoCheck, OnChanges, Input, Output, EventEmitter, IterableDiffers, OnInit, AfterViewChecked, SimpleChanges, AfterViewInit, Renderer2 } from '@angular/core';
+import { NgModule, Component, ElementRef, OnDestroy, DoCheck, OnChanges, Input, Output, EventEmitter, IterableDiffers, OnInit, AfterViewChecked, SimpleChanges, AfterViewInit, Renderer2, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DragDropModule } from 'primeng/dragdrop';
@@ -7,6 +7,7 @@ import { CalendarModule } from 'primeng/calendar';
 import * as interact from 'interactjs';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EventoModule } from '../evento/evento.component';
 
 declare const moment: any;
 
@@ -136,8 +137,9 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
 }
 
 @NgModule({
-  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, CalendarModule],
+  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, CalendarModule, EventoModule],
   exports: [Schedule],
-  declarations: [Schedule]
+  declarations: [Schedule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ScheduleModule { }
