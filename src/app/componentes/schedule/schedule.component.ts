@@ -1,4 +1,4 @@
-import { NgModule, Component, ElementRef, OnDestroy, DoCheck, OnChanges, Input, Output, EventEmitter, IterableDiffers, OnInit, AfterViewChecked, SimpleChanges, AfterViewInit, Renderer2, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, Component, OnDestroy, DoCheck, OnChanges, OnInit, AfterViewChecked, SimpleChanges, AfterViewInit, Renderer2, CUSTOM_ELEMENTS_SCHEMA, ComponentRef, ComponentFactoryResolver, Injector, ApplicationRef, EmbeddedViewRef, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DragDropModule } from 'primeng/dragdrop';
@@ -7,7 +7,8 @@ import { CalendarModule } from 'primeng/calendar';
 import * as interact from 'interactjs';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { EventoModule } from '../evento/evento.component';
+import { EventoModule, Evento } from '../evento/evento.component';
+import { EventEmitterService } from 'src/app/service/eventemitter.service';
 
 declare const moment: any;
 
@@ -18,13 +19,14 @@ declare const moment: any;
 })
 export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterViewChecked, AfterViewInit {
 
+  eventoComponentRef: ComponentRef<Evento>;
   data: Date = new Date();
   resources = new Array();
   periodos = new Array();
   events = new Array();
   dndElement: any;
 
-  constructor(private renderer: Renderer2) {
+  constructor(private renderer: Renderer2, private componentFactoryResolver: ComponentFactoryResolver, private injector: Injector, private appRef: ApplicationRef, private cd: ChangeDetectorRef) {
 
     moment.locale('pt-br');
     var momento = moment(this.data);
@@ -47,6 +49,9 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
       { id: '4', resourceId: 'c', start: '2018-04-07T07:30:00', end: '2018-04-07T09:30:00', title: 'event 4' },
     ];
 
+    EventEmitterService.get('dndElement').subscribe(data => {
+      this.dndElement = data;
+    });
   }
 
   ngOnInit() {
@@ -59,18 +64,16 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
 
   ngAfterViewInit() {
     this.plotarEventos();
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
-
   }
 
   initialize() {
-
   }
 
   ngDoCheck() {
-
   }
 
   ngOnDestroy() {
@@ -85,17 +88,18 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
     event.srcElement.bgColor = '#F2F2F2';
   }
 
-  dragStart(event) {
-    this.dndElement = event.srcElement;
-  }
-
   drop(event) {
-    console.log(this.dndElement)
     event.srcElement.appendChild(this.dndElement)
   }
 
   plotarEventos() {
     this.events.forEach(evento => {
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(Evento);
+      const componentRef = componentFactory.create(this.injector);
+      this.appRef.attachView(componentRef.hostView);
+      const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+      componentRef.changeDetectorRef.detectChanges();
+
       var resourceId = evento.resourceId;
       var momentoInicio = moment(evento.start);
       var hora = momentoInicio.format('HH');
@@ -103,12 +107,9 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
       var celulasEvento = document.querySelectorAll("td[data-resourceid='" + resourceId + "'][data-periodo='" + hora + ":" + minutos + "']");
       if (celulasEvento) {
         celulasEvento.forEach(celula => {
-          const text = this.renderer.createText('Hello world!');
-          this.renderer.appendChild(celula, text);
-          console.log(celula);
+          this.renderer.appendChild(celula, domElem);
         });
       }
-
     });
   }
 

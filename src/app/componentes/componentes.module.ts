@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScheduleModule } from './schedule/schedule.component';
-import { EventoModule } from './evento/evento.component';
+import { EventoModule, Evento } from './evento/evento.component';
 
 
 @NgModule({
@@ -12,6 +12,7 @@ import { EventoModule } from './evento/evento.component';
   ],
   declarations: [],
   exports: [ScheduleModule, EventoModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  entryComponents: [Evento]
 })
 export class ComponentesModule { }

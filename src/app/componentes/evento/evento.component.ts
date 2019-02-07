@@ -1,10 +1,11 @@
-import { Component, OnInit, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, NgModule, CUSTOM_ELEMENTS_SCHEMA, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
 import { DragDropModule } from 'primeng/dragdrop';
 import * as interact from 'interactjs';
+import { EventEmitterService } from 'src/app/service/eventemitter.service';
 
 @Component({
   selector: 'rn-evento',
@@ -15,7 +16,6 @@ export class Evento implements OnInit {
 
   static alturaDivEvento = 22;
   static alturaEntreLinha = 3;
-  dndElement: any;
 
   constructor() {
 
@@ -45,15 +45,8 @@ export class Evento implements OnInit {
   }
 
   dragStart(event) {
-    this.dndElement = event.srcElement;
+    EventEmitterService.get('dndElement').emit(event.srcElement);
   }
-
-  drop(event) {
-    event.srcElement.appendChild(this.dndElement)
-  }
-
-
-
 }
 
 @NgModule({
