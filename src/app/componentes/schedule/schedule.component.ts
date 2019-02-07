@@ -23,31 +23,9 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
   periodos = new Array();
   events = new Array();
   dndElement: any;
-  static alturaDivEvento = 22;
-  static alturaEntreLinha = 3;
+
 
   constructor(private renderer: Renderer2) {
-
-    interact('.evento').resizable({
-      // resize from all edges and corners
-      edges: { left: false, right: false, bottom: true, top: false },
-    }).on('resizemove', function (event: any) {
-      var target = event.target;
-      target.style.height = event.rect.height + 'px';
-
-    }).on('resizeend', function (event: any) {
-      var target = event.target;
-      let alturaRequerida = event.target.clientHeight;
-
-      if (event.target.clientHeight < Schedule.alturaDivEvento) {
-        target.style.height = Schedule.alturaDivEvento + 'px';
-      } else {
-        let totalLinhas = Math.round(alturaRequerida / Schedule.alturaDivEvento);
-        let novaAltura = totalLinhas * Schedule.alturaDivEvento + (totalLinhas * Schedule.alturaEntreLinha);
-        novaAltura -= Schedule.alturaEntreLinha;
-        target.style.height = novaAltura + 'px';
-      }
-    });
 
     moment.locale('pt-br');
     var momento = moment(this.data);

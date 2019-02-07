@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
 import { DragDropModule } from 'primeng/dragdrop';
+import * as interact from 'interactjs';
 
 @Component({
   selector: 'rn-evento',
@@ -12,7 +13,32 @@ import { DragDropModule } from 'primeng/dragdrop';
 })
 export class Evento implements OnInit {
 
-  constructor() { }
+  static alturaDivEvento = 22;
+  static alturaEntreLinha = 3;
+
+  constructor() {
+
+    interact('.evento').resizable({
+      // resize from all edges and corners
+      edges: { left: false, right: false, bottom: true, top: false },
+    }).on('resizemove', function (event: any) {
+      var target = event.target;
+      target.style.height = event.rect.height + 'px';
+
+    }).on('resizeend', function (event: any) {
+      var target = event.target;
+      let alturaRequerida = event.target.clientHeight;
+
+      if (event.target.clientHeight < Evento.alturaDivEvento) {
+        target.style.height = Evento.alturaDivEvento + 'px';
+      } else {
+        let totalLinhas = Math.round(alturaRequerida / Evento.alturaDivEvento);
+        let novaAltura = totalLinhas * Evento.alturaDivEvento + (totalLinhas * Evento.alturaEntreLinha);
+        novaAltura -= Evento.alturaEntreLinha;
+        target.style.height = novaAltura + 'px';
+      }
+    });
+  }
 
   ngOnInit() {
   }
