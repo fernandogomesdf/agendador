@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DragDropModule } from 'primeng/dragdrop';
 import { CalendarModule } from 'primeng/calendar';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { DialogModule } from 'primeng/dialog';
+
+import { MenuItem } from 'primeng/api';
 
 import * as interact from 'interactjs';
 import { FormsModule } from '@angular/forms';
@@ -25,8 +29,31 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
   periodos = new Array();
   events = new Array();
   dndElement: any;
+  private items: MenuItem[];
+  displayDialogNovoEvento: boolean = false;
 
   constructor(private renderer: Renderer2, private componentFactoryResolver: ComponentFactoryResolver, private injector: Injector, private appRef: ApplicationRef, private cd: ChangeDetectorRef) {
+
+    this.items = [
+      {
+        label: 'Agendamento',
+        items: [{
+          label: 'Novo',
+          icon: 'pi pi-fw pi-plus',
+          command: (event) => {
+            this.displayDialogNovoEvento = true;
+          }
+        }]
+      },
+      {
+        label: 'Edit',
+        icon: 'pi pi-fw pi-pencil',
+        items: [
+          { label: 'Delete', icon: 'pi pi-fw pi-trash' },
+          { label: 'Refresh', icon: 'pi pi-fw pi-refresh' }
+        ]
+      }
+    ];
 
     moment.locale('pt-br');
     var momento = moment(this.data);
@@ -117,7 +144,7 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
 }
 
 @NgModule({
-  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, CalendarModule, EventoModule],
+  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, ContextMenuModule, CalendarModule, DialogModule, EventoModule],
   exports: [Schedule],
   declarations: [Schedule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
