@@ -1,4 +1,4 @@
-import { Component, OnInit, NgModule, CUSTOM_ELEMENTS_SCHEMA, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, NgModule, CUSTOM_ELEMENTS_SCHEMA, Output, EventEmitter, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,6 +16,7 @@ export class Evento implements OnInit {
 
   static alturaDivEvento = 22;
   static alturaEntreLinha = 3;
+  @Input() id: string;
 
   constructor() {
 

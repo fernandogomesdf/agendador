@@ -96,6 +96,7 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
     this.events.forEach(evento => {
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(Evento);
       const componentRef = componentFactory.create(this.injector);
+      componentRef.instance.id = evento.id;
       this.appRef.attachView(componentRef.hostView);
       const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
       componentRef.changeDetectorRef.detectChanges();
