@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EventoModule, Evento } from '../evento/evento.component';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
+import { ComponentesModule } from '../componentes.module';
+import { CriareventoComponent } from '../evento/criarevento/criarevento.component';
 
 declare const moment: any;
 
@@ -146,7 +148,7 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
 @NgModule({
   imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, ContextMenuModule, CalendarModule, DialogModule, EventoModule],
   exports: [Schedule],
-  declarations: [Schedule],
+  declarations: [Schedule, CriareventoComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ScheduleModule { }
