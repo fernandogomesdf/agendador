@@ -13,7 +13,6 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EventoModule, Evento } from '../evento/evento.component';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
-import { ComponentesModule } from '../componentes.module';
 import { CriareventoComponent } from '../evento/criarevento/criarevento.component';
 
 declare const moment: any;
