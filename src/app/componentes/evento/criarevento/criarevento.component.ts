@@ -8,8 +8,9 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 })
 export class CriareventoComponent implements OnInit {
 
-  cliente = "Fernando";
-  @ViewChild('meuForm') meuForm: ElementRef;
+  public cliente?: any = {};
+  text: string;
+  results: string[];
 
   constructor() { }
 

@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EventoModule, Evento } from '../evento/evento.component';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
 import { CriareventoComponent } from '../evento/criarevento/criarevento.component';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 declare const moment: any;
 
@@ -145,7 +146,7 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
 }
 
 @NgModule({
-  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, ContextMenuModule, CalendarModule, DialogModule, EventoModule],
+  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, ContextMenuModule, CalendarModule, AutoCompleteModule, DialogModule, EventoModule],
   exports: [Schedule],
   declarations: [Schedule, CriareventoComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

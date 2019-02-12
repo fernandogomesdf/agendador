@@ -1,12 +1,8 @@
-<form #meuForm="ngForm">
-  <table>
-    <tr>
-      <td>
-        <label>Cliente :</label>
-      </td>
-      <td>
-        <input type="text" required [(ngModel)]="cliente" name="cliente">
-      </td>
-    </tr>
-  </table>
-</form>
+<table>
+  <tr>
+    <td><label>Cliente: </label></td>
+    <td>
+      <p-autoComplete [(ngModel)]="text" [suggestions]="results"></p-autoComplete>
+    </td>
+  </tr>
+</table>
