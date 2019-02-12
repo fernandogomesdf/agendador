@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { CriareventoService } from './criarevento.service';
 
 @Component({
   selector: 'rn-criarevento',
@@ -12,9 +13,12 @@ export class CriareventoComponent implements OnInit {
   text: string;
   results: string[];
 
-  constructor() { }
+  constructor(private criarEventoService: CriareventoService) { }
 
   ngOnInit() {
   }
 
+  searchCliente(event) {
+    this.criarEventoService;
+  }
 }

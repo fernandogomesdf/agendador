@@ -2,7 +2,8 @@
   <tr>
     <td><label>Cliente: </label></td>
     <td>
-      <p-autoComplete [(ngModel)]="text" [suggestions]="results"></p-autoComplete>
+      <p-autoComplete [(ngModel)]="text" (completeMethod)="searchCliente($event)" [suggestions]="results">
+      </p-autoComplete>
     </td>
   </tr>
 </table>
