@@ -13,6 +13,9 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputTextModule } from 'primeng/inputtext';
+import { AppService } from './app.service';
+import { HttpModule } from '@angular/http';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -23,6 +26,7 @@ import { InputTextModule } from 'primeng/inputtext';
     routing,
     BrowserModule,
     FormsModule,
+    HttpModule,
     GestaoModule,
     CursosModule,
     PublicoModule,
@@ -32,7 +36,7 @@ import { InputTextModule } from 'primeng/inputtext';
     AutoCompleteModule,
     InputTextModule
   ],
-  providers: [],
+  providers: [AppService, MessageService, ConfirmationService],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })

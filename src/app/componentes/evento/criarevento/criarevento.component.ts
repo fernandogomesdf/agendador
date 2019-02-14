@@ -12,6 +12,8 @@ export class CriareventoComponent implements OnInit {
   public cliente?: any = {};
   text: string;
   results: string[];
+  servicos: SelectItem[];
+  selectedCars1: string[] = [];
 
   constructor(private criarEventoService: CriareventoService) { }
 
@@ -19,6 +21,8 @@ export class CriareventoComponent implements OnInit {
   }
 
   searchCliente(event) {
-    this.criarEventoService;
+    this.criarEventoService.searchCliente(event).subscribe(data => {
+      this.results = data;
+    });
   }
 }
