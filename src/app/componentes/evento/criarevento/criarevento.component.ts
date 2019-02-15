@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CriareventoService } from './criarevento.service';
+import { SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'rn-criarevento',
@@ -11,18 +12,24 @@ export class CriareventoComponent implements OnInit {
 
   public cliente?: any = {};
   text: string;
-  results: string[];
-  servicos: SelectItem[];
+  resultsCliente: string[];
+  servicos: SelectItem[] = [];
   selectedCars1: string[] = [];
 
-  constructor(private criarEventoService: CriareventoService) { }
+  constructor(private criarEventoService: CriareventoService) {
+    this.criarEventoService.listarServicos().subscribe(data => {
+      data.forEach(element => {
+        this.servicos.push({ label: element.nome, value: element.id });
+      });
+    });
+  }
 
   ngOnInit() {
   }
 
   searchCliente(event) {
     this.criarEventoService.searchCliente(event).subscribe(data => {
-      this.results = data;
+      this.resultsCliente = data;
     });
   }
 }
