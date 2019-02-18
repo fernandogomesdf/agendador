@@ -25,7 +25,7 @@ export class CriareventoComponent implements OnInit {
 
   ngOnInit() {
   }
-  i
+
   searchCliente(event) {
     this.criarEventoService.searchCliente(event).subscribe(data => {
       this.resultsCliente = data;
