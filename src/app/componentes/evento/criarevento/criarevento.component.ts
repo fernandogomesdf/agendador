@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CriareventoService } from './criarevento.service';
+import { SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'rn-criarevento',
@@ -13,7 +14,6 @@ export class CriareventoComponent implements OnInit {
   text: string;
   results: string[];
   servicos: SelectItem[];
-  selectedCars1: string[] = [];
 
   constructor(private criarEventoService: CriareventoService) { }
 
