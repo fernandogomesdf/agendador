@@ -14,7 +14,6 @@ export class CriareventoComponent implements OnInit {
   text: string;
   resultsCliente: string[];
   servicos: SelectItem[] = [];
-  selectedCars1: string[] = [];
 
   constructor(private criarEventoService: CriareventoService) {
     this.criarEventoService.listarServicos().subscribe(data => {
@@ -26,7 +25,7 @@ export class CriareventoComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  i
   searchCliente(event) {
     this.criarEventoService.searchCliente(event).subscribe(data => {
       this.resultsCliente = data;
