@@ -12,17 +12,23 @@ export class CriareventoComponent implements OnInit {
 
   public cliente?: any = {};
   text: string;
-  results: string[];
-  servicos: SelectItem[];
+  resultsCliente: string[];
+  servicos: SelectItem[] = [];
 
-  constructor(private criarEventoService: CriareventoService) { }
+  constructor(private criarEventoService: CriareventoService) {
+    this.criarEventoService.listarServicos().subscribe(data => {
+      data.forEach(element => {
+        this.servicos.push({ label: element.nome, value: element.id });
+      });
+    });
+  }
 
   ngOnInit() {
   }
 
   searchCliente(event) {
     this.criarEventoService.searchCliente(event).subscribe(data => {
-      this.results = data;
+      this.resultsCliente = data;
     });
   }
 }

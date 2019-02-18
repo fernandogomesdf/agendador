@@ -4,6 +4,7 @@ import { AgendamentoComponent } from './agendamento/agendamento.component';
 
 const routes: Routes = [
   { path: 'gestao/agendamento', component: AgendamentoComponent },
+  { path: '', component: AgendamentoComponent }
 ];
 
 @NgModule({

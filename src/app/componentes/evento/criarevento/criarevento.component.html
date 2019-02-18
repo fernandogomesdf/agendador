@@ -2,7 +2,8 @@
   <tr>
     <td><label>Cliente: </label></td>
     <td>
-      <p-autoComplete [(ngModel)]="text" (completeMethod)="searchCliente($event)" [suggestions]="results" field="nome">
+      <p-autoComplete [(ngModel)]="text" (completeMethod)="searchCliente($event)" [suggestions]="resultsCliente"
+        field="nome">
       </p-autoComplete>
       <button pButton type="button" label="Novo" icon="fa fa-plus" class="ui-button-raised"></button>
     </td>
@@ -10,15 +11,16 @@
   <tr>
     <td><label>Profissional: </label></td>
     <td>
-      
+
     </td>
   </tr>
   <tr>
-      <td><label>Serviço: </label></td>
-      <td>
-          <p-multiSelect [options]="servicos" [(ngModel)]="selectedServicos" [panelStyle]="{minWidth:'12em'}"></p-multiSelect>
-      </td>
-    </tr>
+    <td><label>Serviço: </label></td>
+    <td>
+      <p-multiSelect [options]="servicos" [(ngModel)]="selectedServicos" [panelStyle]="{minWidth:'12em'}">
+      </p-multiSelect>
+    </td>
+  </tr>
 </table>
 
 Data Hora Valor Duração
