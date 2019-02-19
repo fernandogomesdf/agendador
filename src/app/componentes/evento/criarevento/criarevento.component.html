@@ -22,6 +22,14 @@
       </p-multiSelect>
     </td>
   </tr>
+  <tr>
+    <td><label>Data*: </label></td>
+    <td>
+      <p-calendar [(ngModel)]="data" dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
+      <label>&nbsp;&nbsp;&nbsp;Hora*: </label>
+      <input type="time" [(ngModel)]="hora" pInputText />
+    </td>
+  </tr>
 </table>
 
 Data Hora Valor Duração

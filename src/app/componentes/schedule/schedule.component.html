@@ -22,9 +22,13 @@
   </tr>
 </table>
 <p-contextMenu [global]="true" [model]="items"></p-contextMenu>
-<p-dialog header="Novo Agendamento" [maximizable]="true" modal="true" [(visible)]="displayDialogNovoEvento">
+<p-dialog header="Novo Agendamento" [maximizable]="true" modal="true" [(visible)]="displayDialogNovoEvento"
+  [style]="{width: '800px'}">
   <rn-criarevento></rn-criarevento>
+  <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
   <p-footer>
-    Footer content here
+    <button pButton type="button" label="Cancelar" icon="fa fa-ban"
+      class="ui-button-raised ui-button-secondary"></button>
+    <button pButton type="button" label="Salvar" icon="fa fa-save" class="ui-button-raised"></button>
   </p-footer>
 </p-dialog>

@@ -17,6 +17,7 @@ import { CriareventoComponent } from '../evento/criarevento/criarevento.componen
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
 
 declare const moment: any;
 
@@ -34,7 +35,7 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
   events = new Array();
   dndElement: any;
   private items: MenuItem[];
-  displayDialogNovoEvento: boolean = false;
+  displayDialogNovoEvento: boolean = true;
 
   constructor(private renderer: Renderer2, private componentFactoryResolver: ComponentFactoryResolver, private injector: Injector, private appRef: ApplicationRef, private cd: ChangeDetectorRef) {
 
@@ -148,7 +149,7 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
 }
 
 @NgModule({
-  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, ContextMenuModule, CalendarModule, AutoCompleteModule, DialogModule, MultiSelectModule, EventoModule, DropdownModule],
+  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, ContextMenuModule, CalendarModule, AutoCompleteModule, DialogModule, MultiSelectModule, EventoModule, DropdownModule, InputTextModule],
   exports: [Schedule],
   declarations: [Schedule, CriareventoComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
