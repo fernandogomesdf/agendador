@@ -1,23 +1,24 @@
 <table>
   <tr>
-    <td><label>Cliente: </label></td>
+    <td><label>Cliente*: </label></td>
     <td>
-      <p-autoComplete [(ngModel)]="text" (completeMethod)="searchCliente($event)" [suggestions]="resultsCliente"
-        field="nome">
-      </p-autoComplete>
+      <p-autoComplete [(ngModel)]="selectedCliente" (completeMethod)="searchCliente($event)"
+        [suggestions]="resultsCliente" field="nome">
+      </p-autoComplete>&nbsp;
       <button pButton type="button" label="Novo" icon="fa fa-plus" class="ui-button-raised"></button>
     </td>
   </tr>
   <tr>
     <td><label>Profissional: </label></td>
     <td>
-
+      <p-dropdown [options]="profissionais" [(ngModel)]="selectedProfissional"></p-dropdown>
     </td>
   </tr>
   <tr>
-    <td><label>Serviço: </label></td>
+    <td><label>Serviço*: </label></td>
     <td>
-      <p-multiSelect [options]="servicos" [(ngModel)]="selectedServicos" [panelStyle]="{minWidth:'12em'}">
+      <p-multiSelect defaultLabel="Escolha" [options]="servicos" [(ngModel)]="selectedServicos"
+        [panelStyle]="{minWidth:'12em'}">
       </p-multiSelect>
     </td>
   </tr>

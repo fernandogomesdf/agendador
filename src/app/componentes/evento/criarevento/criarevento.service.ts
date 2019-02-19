@@ -16,4 +16,8 @@ export class CriareventoService {
   listarServicos(): any {
     return this.appService.requestPost('/servico/buscar', 'minhaquery');
   }
+
+  listarProfissionais(): any {
+    return this.appService.requestPost('/profissional/buscar', 'minhaquery');
+  }
 }

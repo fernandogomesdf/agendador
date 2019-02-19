@@ -16,6 +16,7 @@ import { EventEmitterService } from 'src/app/service/eventemitter.service';
 import { CriareventoComponent } from '../evento/criarevento/criarevento.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { DropdownModule } from 'primeng/dropdown';
 
 declare const moment: any;
 
@@ -147,7 +148,7 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
 }
 
 @NgModule({
-  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, ContextMenuModule, CalendarModule, AutoCompleteModule, DialogModule, MultiSelectModule, EventoModule],
+  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, ContextMenuModule, CalendarModule, AutoCompleteModule, DialogModule, MultiSelectModule, EventoModule, DropdownModule],
   exports: [Schedule],
   declarations: [Schedule, CriareventoComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
