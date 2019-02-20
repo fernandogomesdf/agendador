@@ -2,8 +2,8 @@
   <tr>
     <td><label>Cliente*: </label></td>
     <td>
-      <p-autoComplete [(ngModel)]="selectedCliente" (completeMethod)="searchCliente($event)"
-        [suggestions]="resultsCliente" field="nome">
+      <p-autoComplete [style]="{'width':'350px','overflow':'visible'}" [(ngModel)]="selectedCliente"
+        (completeMethod)="searchCliente($event)" [suggestions]="resultsCliente" field="nome">
       </p-autoComplete>&nbsp;
       <button pButton type="button" label="Novo" icon="fa fa-plus" class="ui-button-raised"></button>
     </td>
@@ -11,14 +11,15 @@
   <tr>
     <td><label>Profissional: </label></td>
     <td>
-      <p-dropdown [options]="profissionais" [(ngModel)]="selectedProfissional"></p-dropdown>
+      <p-dropdown #proDD placeholder="Selecione" [options]="profissionais" [(ngModel)]="selectedProfissional">
+      </p-dropdown>
     </td>
   </tr>
   <tr>
     <td><label>Serviço*: </label></td>
     <td>
-      <p-multiSelect defaultLabel="Escolha" [options]="servicos" [(ngModel)]="selectedServicos"
-        [panelStyle]="{minWidth:'12em'}">
+      <p-multiSelect defaultLabel="Escolha" selectedItemsLabel="{0} items selecionados" [options]="servicos"
+        [(ngModel)]="selectedServicos" [panelStyle]="{minWidth:'12em'}">
       </p-multiSelect>
     </td>
   </tr>

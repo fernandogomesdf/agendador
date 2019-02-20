@@ -1,6 +1,7 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ApplicationRef, ViewChild } from '@angular/core';
 import { CriareventoService } from './criarevento.service';
 import { SelectItem } from 'primeng/api';
+import { Dropdown } from 'primeng/dropdown';
 
 @Component({
   selector: 'rn-criarevento',
@@ -18,10 +19,13 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   selectedProfissional: string;
   selectedCliente: string;
 
+  @ViewChild('proDD') proDD: Dropdown;
+
   constructor(private criarEventoService: CriareventoService) {
   }
 
   ngOnInit() {
+
   }
 
   ngAfterViewInit() {
@@ -36,6 +40,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
         this.profissionais.push({ label: element.nome, value: element.id });
       });
     });
+
   }
 
   searchCliente(event) {
