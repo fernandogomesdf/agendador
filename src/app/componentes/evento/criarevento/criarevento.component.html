@@ -2,8 +2,8 @@
   <tr>
     <td><label>Cliente*: </label></td>
     <td>
-      <p-autoComplete [style]="{'width':'350px','overflow':'visible'}" [(ngModel)]="selectedCliente"
-        (completeMethod)="searchCliente($event)" [suggestions]="resultsCliente" field="nome">
+      <p-autoComplete [(ngModel)]="selectedCliente" (completeMethod)="searchCliente($event)"
+        [suggestions]="resultsCliente" field="nome">
       </p-autoComplete>&nbsp;
       <button pButton type="button" label="Novo" icon="fa fa-plus" class="ui-button-raised"></button>
     </td>
@@ -11,7 +11,8 @@
   <tr>
     <td><label>Profissional: </label></td>
     <td>
-      <p-dropdown #proDD placeholder="Selecione" [options]="profissionais" [(ngModel)]="selectedProfissional">
+      <p-dropdown #proDD placeholder="Selecione" [options]="profissionais" [(ngModel)]="selectedProfissional"
+        [style]="{'width':'350px'}">
       </p-dropdown>
     </td>
   </tr>
@@ -31,9 +32,26 @@
       <input type="time" [(ngModel)]="hora" pInputText />
     </td>
   </tr>
+  <tr>
+    <td><label>Valor*: </label></td>
+    <td>
+      <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon">R$</span>
+          <input type="number" [(ngModel)]="valor" min="0.00" step="0.50" pInputText />
+        </div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td><label>Duração*: </label></td>
+    <td>
+      <input type="number" [(ngModel)]="duracao" step="30" pInputText />
+    </td>
+  </tr>
 </table>
 
-Data Hora Valor Duração
+Valor Duração
 
 + Serviço
 
