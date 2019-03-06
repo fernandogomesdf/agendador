@@ -46,13 +46,13 @@
   <tr>
     <td><label>Duração*: </label></td>
     <td>
-      <input type="number" [(ngModel)]="duracao" step="30" pInputText />
+      <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+          <input type="number" [(ngModel)]="duracao" step="30" pInputText />
+          <span class="ui-inputgroup-addon">min.</span>
+        </div>
+      </div>
     </td>
   </tr>
 </table>
-
-Valor Duração
-
-+ Serviço
-
 Observação

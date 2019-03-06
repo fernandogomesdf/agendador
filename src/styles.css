@@ -15,3 +15,11 @@ body .ui-datepicker table td {
 label {
    font-weight: bold;
 }
+
+.ui-md-1, .ui-md-2, .ui-md-3, .ui-md-4, .ui-md-5, .ui-md-6, .ui-md-7, .ui-md-8, .ui-md-9, .ui-md-10, .ui-md-11, .ui-md-12 {
+    padding: 0px !important;
+}
+
+.ui-inputgroup-addon {
+    min-width: 4em !important;
+}
