@@ -18,6 +18,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
+import { EditorModule } from 'primeng/editor';
 
 declare const moment: any;
 
@@ -124,6 +125,14 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
     event.srcElement.appendChild(this.dndElement)
   }
 
+  cancelar() {
+    EventEmitterService.get('dialogo').emit('cancelar');
+  }
+
+  salvar() {
+    EventEmitterService.get('dialogo').emit('salvar');
+  }
+
   plotarEventos() {
     this.events.forEach(evento => {
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(Evento);
@@ -149,7 +158,7 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
 }
 
 @NgModule({
-  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, ContextMenuModule, CalendarModule, AutoCompleteModule, DialogModule, MultiSelectModule, EventoModule, DropdownModule, InputTextModule],
+  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, ContextMenuModule, CalendarModule, AutoCompleteModule, DialogModule, MultiSelectModule, EventoModule, DropdownModule, InputTextModule, EditorModule],
   exports: [Schedule],
   declarations: [Schedule, CriareventoComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

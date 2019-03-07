@@ -1,7 +1,8 @@
-import { Component, OnInit, AfterViewInit, ApplicationRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ApplicationRef, ViewChild, Input } from '@angular/core';
 import { CriareventoService } from './criarevento.service';
 import { SelectItem } from 'primeng/api';
 import { Dropdown } from 'primeng/dropdown';
+import { EventEmitterService } from 'src/app/service/eventemitter.service';
 
 @Component({
   selector: 'rn-criarevento',
@@ -18,6 +19,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   selectedServicos: string[] = [];
   selectedProfissional: string;
   selectedCliente: string;
+  displayDialogNovoUsuario = false;
 
   @ViewChild('proDD') proDD: Dropdown;
 
@@ -25,7 +27,38 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    EventEmitterService.get('dialogo').subscribe(data => {
+      switch (data) {
+        case "salvar": {
+          this.salvar();
+          break;
+        }
+        case "cancelar": {
+          this.cancelar();
+          break;
+        }
+        default: {
+          console.log("opção indefinida....");
+          break;
+        }
+      }
+    });
+  }
 
+  ngOnDestroy() {
+
+  }
+
+  salvar() {
+
+  }
+
+  cancelar() {
+
+  }
+
+  abrirNovoUsuario() {
+    this.displayDialogNovoUsuario = true;
   }
 
   ngAfterViewInit() {

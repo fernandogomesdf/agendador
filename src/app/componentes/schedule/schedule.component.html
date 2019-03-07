@@ -28,8 +28,8 @@
   [contentStyle]="{'overflow':'visible'}">
   <rn-criarevento></rn-criarevento>
   <p-footer>
-    <button pButton type="button" label="Cancelar" icon="fa fa-ban"
+    <button pButton type="button" (click)="cancelar()" label="Cancelar" icon="fa fa-ban"
       class="ui-button-raised ui-button-secondary"></button>
-    <button pButton type="button" label="Salvar" icon="fa fa-save" class="ui-button-raised"></button>
+    <button pButton type="button" (click)="salvar()" label="Salvar" icon="fa fa-save" class="ui-button-raised"></button>
   </p-footer>
 </p-dialog>

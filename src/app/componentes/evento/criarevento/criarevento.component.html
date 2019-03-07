@@ -2,10 +2,11 @@
   <tr>
     <td><label>Cliente*: </label></td>
     <td>
-      <p-autoComplete [(ngModel)]="selectedCliente" (completeMethod)="searchCliente($event)"
+      <p-autoComplete size="53" [(ngModel)]="selectedCliente" (completeMethod)="searchCliente($event)"
         [suggestions]="resultsCliente" field="nome">
       </p-autoComplete>&nbsp;
-      <button pButton type="button" label="Novo" icon="fa fa-plus" class="ui-button-raised"></button>
+      <button pButton type="button" (click)="abrirNovoUsuario()" label="Novo" icon="fa fa-plus"
+        class="ui-button-raised"></button>
     </td>
   </tr>
   <tr>
@@ -54,5 +55,28 @@
       </div>
     </td>
   </tr>
+  <tr>
+    <td><label>Observações: </label></td>
+    <td>
+      <p-editor [(ngModel)]="observacoes" [style]="{'height':'220px', 'width':'500px'}">
+        <p-header>
+          <span class="ql-formats">
+            <button class="ql-bold" aria-label="Negrito"></button>
+            <button class="ql-italic" aria-label="Itálico"></button>
+            <button class="ql-underline" aria-label="Sublinhado"></button>
+          </span>
+        </p-header>
+      </p-editor>
+    </td>
+  </tr>
 </table>
-Observação
+
+<p-dialog header="Novo Usuário" [maximizable]="true" [(visible)]="displayDialogNovoUsuario"
+  [contentStyle]="{'overflow':'visible'}">
+  oieeee
+  <p-footer>
+    <button pButton type="button" label="Cancelar" icon="fa fa-ban"
+      class="ui-button-raised ui-button-secondary"></button>
+    <button pButton type="button" label="Salvar" icon="fa fa-save" class="ui-button-raised"></button>
+  </p-footer>
+</p-dialog>
