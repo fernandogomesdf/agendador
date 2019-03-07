@@ -57,6 +57,14 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   }
 
+  cancelarNovoUsuario() {
+    this.displayDialogNovoUsuario = false;
+  }
+
+  salvarNovoUsuario() {
+    
+  }
+
   abrirNovoUsuario() {
     this.displayDialogNovoUsuario = true;
   }
@@ -73,7 +81,6 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
         this.profissionais.push({ label: element.nome, value: element.id });
       });
     });
-
   }
 
   searchCliente(event) {
