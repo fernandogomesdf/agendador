@@ -5,7 +5,7 @@
       <p-autoComplete size="53" [(ngModel)]="selectedCliente" (completeMethod)="searchCliente($event)"
         [suggestions]="resultsCliente" field="nome">
       </p-autoComplete>&nbsp;
-      <button pButton type="button" (click)="abrirNovoUsuario()" label="Novo" icon="fa fa-plus"
+      <button pButton type="button" (click)="abrirNovoCliente()" label="Novo" icon="fa fa-plus"
         class="ui-button-raised"></button>
     </td>
   </tr>
@@ -71,12 +71,12 @@
   </tr>
 </table>
 
-<p-dialog header="Novo Usuário" [maximizable]="true" [(visible)]="displayDialogNovoUsuario"
+<p-dialog header="Novo Cliente" [maximizable]="true" [(visible)]="displayDialogNovoCliente"
   [contentStyle]="{'overflow':'visible'}">
-  <rn-criarusuario></rn-criarusuario>
+  <rn-criarcliente></rn-criarcliente>
   <p-footer>
-    <button pButton (click)="cancelarNovoUsuario()" type="button" label="Cancelar" icon="fa fa-ban"
+    <button pButton (click)="cancelarNovoCliente()" type="button" label="Cancelar" icon="fa fa-ban"
       class="ui-button-raised ui-button-secondary"></button>
-    <button pButton (click)="salvarNovoUsuario()" type="button" label="Salvar" icon="fa fa-save" class="ui-button-raised"></button>
+    <button pButton (click)="salvarNovoCliente()" type="button" label="Salvar" icon="fa fa-save" class="ui-button-raised"></button>
   </p-footer>
 </p-dialog>

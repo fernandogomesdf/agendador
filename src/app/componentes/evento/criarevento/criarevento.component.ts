@@ -19,7 +19,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   selectedServicos: string[] = [];
   selectedProfissional: string;
   selectedCliente: string;
-  displayDialogNovoUsuario = false;
+  displayDialogNovoCliente = false;
 
   @ViewChild('proDD') proDD: Dropdown;
 
@@ -57,16 +57,15 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   }
 
-  cancelarNovoUsuario() {
-    this.displayDialogNovoUsuario = false;
+  cancelarNovoCliente() {
+    this.displayDialogNovoCliente = false;
   }
 
-  salvarNovoUsuario() {
-    
+  salvarNovoCliente() {
   }
 
-  abrirNovoUsuario() {
-    this.displayDialogNovoUsuario = true;
+  abrirNovoCliente() {
+    this.displayDialogNovoCliente = true;
   }
 
   ngAfterViewInit() {
