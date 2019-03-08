@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
+import { AppService } from 'src/app/app.service';
 
 declare const moment: any;
 
@@ -13,7 +14,7 @@ export class CriarclienteComponent implements OnInit {
   cliente: any = {};
   mensagensValidacao: string[] = [];
 
-  constructor() { }
+  constructor(private appService: AppService) { }
 
   ngOnInit() {
     EventEmitterService.get('dialogoNovoCliente').subscribe(data => {
@@ -68,7 +69,7 @@ export class CriarclienteComponent implements OnInit {
       }
     }
     for (let entry of this.mensagensValidacao) {
-      alert(entry);
+      this.appService.msgWarn(entry)
     }
     return this.mensagensValidacao.length == 0;
   }

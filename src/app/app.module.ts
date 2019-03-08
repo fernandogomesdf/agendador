@@ -13,6 +13,7 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
 import { AppService } from './app.service';
 import { HttpModule } from '@angular/http';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -34,7 +35,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     ButtonModule,
     DragDropModule,
     AutoCompleteModule,
-    InputTextModule
+    InputTextModule,
+    ToastModule
   ],
   providers: [AppService, MessageService, ConfirmationService],
   schemas: [NO_ERRORS_SCHEMA],

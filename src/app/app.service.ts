@@ -134,7 +134,6 @@ export class AppService {
     }
 
     private msg(severity, summary, detail) {
-        this.messageService.clear();
         this.messageService.add({ severity: severity, summary: summary, detail: detail });
     }
 
