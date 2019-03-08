@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CriarclienteComponent implements OnInit {
 
+  cliente: any = {};
+
   constructor() { }
 
   ngOnInit() {

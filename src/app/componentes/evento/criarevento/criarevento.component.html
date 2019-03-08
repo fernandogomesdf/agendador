@@ -2,7 +2,7 @@
   <tr>
     <td><label>Cliente*: </label></td>
     <td>
-      <p-autoComplete size="53" [(ngModel)]="selectedCliente" (completeMethod)="searchCliente($event)"
+      <p-autoComplete size="53" [(ngModel)]="agendamento.selectedCliente" (completeMethod)="searchCliente($event)"
         [suggestions]="resultsCliente" field="nome">
       </p-autoComplete>&nbsp;
       <button pButton type="button" (click)="abrirNovoCliente()" label="Novo" icon="fa fa-plus"
@@ -12,8 +12,8 @@
   <tr>
     <td><label>Profissional: </label></td>
     <td>
-      <p-dropdown #proDD placeholder="Selecione" [options]="profissionais" [(ngModel)]="selectedProfissional"
-        [style]="{'width':'350px'}">
+      <p-dropdown #proDD placeholder="Selecione" [options]="profissionais"
+        [(ngModel)]="agendamento.selectedProfissional" [style]="{'width':'350px'}">
       </p-dropdown>
     </td>
   </tr>
@@ -21,16 +21,16 @@
     <td><label>Serviço*: </label></td>
     <td>
       <p-multiSelect defaultLabel="Escolha" selectedItemsLabel="{0} items selecionados" [options]="servicos"
-        [(ngModel)]="selectedServicos" [panelStyle]="{minWidth:'12em'}">
+        [(ngModel)]="agendamento.selectedServico" [panelStyle]="{minWidth:'12em'}">
       </p-multiSelect>
     </td>
   </tr>
   <tr>
     <td><label>Data*: </label></td>
     <td>
-      <p-calendar [(ngModel)]="data" dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
+      <p-calendar [(ngModel)]="agendamento.data" dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
       <label>&nbsp;&nbsp;&nbsp;Hora*: </label>
-      <input type="time" [(ngModel)]="hora" pInputText />
+      <input type="time" [(ngModel)]="agendamento.hora" pInputText />
     </td>
   </tr>
   <tr>
@@ -39,7 +39,7 @@
       <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
           <span class="ui-inputgroup-addon">R$</span>
-          <input type="number" [(ngModel)]="valor" min="0.00" step="0.50" pInputText />
+          <input type="number" [(ngModel)]="agendamento.valor" min="0.00" step="0.50" pInputText />
         </div>
       </div>
     </td>
@@ -49,16 +49,19 @@
     <td>
       <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
-          <input type="number" [(ngModel)]="duracao" step="30" pInputText />
+          <input type="number" [(ngModel)]="agendamento.duracao" step="30" pInputText />
           <span class="ui-inputgroup-addon">min.</span>
+          <span *ngIf="agendamento.duracao" class="ui-inputgroup-addon">
+            = {{(agendamento.duracao/60 | number:'1.0-2') + 'h'}}</span>
         </div>
       </div>
+
     </td>
   </tr>
   <tr>
     <td><label>Observações: </label></td>
     <td>
-      <p-editor [(ngModel)]="observacoes" [style]="{'height':'220px', 'width':'550px'}">
+      <p-editor [(ngModel)]="agendamento.observacoes" [style]="{'height':'220px', 'width':'550px'}">
         <p-header>
           <span class="ql-formats">
             <button class="ql-bold" aria-label="Negrito"></button>
@@ -71,12 +74,15 @@
   </tr>
 </table>
 
+{{getAgendamento()}}
+
 <p-dialog header="Novo Cliente" [maximizable]="true" [(visible)]="displayDialogNovoCliente"
   [contentStyle]="{'overflow':'visible'}">
   <rn-criarcliente></rn-criarcliente>
   <p-footer>
     <button pButton (click)="cancelarNovoCliente()" type="button" label="Cancelar" icon="fa fa-ban"
       class="ui-button-raised ui-button-secondary"></button>
-    <button pButton (click)="salvarNovoCliente()" type="button" label="Salvar" icon="fa fa-save" class="ui-button-raised"></button>
+    <button pButton (click)="salvarNovoCliente()" type="button" label="Salvar" icon="fa fa-save"
+      class="ui-button-raised"></button>
   </p-footer>
 </p-dialog>

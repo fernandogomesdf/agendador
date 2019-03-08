@@ -17,8 +17,9 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   servicos: SelectItem[] = [];
   profissionais: SelectItem[] = [];
   selectedServicos: string[] = [];
-  selectedProfissional: string;
-  selectedCliente: string;
+
+  agendamento: any = {};
+
   displayDialogNovoCliente = false;
 
   @ViewChild('proDD') proDD: Dropdown;
@@ -66,6 +67,11 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   abrirNovoCliente() {
     this.displayDialogNovoCliente = true;
+  }
+
+  //TODO remover
+  getAgendamento(): string {
+    return JSON.stringify(this.agendamento);
   }
 
   ngAfterViewInit() {
