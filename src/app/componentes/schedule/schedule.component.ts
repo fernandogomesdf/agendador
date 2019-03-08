@@ -19,6 +19,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { EditorModule } from 'primeng/editor';
+import { InputMaskModule } from 'primeng/inputmask';
 import { CriarclienteComponent } from '../cliente/criarcliente/criarcliente.component';
 
 declare const moment: any;
@@ -159,7 +160,7 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
 }
 
 @NgModule({
-  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, ContextMenuModule, CalendarModule, AutoCompleteModule, DialogModule, MultiSelectModule, EventoModule, DropdownModule, InputTextModule, EditorModule],
+  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, ContextMenuModule, CalendarModule, AutoCompleteModule, DialogModule, MultiSelectModule, EventoModule, DropdownModule, InputTextModule, EditorModule, InputMaskModule],
   exports: [Schedule],
   declarations: [Schedule, CriareventoComponent, CriarclienteComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

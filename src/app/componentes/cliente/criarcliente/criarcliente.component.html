@@ -2,7 +2,15 @@
     <tr>
         <td><label>Nome*: </label></td>
         <td>
-
+            <input type="text" [(ngModel)]="cliente.nome" size="36" pInputText />
+        </td>
+    </tr>
+    <tr>
+        <td><label>Telefone*: </label></td>
+        <td>
+            <p-inputMask [(ngModel)]="cliente.telefone" size="12" mask="(99) 99999-9999"></p-inputMask>
+            &nbsp;&nbsp; <label> CPF: </label>
+            <p-inputMask [(ngModel)]="cliente.cpf" size="14" mask="999.999.999-99"></p-inputMask>
         </td>
     </tr>
 </table>
