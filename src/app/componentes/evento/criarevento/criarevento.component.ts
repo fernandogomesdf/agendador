@@ -51,18 +51,18 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   }
 
   salvar() {
-
   }
 
   cancelar() {
-
   }
 
   cancelarNovoCliente() {
+    EventEmitterService.get('dialogoNovoCliente').emit('cancelar');
     this.displayDialogNovoCliente = false;
   }
 
   salvarNovoCliente() {
+    EventEmitterService.get('dialogoNovoCliente').emit('salvar');
   }
 
   abrirNovoCliente() {
