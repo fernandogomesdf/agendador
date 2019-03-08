@@ -28,7 +28,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    EventEmitterService.get('dialogo').subscribe(data => {
+    EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
       switch (data) {
         case "salvar": {
           this.salvar();

@@ -13,12 +13,34 @@
             <p-inputMask [(ngModel)]="cliente.cpf" size="14" mask="999.999.999-99"></p-inputMask>
         </td>
     </tr>
-</table>
+    <tr>
+        <td><label>E-mail: </label></td>
+        <td>
+            <input type="text" [(ngModel)]="cliente.email" size="36" pInputText />
+        </td>
+    </tr>
+    <tr>
+        <td><label>Sexo: </label></td>
+        <td>
+            F <p-radioButton name="sexo" value="F" [(ngModel)]="cliente.sexo"></p-radioButton>
+            M <p-radioButton name="sexo" value="M" [(ngModel)]="cliente.sexo"></p-radioButton>
 
-nome
-telefone
-cpf
-email
-dia e mes de nascimento
-sexo
-observacoes
+            &nbsp;&nbsp; <label>Aniversário: </label>
+            <p-inputMask [(ngModel)]="cliente.diaMesAniversario" size="3" mask="99/99"></p-inputMask>
+        </td>
+    </tr>
+    <tr>
+        <td><label>Observações: </label></td>
+        <td>
+            <p-editor [(ngModel)]="cliente.observacoes" [style]="{'height':'180px', 'width':'350px'}">
+                <p-header>
+                    <span class="ql-formats">
+                        <button class="ql-bold" aria-label="Negrito"></button>
+                        <button class="ql-italic" aria-label="Itálico"></button>
+                        <button class="ql-underline" aria-label="Sublinhado"></button>
+                    </span>
+                </p-header>
+            </p-editor>
+        </td>
+    </tr>
+</table>
