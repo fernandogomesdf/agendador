@@ -42,7 +42,9 @@ export class CriarclienteComponent implements OnInit {
   salvar() {
     console.log(JSON.stringify(this.cliente));
     if (this.isValido()) {
-
+      this.appService.requestPost('/cliente/inserir', this.cliente).subscribe(data => {
+        alert(JSON.stringify(data));
+      });
     }
   }
 
