@@ -11,8 +11,6 @@ import { EventEmitterService } from 'src/app/service/eventemitter.service';
 })
 export class CriareventoComponent implements OnInit, AfterViewInit {
 
-  public cliente?: any = {};
-
   resultsCliente: string[];
   servicos: SelectItem[] = [];
   profissionais: SelectItem[] = [];
@@ -38,8 +36,17 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
           this.cancelar();
           break;
         }
+      }
+    });
+
+    EventEmitterService.get('dialogoNovoCliente').subscribe(data => {
+      switch (data) {
+        case "fechar": {
+          this.displayDialogNovoCliente = false;
+          break;
+        }
         default: {
-          console.log("opção indefinida....");
+          this.agendamento.cliente = data;
           break;
         }
       }

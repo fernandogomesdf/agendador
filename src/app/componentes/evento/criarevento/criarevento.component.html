@@ -2,7 +2,7 @@
   <tr>
     <td><label>Cliente*: </label></td>
     <td>
-      <p-autoComplete size="53" [(ngModel)]="agendamento.selectedCliente" (completeMethod)="searchCliente($event)"
+      <p-autoComplete size="53" [(ngModel)]="agendamento.cliente" (completeMethod)="searchCliente($event)"
         [suggestions]="resultsCliente" field="nome">
       </p-autoComplete>&nbsp;
       <button pButton type="button" (click)="abrirNovoCliente()" label="Novo" icon="fa fa-plus"
@@ -12,8 +12,8 @@
   <tr>
     <td><label>Profissional: </label></td>
     <td>
-      <p-dropdown #proDD placeholder="Selecione" [options]="profissionais"
-        [(ngModel)]="agendamento.selectedProfissional" [style]="{'width':'350px'}">
+      <p-dropdown #proDD placeholder="Selecione" [options]="profissionais" [(ngModel)]="agendamento.profissional"
+        [style]="{'width':'350px'}">
       </p-dropdown>
     </td>
   </tr>
@@ -21,7 +21,7 @@
     <td><label>Serviço*: </label></td>
     <td>
       <p-multiSelect defaultLabel="Escolha" selectedItemsLabel="{0} items selecionados" [options]="servicos"
-        [(ngModel)]="agendamento.selectedServico" [panelStyle]="{minWidth:'12em'}">
+        [(ngModel)]="agendamento.servicos" [panelStyle]="{minWidth:'12em'}">
       </p-multiSelect>
     </td>
   </tr>

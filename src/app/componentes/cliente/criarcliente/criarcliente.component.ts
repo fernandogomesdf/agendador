@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
 import { AppService } from 'src/app/app.service';
+import { JsonPipe } from '@angular/common';
 
 declare const moment: any;
 
@@ -27,23 +28,22 @@ export class CriarclienteComponent implements OnInit {
           this.cancelar();
           break;
         }
-        default: {
-          console.log("opção indefinida....");
-          break;
-        }
       }
     });
   }
 
   cancelar() {
-    alert('cancelar');
+    EventEmitterService.get('dialogoNovoCliente').emit('fechar');
   }
 
   salvar() {
     if (this.isValido()) {
       this.appService.requestPost('/cliente/inserir', this.cliente).subscribe(data => {
-        if (data._id) {
-
+        if (data.id) {
+          this.cliente = {};
+          this.appService.msgSucesso('Cliente incluído com sucesso!');
+          EventEmitterService.get('dialogoNovoCliente').emit('fechar');
+          EventEmitterService.get('dialogoNovoCliente').emit(data);
         }
       });
     }
