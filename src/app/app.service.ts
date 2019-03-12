@@ -152,5 +152,4 @@ export class AppService {
     msgSucesso(detail) {
         this.msg('success', 'Sucesso', detail);
     }
-
 }
