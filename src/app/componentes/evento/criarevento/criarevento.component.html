@@ -3,7 +3,14 @@
     <td><label>Cliente*: </label></td>
     <td>
       <p-autoComplete size="53" [(ngModel)]="agendamento.cliente" (completeMethod)="searchCliente($event)"
-        [suggestions]="resultsCliente" field="nome">
+        [suggestions]="resultsCliente" field="nome" [forceSelection]="true">
+
+        <ng-template let-cliente pTemplate="item">
+          <div class="ui-helper-clearfix">
+            <b>{{cliente.telefone}}</b> - {{cliente.nome}}
+          </div>
+        </ng-template>
+
       </p-autoComplete>&nbsp;
       <button pButton type="button" (click)="abrirNovoCliente()" label="Novo" icon="fa fa-plus"
         class="ui-button-raised"></button>

@@ -3,6 +3,7 @@ import { CriareventoService } from './criarevento.service';
 import { SelectItem } from 'primeng/api';
 import { Dropdown } from 'primeng/dropdown';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
+import { AppService } from 'src/app/app.service';
 
 @Component({
   selector: 'rn-criarevento',
@@ -14,7 +15,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   resultsCliente: string[];
   servicos: SelectItem[] = [];
   profissionais: SelectItem[] = [];
-  selectedServicos: string[] = [];
+  mensagensValidacao: string[] = [];
 
   agendamento: any = {};
 
@@ -22,7 +23,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   @ViewChild('proDD') proDD: Dropdown;
 
-  constructor(private criarEventoService: CriareventoService) {
+  constructor(private criarEventoService: CriareventoService, private appService: AppService) {
   }
 
   ngOnInit() {
@@ -58,6 +59,39 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   }
 
   salvar() {
+    if (this.isValido()) {
+
+    }
+  }
+
+  isValido(): boolean {
+    this.mensagensValidacao = [];
+
+    if (!(this.agendamento.cliente || {}).id) {
+      this.mensagensValidacao.push("É necessário informar o cliente.");
+    }
+
+    if (!this.agendamento.servicos) {
+      this.mensagensValidacao.push("É necessário informar o serviço.");
+    }
+
+    if (!this.agendamento.data) {
+      this.mensagensValidacao.push("É necessário informar a data.");
+    }
+
+    if (!this.agendamento.hora) {
+      this.mensagensValidacao.push("É necessário informar a hora.");
+    }
+
+    if (!this.agendamento.duracao) {
+      this.mensagensValidacao.push("É necessário informar a duracao.");
+    }
+
+    this.mensagensValidacao.forEach(mensagem => {
+      this.appService.msgWarn(mensagem)
+    });
+
+    return this.mensagensValidacao.length == 0;
   }
 
   cancelar() {

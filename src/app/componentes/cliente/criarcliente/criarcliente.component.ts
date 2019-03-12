@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
 import { AppService } from 'src/app/app.service';
-import { JsonPipe } from '@angular/common';
 
 declare const moment: any;
 
