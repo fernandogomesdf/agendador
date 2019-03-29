@@ -60,7 +60,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   salvar() {
     if (this.isValido()) {
-
+      
     }
   }
 
