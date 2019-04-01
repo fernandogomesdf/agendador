@@ -3,7 +3,7 @@
     <td><label>Cliente*: </label></td>
     <td>
       <p-autoComplete size="53" [(ngModel)]="agendamento.cliente" (completeMethod)="searchCliente($event)"
-        [suggestions]="resultsCliente" field="nome" [forceSelection]="true">
+        [suggestions]="resultsCliente" field="fone_nome" [forceSelection]="true">
 
         <ng-template let-cliente pTemplate="item">
           <div class="ui-helper-clearfix">
@@ -27,8 +27,9 @@
   <tr>
     <td><label>Serviço*: </label></td>
     <td>
-      <p-multiSelect defaultLabel="Escolha" selectedItemsLabel="{0} items selecionados" [options]="servicos"
-        [(ngModel)]="agendamento.servicos" [panelStyle]="{minWidth:'12em'}">
+      <p-multiSelect (onChange)="atualizarPrecoAgendamento($event)" defaultLabel="Selecione"
+        selectedItemsLabel="{0} items selecionados" [options]="servicos" [(ngModel)]="agendamento.servicos"
+        [panelStyle]="{minWidth:'12em'}">
       </p-multiSelect>
     </td>
   </tr>

@@ -13,7 +13,7 @@ import { AppService } from 'src/app/app.service';
 export class CriareventoComponent implements OnInit, AfterViewInit {
 
   resultsCliente: string[];
-  servicos: SelectItem[] = [];
+  servicos: SelectItemRN[] = [];
   profissionais: SelectItem[] = [];
   mensagensValidacao: string[] = [];
 
@@ -24,6 +24,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   @ViewChild('proDD') proDD: Dropdown;
 
   constructor(private criarEventoService: CriareventoService, private appService: AppService) {
+
   }
 
   ngOnInit() {
@@ -58,10 +59,21 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   }
 
+  atualizarPrecoAgendamento(event) {
+    let servicosSelecionados = this.agendamento.servicos;
+    let precoAgendamento: number = 0;
+    this.servicos.filter(function (item) {
+      return servicosSelecionados.includes(item.value)
+    }).forEach(elemento => {
+      precoAgendamento += elemento.preco;
+    })
+    this.agendamento.valor = precoAgendamento;
+  }
+
   salvar() {
     if (this.isValido()) {
-      this.appService.requestPost('/cliente/inserir', this.agendamento).subscribe(data => {
-        
+      this.appService.requestPost('/evento/inserir', this.agendamento).subscribe(data => {
+
       });
     }
   }
@@ -120,7 +132,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.criarEventoService.listarServicos().subscribe(data => {
       data.forEach(element => {
-        this.servicos.push({ label: element.nome, value: element.id });
+        this.servicos.push({ label: element.nome, value: element.id, preco: element.preco });
       });
     });
 
@@ -133,7 +145,14 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   searchCliente(event) {
     this.criarEventoService.searchCliente(event).subscribe(data => {
+      data.forEach(element => {
+        element.fone_nome = ''.concat(element.telefone.concat(' - ').concat(element.nome))
+      });
       this.resultsCliente = data;
     });
   }
+}
+
+export interface SelectItemRN extends SelectItem {
+  preco: any;
 }
