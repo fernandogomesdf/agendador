@@ -60,7 +60,9 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   salvar() {
     if (this.isValido()) {
-      
+      this.appService.requestPost('/cliente/inserir', this.agendamento).subscribe(data => {
+        
+      });
     }
   }
 
