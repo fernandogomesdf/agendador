@@ -30,7 +30,7 @@ export class AppService {
                 } else {
                     resposta = eval("(" + err._body + ")");
                     if (resposta.message) {
-                        if (resposta.status == 500) {
+                        if (resposta.status == 500 || err.status == 500) {
                             this.msgErro(resposta.message);
                         } else {
                             this.msgWarn(resposta.message);

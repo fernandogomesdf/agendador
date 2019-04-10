@@ -18,7 +18,6 @@ import { AppService } from './app.service';
 import { HttpModule } from '@angular/http';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
-
 @NgModule({
   declarations: [
     AppComponent
