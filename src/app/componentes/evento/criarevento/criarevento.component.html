@@ -47,7 +47,8 @@
       <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
           <span class="ui-inputgroup-addon">R$</span>
-          <input type="number" [(ngModel)]="agendamento.valor" min="0.00" step="0.50" pInputText />
+          <input currencyMask [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text"
+            [(ngModel)]="agendamento.valor" pInputText />
         </div>
       </div>
     </td>

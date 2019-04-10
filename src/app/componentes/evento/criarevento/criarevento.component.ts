@@ -73,7 +73,8 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   salvar() {
     if (this.isValido()) {
       this.appService.requestPost('/evento/inserir', this.agendamento).subscribe(data => {
-
+        this.appService.msgSucesso('Novo agendamento realizado com sucesso!');
+        EventEmitterService.get('dialogoNovoEvento').emit('salvou');
       });
     }
   }

@@ -6,6 +6,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
 
+import { CurrencyMaskModule } from "ng2-currency-mask";
+
 import { MenuItem } from 'primeng/api';
 
 import * as interact from 'interactjs';
@@ -85,13 +87,17 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
       { id: '4', resourceId: 'c', start: '2018-04-07T07:30:00', end: '2018-04-07T09:30:00', title: 'event 4' },
     ];
 
-    EventEmitterService.get('dndElement').subscribe(data => {
-      this.dndElement = data;
-    });
   }
 
   ngOnInit() {
-
+    EventEmitterService.get('dndElement').subscribe(data => {
+      this.dndElement = data;
+    });
+    EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
+      if (data === 'salvou') {
+        this.displayDialogNovoEvento = false;
+      }
+    });
   }
 
   ngAfterViewChecked() {
@@ -162,7 +168,7 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
 }
 
 @NgModule({
-  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, ContextMenuModule, CalendarModule, AutoCompleteModule, DialogModule, MultiSelectModule, EventoModule, DropdownModule, InputTextModule, EditorModule, InputMaskModule, RadioButtonModule],
+  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, ContextMenuModule, CalendarModule, AutoCompleteModule, DialogModule, MultiSelectModule, EventoModule, DropdownModule, InputTextModule, EditorModule, InputMaskModule, RadioButtonModule, CurrencyMaskModule],
   exports: [Schedule],
   declarations: [Schedule, CriareventoComponent, CriarclienteComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
