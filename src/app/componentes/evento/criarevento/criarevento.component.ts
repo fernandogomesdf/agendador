@@ -104,9 +104,9 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
       this.mensagensValidacao.push("É necessário informar a data.");
     }
 
-    if (!this.agendamento.hora) {
+    /*if (!this.agendamento.hora) {
       this.mensagensValidacao.push("É necessário informar a hora.");
-    }
+    }*/
 
     if (!this.agendamento.duracao) {
       this.mensagensValidacao.push("É necessário informar a duracao.");
