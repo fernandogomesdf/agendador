@@ -1,0 +1,75 @@
+<center>
+  <p-card header="Login" [style]="{width: '400px'}" styleClass="ui-card-shadow" *ngIf="!isCadastro">
+    <form #meuFormLogin (keyup.enter)="efetuarLogin()">
+      <input [(ngModel)]="login.emailoucpf" style="height: 35px" name="emailoucpf" size="35" type="text" pInputText
+        required placeholder="E-mail ou CPF" />
+      <br />
+      <br />
+      <input [(ngModel)]="login.senha" style="height: 35px" name="senha" size="35" type="password" pInputText required
+        placeholder="Senha" />
+      <br />
+      <br />
+      <button pButton type="button" style="height: 35px" (click)="efetuarLogin()" icon="fa fa-sign-in" iconPos="left"
+        label="Entrar"></button>
+      &nbsp;&nbsp;
+      <button pButton type="button" style="height: 35px" icon="fa fa-user-plus" iconPos="left" (click)="clickCadastro()"
+        label="Cadastrar-se"></button>
+      <br />
+      <br />
+      <a href="javascript:alert('Não implementado!')">Esqueci a senha</a>
+    </form>
+  </p-card>
+  <p-card header="Cadastro" [style]="{width: '400px'}" styleClass="ui-card-shadow" *ngIf="isCadastro">
+    <form #meuFormCadastro>
+      <input [(ngModel)]="cadastro.nome" maxlength="255" style="height: 35px" name="nome" size="35" type="text"
+        pInputText placeholder="Nome completo" required />
+      <br />
+      <br />
+      <input [(ngModel)]="cadastro.cpf" minlength="11" maxlength="11" style="height: 35px" name="cpf" size="35"
+        type="text" pInputText required placeholder="CPF" />
+      <br />
+      <br />
+      <input [(ngModel)]="cadastro.estabelecimento" maxlength="255" style="height: 35px" name="nome_estabelecimento"
+        size="35" type="text" pInputText placeholder="Nome do estabelecimento" required />
+      <br />
+      <br />
+      <p-dropdown name="tipo_estabelecimento" [style]="{'height' : '35px', 'width':'310px'}"
+        [options]="tiposEstabelecimento" [(ngModel)]="cadastro.tipo_estabelecimento"></p-dropdown>
+      <br />
+      <br />
+      <input [(ngModel)]="cadastro.email" style="height: 35px" name="email" size="35" type="text" pInputText required
+        placeholder="E-mail" required email #email="ngModel" maxlength="255" />
+      <br />
+      <span class="erroValidacao" *ngIf="(email.dirty || email.touched) && email.errors?.email">O e-mail não é
+        válido.</span>
+      <br />
+      <input [(ngModel)]="cadastro.repitaemail" style="height: 35px" name="repitaemail" size="35" type="text" pInputText
+        required placeholder="Repita o e-mail" required email #repitaemail="ngModel" />
+      <br />
+      <span class="erroValidacao" *ngIf="(repitaemail.dirty || repitaemail.touched) && repitaemail.errors?.email">O
+        e-mail não é válido.</span>
+      <br />
+      <input [(ngModel)]="cadastro.senha" style="height: 35px" name="senha" size="35" type="password" pInputText
+        placeholder="Senha" minlength="6" maxlength="12" required #senha="ngModel" />
+      <br />
+      <span class="erroValidacao" *ngIf="(senha.dirty || senha.touched) && senha.errors?.minlength">Necessário ao menos
+        6 caracteres.</span>
+      <br />
+      <input [(ngModel)]="cadastro.repitasenha" style="height: 35px" name="repitasenha" size="35" type="password"
+        pInputText placeholder="Repita a senha" minlength="6" maxlength="12" required #repitasenha="ngModel" />
+      <br />
+      <span class="erroValidacao"
+        *ngIf="(repitasenha.dirty || repitasenha.touched) && repitasenha.errors?.minlength">Necessário ao menos 6
+        caracteres.</span>
+      <br />
+      <button pButton type="button"
+        [disabled]="email.errors?.email || repitaemail.errors?.email || senha.errors?.minlength" style="height: 35px"
+        (click)="cadastrar();" icon="fa fa-user-plus" iconPos="left" label="Cadastrar"></button>
+      &nbsp;&nbsp;
+      <button pButton type="button" style="height: 35px" (click)="cancelar();" class="ui-button-secondary"
+        icon="fa fa-ban" iconPos="left" label="Cancelar"></button>
+
+      <br />
+    </form>
+  </p-card>
+</center>
