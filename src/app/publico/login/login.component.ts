@@ -69,6 +69,10 @@ export class LoginComponent implements OnInit {
       this.appService.msgWarn("Informe o CPF.");
     } else if (!this.cadastro.email) {
       this.appService.msgWarn("Informe o e-mail.");
+    } else if (!this.cadastro.nome_estabelecimento) {
+      this.appService.msgWarn("Informe o nome do estabelecimento.");
+    } else if (!this.cadastro.tipo_estabelecimento) {
+      this.appService.msgWarn("Informe o tipo do estabelecimento.");
     } else if (!this.cadastro.senha) {
       this.appService.msgWarn("Informe a senha.");
     } else if (this.cadastro.email != this.cadastro.repitaemail) {
@@ -77,7 +81,6 @@ export class LoginComponent implements OnInit {
       this.appService.msgWarn("As senhas são diferentes");
     } else {
       this.service.cadastrar(this.cadastro).subscribe(result => {
-        this.appService.msgSucesso("Cadastro criado com sucesso.");
         this.cadastro = {};
         this.login = {};
         this.meuFormCadastro.nativeElement.reset();

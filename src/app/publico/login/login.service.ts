@@ -15,7 +15,7 @@ export class LoginService {
   }
 
   cadastrar(cadastro: any) {
-    this.response = this.appService.requestPost('/usuario/inserir', cadastro);
+    this.response = this.appService.requestPost('/usuario/cadastrar', cadastro);
     this.response.subscribe(result => {
       this.appService.msgSucesso("Seu cadastro foi realizado com sucesso!");
     });
