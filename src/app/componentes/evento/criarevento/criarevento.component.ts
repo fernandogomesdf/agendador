@@ -74,16 +74,9 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   salvar() {
     if (this.isValido()) {
-
-      //setar a hora na data
-      /*let data = this.agendamento.data;
-      let hora = this.agendamento.hora;
-      let horaSplit = hora.split(":");
-      let dataHora = moment(data).hour(horaSplit[0]).minutes(horaSplit[1]);
-      this.agendamento.data = dataHora;*/
-
       this.appService.requestPost('/evento/inserir', this.agendamento).subscribe(data => {
         this.appService.msgSucesso('Novo agendamento realizado com sucesso!');
+        this.agendamento = {};
         EventEmitterService.get('dialogoNovoEvento').emit('salvou');
       });
     }
