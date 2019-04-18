@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
             rotaRequerida = '/' + rotaRequerida.replace(/,/g, "/");
             this.router.navigate([rotaRequerida]);
           } else {
-            this.router.navigate(['/admin/dashboard']);
+            this.router.navigate(['/']);
           }
           sessionStorage.removeItem('rotarequerida');
         }
