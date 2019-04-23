@@ -4,15 +4,18 @@ import { CommonModule } from '@angular/common';
 import { GestaoRoutingModule } from './gestao-routing.module';
 import { AgendamentoComponent } from './agendamento/agendamento.component';
 import { ComponentesModule } from '../componentes/componentes.module';
+import { CalendarioAlternativoComponent } from './calendario-alternativo/calendario-alternativo.component';
+import { FullCalendarModule } from 'primeng/fullcalendar';
 
 
 @NgModule({
   imports: [
     CommonModule,
     GestaoRoutingModule,
-    ComponentesModule
+    ComponentesModule,
+    FullCalendarModule
   ],
-  declarations: [AgendamentoComponent],
+  declarations: [AgendamentoComponent, CalendarioAlternativoComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class GestaoModule { }
