@@ -14,6 +14,7 @@ export class CalendarioAlternativoComponent implements OnInit {
 
   events: any[];
   options: any;
+  displayDialogNovoEvento = true;
 
   constructor() { }
 

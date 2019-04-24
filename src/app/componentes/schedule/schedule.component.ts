@@ -24,6 +24,7 @@ import { EditorModule } from 'primeng/editor';
 import { InputMaskModule } from 'primeng/inputmask';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { CriarclienteComponent } from '../cliente/criarcliente/criarcliente.component';
+import { ComponentesModule } from '../componentes.module';
 
 declare const moment: any;
 
@@ -167,10 +168,29 @@ export class ScheduleComponent implements DoCheck, OnDestroy, OnInit, OnChanges,
 
 }
 
-@NgModule({
-  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, ContextMenuModule, CalendarModule, AutoCompleteModule, DialogModule, MultiSelectModule, EventoModule, DropdownModule, InputTextModule, EditorModule, InputMaskModule, RadioButtonModule, CurrencyMaskModule],
+/*@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    ButtonModule,
+    DragDropModule,
+    ContextMenuModule,
+    CalendarModule,
+    AutoCompleteModule,
+    DialogModule,
+    MultiSelectModule,
+    EventoModule,
+    DropdownModule,
+    InputTextModule,
+    EditorModule,
+    InputMaskModule,
+    RadioButtonModule,
+    CurrencyMaskModule,
+    ComponentesModule
+  ],
   exports: [ScheduleComponent],
-  declarations: [ScheduleComponent, CriareventoComponent, CriarclienteComponent],
+  declarations: [ScheduleComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class ScheduleModule { }
+export class ScheduleModule { }*/
