@@ -12,7 +12,7 @@ import { EventEmitterService } from 'src/app/service/eventemitter.service';
   templateUrl: './evento.component.html',
   styleUrls: ['./evento.component.css']
 })
-export class Evento implements OnInit {
+export class EventoComponent implements OnInit {
 
   static alturaDivEvento = 22;
   static alturaEntreLinha = 3;
@@ -31,12 +31,12 @@ export class Evento implements OnInit {
       var target = event.target;
       let alturaRequerida = event.target.clientHeight;
 
-      if (event.target.clientHeight < Evento.alturaDivEvento) {
-        target.style.height = Evento.alturaDivEvento + 'px';
+      if (event.target.clientHeight < EventoComponent.alturaDivEvento) {
+        target.style.height = EventoComponent.alturaDivEvento + 'px';
       } else {
-        let totalLinhas = Math.round(alturaRequerida / Evento.alturaDivEvento);
-        let novaAltura = totalLinhas * Evento.alturaDivEvento + (totalLinhas * Evento.alturaEntreLinha);
-        novaAltura -= Evento.alturaEntreLinha;
+        let totalLinhas = Math.round(alturaRequerida / EventoComponent.alturaDivEvento);
+        let novaAltura = totalLinhas * EventoComponent.alturaDivEvento + (totalLinhas * EventoComponent.alturaEntreLinha);
+        novaAltura -= EventoComponent.alturaEntreLinha;
         target.style.height = novaAltura + 'px';
       }
     });
@@ -52,8 +52,8 @@ export class Evento implements OnInit {
 
 @NgModule({
   imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule],
-  exports: [Evento],
-  declarations: [Evento],
+  exports: [EventoComponent],
+  declarations: [EventoComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class EventoModule { }

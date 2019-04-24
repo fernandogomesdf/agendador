@@ -13,7 +13,7 @@ import { MenuItem } from 'primeng/api';
 import * as interact from 'interactjs';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { EventoModule, Evento } from '../evento/evento.component';
+import { EventoModule, EventoComponent } from '../evento/evento.component';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
 import { CriareventoComponent } from '../evento/criarevento/criarevento.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -32,9 +32,9 @@ declare const moment: any;
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.css']
 })
-export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterViewChecked, AfterViewInit {
+export class ScheduleComponent implements DoCheck, OnDestroy, OnInit, OnChanges, AfterViewChecked, AfterViewInit {
 
-  eventoComponentRef: ComponentRef<Evento>;
+  eventoComponentRef: ComponentRef<EventoComponent>;
   data: Date = new Date();
   resources = new Array();
   periodos = new Array();
@@ -145,7 +145,7 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
 
   plotarEventos() {
     this.events.forEach(evento => {
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(Evento);
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(EventoComponent);
       const componentRef = componentFactory.create(this.injector);
       componentRef.instance.id = evento.id;
       this.appRef.attachView(componentRef.hostView);
@@ -169,8 +169,8 @@ export class Schedule implements DoCheck, OnDestroy, OnInit, OnChanges, AfterVie
 
 @NgModule({
   imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule, ContextMenuModule, CalendarModule, AutoCompleteModule, DialogModule, MultiSelectModule, EventoModule, DropdownModule, InputTextModule, EditorModule, InputMaskModule, RadioButtonModule, CurrencyMaskModule],
-  exports: [Schedule],
-  declarations: [Schedule, CriareventoComponent, CriarclienteComponent],
+  exports: [ScheduleComponent],
+  declarations: [ScheduleComponent, CriareventoComponent, CriarclienteComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ScheduleModule { }
