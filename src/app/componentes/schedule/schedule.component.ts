@@ -1,30 +1,10 @@
 import { NgModule, Component, OnDestroy, DoCheck, OnChanges, OnInit, AfterViewChecked, SimpleChanges, AfterViewInit, Renderer2, CUSTOM_ELEMENTS_SCHEMA, ComponentRef, ComponentFactoryResolver, Injector, ApplicationRef, EmbeddedViewRef, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { DragDropModule } from 'primeng/dragdrop';
-import { CalendarModule } from 'primeng/calendar';
-import { ContextMenuModule } from 'primeng/contextmenu';
-import { DialogModule } from 'primeng/dialog';
-
-import { CurrencyMaskModule } from "ng2-currency-mask";
 
 import { MenuItem } from 'primeng/api';
 
 import * as interact from 'interactjs';
-import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { EventoModule, EventoComponent } from '../evento/evento.component';
+import { EventoComponent } from '../evento/evento.component';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
-import { CriareventoComponent } from '../evento/criarevento/criarevento.component';
-import { AutoCompleteModule } from 'primeng/autocomplete';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputTextModule } from 'primeng/inputtext';
-import { EditorModule } from 'primeng/editor';
-import { InputMaskModule } from 'primeng/inputmask';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { CriarclienteComponent } from '../cliente/criarcliente/criarcliente.component';
-import { ComponentesModule } from '../componentes.module';
 
 declare const moment: any;
 
