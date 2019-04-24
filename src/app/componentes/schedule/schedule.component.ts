@@ -145,32 +145,4 @@ export class ScheduleComponent implements DoCheck, OnDestroy, OnInit, OnChanges,
       }
     });
   }
-
 }
-
-/*@NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    ButtonModule,
-    DragDropModule,
-    ContextMenuModule,
-    CalendarModule,
-    AutoCompleteModule,
-    DialogModule,
-    MultiSelectModule,
-    EventoModule,
-    DropdownModule,
-    InputTextModule,
-    EditorModule,
-    InputMaskModule,
-    RadioButtonModule,
-    CurrencyMaskModule,
-    ComponentesModule
-  ],
-  exports: [ScheduleComponent],
-  declarations: [ScheduleComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
-})
-export class ScheduleModule { }*/
