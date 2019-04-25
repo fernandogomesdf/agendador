@@ -133,11 +133,11 @@ export class ScheduleComponent implements DoCheck, OnDestroy, OnInit, OnChanges,
       const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
       componentRef.changeDetectorRef.detectChanges();
 
-      var resourceId = evento.resourceId;
-      var momentoInicio = moment(evento.start);
-      var hora = momentoInicio.format('HH');
-      var minutos = +momentoInicio.format('mm') >= 30 ? '30' : '00';
-      var celulasEvento = document.querySelectorAll("td[data-resourceid='" + resourceId + "'][data-periodo='" + hora + ":" + minutos + "']");
+      let resourceId = evento.resourceId;
+      let momentoInicio = moment(evento.start);
+      let hora = momentoInicio.format('HH');
+      let minutos = +momentoInicio.format('mm') >= 30 ? '30' : '00';
+      let celulasEvento = document.querySelectorAll("td[data-resourceid='" + resourceId + "'][data-periodo='" + hora + ":" + minutos + "']");
       if (celulasEvento) {
         celulasEvento.forEach(celula => {
           this.renderer.appendChild(celula, domElem);
