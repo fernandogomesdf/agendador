@@ -49,6 +49,12 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
           this.displayDialogNovoCliente = false;
           break;
         }
+        case "salvar": {
+          break;
+        }
+        case "cancelar": {
+          break;
+        }
         default: {
           this.agendamento.cliente = data;
           break;

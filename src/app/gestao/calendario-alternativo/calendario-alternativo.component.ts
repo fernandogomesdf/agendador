@@ -4,6 +4,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
 import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
+import { EventEmitterService } from 'src/app/service/eventemitter.service';
 
 @Component({
   selector: 'app-calendario-alternativo',
@@ -51,6 +52,12 @@ export class CalendarioAlternativoComponent implements OnInit {
       eventDrop: this.mudancaEvento
     }
 
+
+    EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
+      if (data === 'salvou') {
+        this.displayDialogNovoEvento = false;
+      }
+    });
   }
 
   cliqueEvento(info) {
@@ -73,5 +80,14 @@ export class CalendarioAlternativoComponent implements OnInit {
   mudancaEvento(evento) {
     console.log(evento)
     alert("mudancaEvento");
+  }
+
+  cancelarNovoEvento() {
+    EventEmitterService.get('dialogoNovoEvento').emit('cancelar');
+    this.displayDialogNovoEvento = false;
+  }
+
+  salvarNovoEvento() {
+    EventEmitterService.get('dialogoNovoEvento').emit('salvar');
   }
 }
