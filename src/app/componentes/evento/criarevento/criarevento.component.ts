@@ -56,6 +56,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
           break;
         }
         default: {
+          this.setFoneNome(data);
           this.agendamento.cliente = data;
           break;
         }
@@ -156,11 +157,16 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   searchCliente(event) {
     this.criarEventoService.searchCliente(event).subscribe(data => {
       data.forEach(element => {
-        element.fone_nome = ''.concat(element.telefone.concat(' - ').concat(element.nome))
+        this.setFoneNome(element);
       });
       this.resultsCliente = data;
     });
   }
+
+  setFoneNome(element) {
+    element.fone_nome = ''.concat(element.telefone.concat(' - ').concat(element.nome))
+  }
+
 }
 
 export interface SelectItemRN extends SelectItem {
