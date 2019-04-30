@@ -16,11 +16,13 @@ export class EventoComponent implements OnInit {
 
   static alturaDivEvento = 22;
   static alturaEntreLinha = 3;
+
+
   @Input() id: string;
 
   constructor() {
 
-    interact('.evento').resizable({
+    /*interact('.evento').resizable({
       // resize from all edges and corners
       edges: { left: false, right: false, bottom: true, top: false },
     }).on('resizemove', function (event: any) {
@@ -39,7 +41,7 @@ export class EventoComponent implements OnInit {
         novaAltura -= EventoComponent.alturaEntreLinha;
         target.style.height = novaAltura + 'px';
       }
-    });
+    });*/
   }
 
   ngOnInit() {

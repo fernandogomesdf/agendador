@@ -22,7 +22,7 @@ export class AppService {
     tratarErro(err) {
         try {
             if (err.status && err.status == 401) {
-                this.router.navigate(['/login']);
+                this.router.navigate(['/publico/login']);
             } else {
                 let resposta = err._body;
                 if (resposta.type == 'error') {

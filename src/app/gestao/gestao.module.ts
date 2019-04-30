@@ -17,7 +17,12 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ButtonModule } from 'primeng/button';
 import { CriareventoComponent } from '../componentes/evento/criarevento/criarevento.component';
+import { LoginGuard } from '../guards/login.guard';
+import { JwtModule } from '@auth0/angular-jwt';
 
+export function getJwtToken(): string {
+  return sessionStorage.getItem('token');
+}
 
 @NgModule({
   imports: [
@@ -33,9 +38,16 @@ import { CriareventoComponent } from '../componentes/evento/criarevento/criareve
     EditorModule,
     InputMaskModule,
     RadioButtonModule,
-    ButtonModule
+    ButtonModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: getJwtToken,
+        whitelistedDomains: ['localhost:4200']
+      }
+    }),
 
   ],
+  providers: [LoginGuard],
   declarations: [AgendamentoComponent, CalendarioAlternativoComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
