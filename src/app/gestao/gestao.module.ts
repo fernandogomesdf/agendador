@@ -16,7 +16,6 @@ import { EditorModule } from 'primeng/editor';
 import { InputMaskModule } from 'primeng/inputmask';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ButtonModule } from 'primeng/button';
-import { CriareventoComponent } from '../componentes/evento/criarevento/criarevento.component';
 import { LoginGuard } from '../guards/login.guard';
 import { JwtModule } from '@auth0/angular-jwt';
 
