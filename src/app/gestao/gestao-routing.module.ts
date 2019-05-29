@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'publico/login', component: LoginComponent },
   { path: 'gestao/agendamento', component: AgendamentoComponent, canActivate: [LoginGuard] },
   { path: 'gestao/calendario_alternativo', component: CalendarioAlternativoComponent, canActivate: [LoginGuard] },
-  { path: '', component: AgendamentoComponent }
+  { path: '', component: AgendamentoComponent, canActivate: [LoginGuard] }
 ];
 
 @NgModule({
