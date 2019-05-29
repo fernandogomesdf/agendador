@@ -73,8 +73,6 @@ export class AppService {
             }),
             share()
         );
-
-
         response$.subscribe(result => {
             this.blockEmitter.emit({
                 value: false

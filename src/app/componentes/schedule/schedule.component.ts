@@ -21,7 +21,7 @@ export class ScheduleComponent implements DoCheck, OnDestroy, OnInit, OnChanges,
   periodos = new Array();
   events = new Array();
   dndElement: any;
-  private items: MenuItem[];
+  items: MenuItem[];
   displayDialogNovoEvento: boolean = true;
 
   constructor(private renderer: Renderer2, private componentFactoryResolver: ComponentFactoryResolver, private injector: Injector, private appRef: ApplicationRef, private cd: ChangeDetectorRef) {

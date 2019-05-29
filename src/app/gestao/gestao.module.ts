@@ -16,8 +16,10 @@ import { EditorModule } from 'primeng/editor';
 import { InputMaskModule } from 'primeng/inputmask';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
 import { LoginGuard } from '../guards/login.guard';
 import { JwtModule } from '@auth0/angular-jwt';
+import { CrudServicoComponent } from './crud-servico/crud-servico.component';
 
 export function getJwtToken(): string {
   return sessionStorage.getItem('token');
@@ -38,6 +40,7 @@ export function getJwtToken(): string {
     InputMaskModule,
     RadioButtonModule,
     ButtonModule,
+    TableModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: getJwtToken,
@@ -47,7 +50,7 @@ export function getJwtToken(): string {
 
   ],
   providers: [LoginGuard],
-  declarations: [AgendamentoComponent, CalendarioAlternativoComponent],
+  declarations: [AgendamentoComponent, CalendarioAlternativoComponent, CrudServicoComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class GestaoModule { }
