@@ -24,11 +24,10 @@ export class AppService {
             if (err.status && err.status == 401) {
                 this.router.navigate(['/publico/login']);
             } else {
-                let resposta = err._body;
-                if (resposta.type == 'error') {
+                if (err.error.type == 'error') {
                     this.msgErro('Não foi possí­vel conectar no servidor.');
                 } else {
-                    resposta = eval("(" + err._body + ")");
+                    let resposta = err.error
                     if (resposta.message) {
                         if (resposta.status == 500 || err.status == 500) {
                             this.msgErro(resposta.message);
