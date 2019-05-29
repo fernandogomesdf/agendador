@@ -15,8 +15,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { AppService } from './app.service';
-import { HttpModule } from '@angular/http';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     routing,
     BrowserModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     GestaoModule,
     CursosModule,
     PublicoModule,

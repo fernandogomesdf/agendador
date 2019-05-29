@@ -1,17 +1,17 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Http, RequestOptions, Headers, Jsonp } from '@angular/http';
-import { Router, Event, NavigationEnd, NavigationStart } from '@angular/router';
 
+import { Router, NavigationEnd } from '@angular/router';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { map, share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class AppService {
 
     @Output() blockEmitter = new EventEmitter();
 
-    constructor(private http: Http, private router: Router, private messageService: MessageService) {
+    constructor(private http: HttpClient, private router: Router, private messageService: MessageService) {
         this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
                 this.messageService.clear();
@@ -57,22 +57,25 @@ export class AppService {
         this.blockEmitter.emit({
             value: true
         });
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
         let token = sessionStorage.getItem('token');
-        if (token) {
-            headers.append('Authorization', 'Bearer ' + token);
-        }
-        let options = new RequestOptions({ headers: headers, method: "post" });
-        let response$ = this.http.post(this.getServerHostPort() + url, data, options).pipe(
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        };
+
+        let response$ = this.http.post(this.getServerHostPort() + url, data, httpOptions).pipe(
             map(response => {
                 try {
-                    return response.json();
+                    return response;
                 }
                 catch (error) { return response["_body"]; }
             }),
             share()
         );
+
+
         response$.subscribe(result => {
             this.blockEmitter.emit({
                 value: false
@@ -99,16 +102,18 @@ export class AppService {
         this.blockEmitter.emit({
             value: bloqueante
         });
-        let headers = new Headers();
+
         let token = sessionStorage.getItem('token');
-        if (token) {
-            headers.append('Authorization', 'Bearer ' + token);
-        }
-        let options = new RequestOptions({ headers: headers, params: null });
-        let response$ = this.http.get((externo ? "" : this.getServerHostPort()) + url, options).pipe(
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            })
+        };
+        let response$ = this.http.get((externo ? "" : this.getServerHostPort()) + url, httpOptions).pipe(
             map(response => {
                 try {
-                    return response.json();
+                    return response;
                 } catch (error) {
                     return response["_body"];
                 }

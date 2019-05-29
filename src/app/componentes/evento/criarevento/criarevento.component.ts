@@ -23,7 +23,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   displayDialogNovoCliente = false;
 
-  @ViewChild('proDD') proDD: Dropdown;
+  @ViewChild('proDD', { static: true }) proDD: Dropdown;
 
   constructor(private criarEventoService: CriareventoService, private appService: AppService) {
 

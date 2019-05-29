@@ -16,8 +16,8 @@ export class LoginComponent implements OnInit {
   public isCadastro = false;
   tiposEstabelecimento: SelectItem[];
 
-  @ViewChild('meuFormCadastro') meuFormCadastro: ElementRef;
-  @ViewChild('meuFormLogin') meuFormLogin: ElementRef;
+  @ViewChild('meuFormCadastro', { static: false }) meuFormCadastro: ElementRef;
+  @ViewChild('meuFormLogin', { static: false }) meuFormLogin: ElementRef;
 
   constructor(public service: LoginService, private appService: AppService, private router: Router) {
     this.tiposEstabelecimento = [
