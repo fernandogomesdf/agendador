@@ -4,13 +4,22 @@
       <th *ngFor="let col of columns">
         {{col.header}}
       </th>
+      <th>Ações</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr>
       <td *ngFor="let col of columns">
-        <div *ngIf="col.field == 'categoria'; else elseBlock">{{rowData['categoria'].tipo}}</div>
+        <div *ngIf="col.field == 'categoria'; else elseBlock">{{rowData['categoria'].nome}}</div>
         <ng-template #elseBlock>{{rowData[col.field]}}</ng-template>
+      </td>
+      <td>
+        <center>
+          <button type="button" (click)="selecionaEditar(rowData)" pButton icon="fa fa-edit" title="Editar"></button>
+          &nbsp;
+          <button type="button" (click)="confirmaExcluir(rowData)" pButton icon="fa fa-trash" title="Excluir"
+            class="ui-button-danger"></button>
+        </center>
       </td>
     </tr>
   </ng-template>

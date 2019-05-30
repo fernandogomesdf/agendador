@@ -17,6 +17,7 @@ import { ToastModule } from 'primeng/toast';
 import { AppService } from './app.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { HttpClientModule } from '@angular/common/http';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MenubarModule } from 'primeng/primeng';
 
 @NgModule({
@@ -37,7 +38,8 @@ import { MenubarModule } from 'primeng/primeng';
     AutoCompleteModule,
     InputTextModule,
     ToastModule,
-    MenubarModule
+    MenubarModule,
+    ConfirmDialogModule
   ],
   providers: [AppService, MessageService, ConfirmationService],
   schemas: [NO_ERRORS_SCHEMA],
