@@ -17,7 +17,7 @@ export class CrudServicoComponent implements OnInit {
     this.cols = [
       { field: 'nome', header: 'Nome' },
       { field: 'preco', header: 'Preço' },
-      { field: 'tempo', header: 'Tempo' },
+      { field: 'tempo', header: 'Tempo (minutos)' },
       { field: 'categoria', header: 'Categoria' }
     ];
 

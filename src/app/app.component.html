@@ -1,4 +1,14 @@
 <p-blockUI [blocked]="blocked"></p-blockUI>
 
+<table width="100%">
+    <tr>
+        <td width="100%"></td>
+        <td>
+            <button pButton type="button" icon="fa fa-sign-out" (click)="sair()" label="Sair"
+                *ngIf="loginGuard.isAuthenticated()"></button>
+        </td>
+    </tr>
+</table>
+
 <p-toast></p-toast>
 <router-outlet></router-outlet>

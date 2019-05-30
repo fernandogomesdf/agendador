@@ -17,6 +17,7 @@ import { ToastModule } from 'primeng/toast';
 import { AppService } from './app.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { HttpClientModule } from '@angular/common/http';
+import { MenubarModule } from 'primeng/primeng';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { HttpClientModule } from '@angular/common/http';
     DragDropModule,
     AutoCompleteModule,
     InputTextModule,
-    ToastModule
+    ToastModule,
+    MenubarModule
   ],
   providers: [AppService, MessageService, ConfirmationService],
   schemas: [NO_ERRORS_SCHEMA],

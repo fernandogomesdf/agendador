@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AppService } from './app.service';
 import { Router } from '@angular/router';
+import { LoginGuard } from './guards/login.guard';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class AppComponent implements OnInit {
   public blocked: boolean = false;
   title = 'rennova-web';
 
-  constructor(public router: Router, private appService: AppService, private cdRef: ChangeDetectorRef) {
+  constructor(public loginGuard: LoginGuard, public router: Router, private appService: AppService, private cdRef: ChangeDetectorRef) {
     appService.blockEmitter.subscribe(result => {
       this.blocked = result.value;
     });
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit {
 
   sair() {
     sessionStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    this.router.navigate(['publico/login']);
   }
 
   ngAfterViewChecked() {

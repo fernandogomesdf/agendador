@@ -9,7 +9,8 @@
   <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr>
       <td *ngFor="let col of columns">
-        {{rowData[col.field]}}
+        <div *ngIf="col.field == 'categoria'; else elseBlock">{{rowData['categoria'].tipo}}</div>
+        <ng-template #elseBlock>{{rowData[col.field]}}</ng-template>
       </td>
     </tr>
   </ng-template>
