@@ -142,6 +142,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.criarEventoService.listarServicos().subscribe(data => {
+      data = data.entidade
       data.forEach(element => {
         this.servicos.push({ label: element.nome, value: element.id, preco: element.preco });
       });
