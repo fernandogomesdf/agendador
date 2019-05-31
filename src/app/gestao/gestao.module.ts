@@ -22,6 +22,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { CrudServicoComponent } from './crud-servico/crud-servico.component';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { FieldsetModule } from 'primeng/primeng';
 
 
 export function getJwtToken(): string {
@@ -50,7 +51,8 @@ export function getJwtToken(): string {
         whitelistedDomains: ['localhost:4200']
       }
     }),
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    FieldsetModule
   ],
   providers: [LoginGuard, ConfirmationService],
   declarations: [AgendamentoComponent, CalendarioAlternativoComponent, CrudServicoComponent],

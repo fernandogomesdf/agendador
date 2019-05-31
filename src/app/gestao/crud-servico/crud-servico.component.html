@@ -1,34 +1,36 @@
-<p-table #dt [columns]="cols" [value]="valores" [paginator]="true" [lazy]="true" [rows]="10"
-  (onLazyLoad)="loadValoresLazy($event)" [totalRecords]="totalRecords" [loading]="loading">
-  <ng-template pTemplate="caption">
-    <div style="text-align: left">
-      <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-      <input type="text" pInputText size="50" placeholder="Busca"
-        (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
-    </div>
-  </ng-template>
-  <ng-template pTemplate="header" let-columns>
-    <tr>
-      <th *ngFor="let col of columns">
-        {{col.header}}
-      </th>
-      <th>Ações</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-rowData let-columns="columns">
-    <tr>
-      <td *ngFor="let col of columns">
-        <div *ngIf="col.field == 'categoria'; else elseBlock">{{rowData['categoria'].nome}}</div>
-        <ng-template #elseBlock>{{rowData[col.field]}}</ng-template>
-      </td>
-      <td>
-        <center>
-          <button type="button" (click)="selecionaEditar(rowData)" pButton icon="fa fa-edit" title="Editar"></button>
-          &nbsp;
-          <button type="button" (click)="confirmaExcluir(rowData)" pButton icon="fa fa-trash" title="Excluir"
-            class="ui-button-danger"></button>
-        </center>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+<p-fieldset legend="Serviços">
+  <p-table #dt [columns]="cols" [value]="valores" [paginator]="true" [lazy]="true" [rows]="10"
+    (onLazyLoad)="loadValoresLazy($event)" [totalRecords]="totalRecords" [loading]="loading">
+    <ng-template pTemplate="caption">
+      <div style="text-align: left">
+        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+        <input type="text" pInputText size="50" placeholder="Busca"
+          (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{col.header}}
+        </th>
+        <th>Ações</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns">
+          <div *ngIf="col.field == 'categoria'; else elseBlock">{{rowData['categoria'].nome}}</div>
+          <ng-template #elseBlock>{{rowData[col.field]}}</ng-template>
+        </td>
+        <td>
+          <center>
+            <button type="button" (click)="selecionaEditar(rowData)" pButton icon="fa fa-edit" title="Editar"></button>
+            &nbsp;
+            <button type="button" (click)="confirmaExcluir(rowData)" pButton icon="fa fa-trash" title="Excluir"
+              class="ui-button-danger"></button>
+          </center>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-fieldset>

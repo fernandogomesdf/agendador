@@ -18,7 +18,7 @@ import { AppService } from './app.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { MenubarModule } from 'primeng/primeng';
+import { MenubarModule, FieldsetModule } from 'primeng/primeng';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,8 @@ import { MenubarModule } from 'primeng/primeng';
     InputTextModule,
     ToastModule,
     MenubarModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    FieldsetModule
   ],
   providers: [AppService, MessageService, ConfirmationService],
   schemas: [NO_ERRORS_SCHEMA],

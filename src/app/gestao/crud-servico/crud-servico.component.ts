@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from 'src/app/app.service';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { JsonPipe } from '@angular/common';
+import { DataTable } from 'primeng/primeng';
 
 @Component({
   selector: 'app-crud-servico',
@@ -15,6 +15,8 @@ export class CrudServicoComponent implements OnInit {
   totalRecords: number;
   loading: boolean;
 
+  @ViewChild("dt", { static: true }) dataTable: DataTable;
+
   constructor(private appService: AppService, private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
@@ -24,14 +26,20 @@ export class CrudServicoComponent implements OnInit {
       { field: 'tempo', header: 'Tempo (minutos)' },
       { field: 'categoria', header: 'Categoria' }
     ];
-
   }
 
   confirmaExcluir(item) {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja excluir?',
       accept: () => {
-
+        this.appService.requestGet('/servico/excluir/' + item.id).subscribe(data => {
+          if (data.deletedCount > 0) {
+            this.appService.msgSucesso('Registro excluído com sucesso!')
+            this.dataTable.reset()
+          }
+        })
+      },
+      reject: () => {
       }
     })
   }
