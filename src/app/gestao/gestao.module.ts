@@ -1,5 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 
 import { GestaoRoutingModule } from './gestao-routing.module';
 import { AgendamentoComponent } from './agendamento/agendamento.component';
@@ -22,7 +22,8 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { CrudServicoComponent } from './crud-servico/crud-servico.component';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { FieldsetModule } from 'primeng/primeng';
+import { FieldsetModule, InputTextareaModule } from 'primeng/primeng';
+import { FormsModule } from '@angular/forms';
 
 
 export function getJwtToken(): string {
@@ -32,6 +33,7 @@ export function getJwtToken(): string {
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     GestaoRoutingModule,
     ComponentesModule,
     FullCalendarModule,
@@ -52,9 +54,10 @@ export function getJwtToken(): string {
       }
     }),
     ConfirmDialogModule,
-    FieldsetModule
+    FieldsetModule,
+    InputTextareaModule
   ],
-  providers: [LoginGuard, ConfirmationService],
+  providers: [LoginGuard, ConfirmationService, CurrencyPipe],
   declarations: [AgendamentoComponent, CalendarioAlternativoComponent, CrudServicoComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

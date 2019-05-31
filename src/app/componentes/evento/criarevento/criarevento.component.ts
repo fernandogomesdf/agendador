@@ -65,7 +65,6 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   }
 
   ngOnDestroy() {
-
   }
 
   atualizarPrecoAgendamento(event) {

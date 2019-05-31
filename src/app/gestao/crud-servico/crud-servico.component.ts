@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from 'src/app/app.service';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { DataTable } from 'primeng/primeng';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-crud-servico',
@@ -14,16 +15,19 @@ export class CrudServicoComponent implements OnInit {
   valores: any[];
   totalRecords: number;
   loading: boolean;
+  displayDialogNovo: boolean;
+  entidade: any = {};
 
   @ViewChild("dt", { static: true }) dataTable: DataTable;
 
-  constructor(private appService: AppService, private confirmationService: ConfirmationService) { }
+  constructor(private cp: CurrencyPipe, private appService: AppService, private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.cols = [
       { field: 'nome', header: 'Nome' },
-      { field: 'preco', header: 'Preço' },
-      { field: 'tempo', header: 'Tempo (minutos)' },
+      { field: 'preco', header: 'Preço', type: this.cp, arg1: 'BRL' },
+      { field: 'duracao', header: 'Duração (minutos)' },
+      { field: 'descricao', header: 'Descrição' },
       { field: 'categoria', header: 'Categoria' }
     ];
   }
@@ -46,6 +50,14 @@ export class CrudServicoComponent implements OnInit {
 
   loadValoresLazy(event: LazyLoadEvent) {
     this.carregarDados(event)
+  }
+
+  novo() {
+    this.displayDialogNovo = true
+  }
+
+  cancelarNovo() {
+    this.displayDialogNovo = false
   }
 
   carregarDados(event: LazyLoadEvent) {

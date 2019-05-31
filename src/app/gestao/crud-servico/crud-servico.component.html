@@ -6,6 +6,8 @@
         <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
         <input type="text" pInputText size="50" placeholder="Busca"
           (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+        &nbsp;&nbsp;
+        <button pButton type="button" icon="fa fa-plus" (click)="novo()" label="Novo"></button>
       </div>
     </ng-template>
     <ng-template pTemplate="header" let-columns>
@@ -20,7 +22,9 @@
       <tr>
         <td *ngFor="let col of columns">
           <div *ngIf="col.field == 'categoria'; else elseBlock">{{rowData['categoria'].nome}}</div>
-          <ng-template #elseBlock>{{rowData[col.field]}}</ng-template>
+          <ng-template #elseBlock>
+            {{ col.type ? col.type.transform(rowData[col.field], col.arg1, col.arg2, col.arg3) : rowData[col.field] }}
+          </ng-template>
         </td>
         <td>
           <center>
@@ -34,3 +38,56 @@
     </ng-template>
   </p-table>
 </p-fieldset>
+
+<p-dialog header="Novo Serviço" [maximizable]="true" [modal]="true" [(visible)]="displayDialogNovo"
+  [contentStyle]="{'overflow':'visible'}">
+  <table>
+    <tr>
+      <td><label>Nome*: </label></td>
+      <td>
+        <input type="text" size="30" [(ngModel)]="entidade.nome" pInputText />
+      </td>
+    </tr>
+    <tr>
+      <td><label>Preço*: </label></td>
+      <td>
+        <div class="ui-g-12 ui-md-4">
+          <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon">R$</span>
+            <input currencyMask [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text"
+              [(ngModel)]="entidade.preco" pInputText />
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Tempo*: </label></td>
+      <td>
+        <div class="ui-g-12 ui-md-4">
+          <div class="ui-inputgroup">
+            <input type="number" size="5" [(ngModel)]="entidade.duracao" step="30" pInputText />
+            <span class="ui-inputgroup-addon">min.</span>
+            <span *ngIf="entidade.duracao" class="ui-inputgroup-addon">
+              = {{(entidade.duracao/60 | number:'1.0-2') + 'h'}}</span>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Descrição: </label></td>
+      <td>
+        <textarea pInputTextarea [rows]="5" [cols]="32" [(ngModel)]="entidade.descricao"></textarea>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Categoria: </label></td>
+      <td></td>
+    </tr>
+  </table>
+  <p-footer>
+    <button pButton (click)="cancelarNovo()" type="button" label="Cancelar" icon="fa fa-ban"
+      class="ui-button-raised ui-button-secondary"></button>
+    <button pButton (click)="salvarNovo()" type="button" label="Salvar" icon="fa fa-save"
+      class="ui-button-raised"></button>
+  </p-footer>
+</p-dialog>
