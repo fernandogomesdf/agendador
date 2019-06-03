@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from 'src/app/app.service';
 import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
-import { DataTable } from 'primeng/primeng';
 import { CurrencyPipe } from '@angular/common';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-crud-servico',
@@ -18,7 +18,7 @@ export class CrudServicoComponent implements OnInit {
   displayDialogNovo: boolean;
   entidade: any = {};
 
-  @ViewChild("dt", { static: true }) dataTable: DataTable;
+  @ViewChild("dt", { static: true }) dataTable: Table;
 
   constructor(private cp: CurrencyPipe, private appService: AppService, private confirmationService: ConfirmationService) { }
 
