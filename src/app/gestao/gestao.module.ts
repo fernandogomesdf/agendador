@@ -24,6 +24,7 @@ import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { FieldsetModule, InputTextareaModule } from 'primeng/primeng';
 import { FormsModule } from '@angular/forms';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 
 export function getJwtToken(): string {
@@ -55,7 +56,8 @@ export function getJwtToken(): string {
     }),
     ConfirmDialogModule,
     FieldsetModule,
-    InputTextareaModule
+    InputTextareaModule,
+    CurrencyMaskModule
   ],
   providers: [LoginGuard, ConfirmationService, CurrencyPipe],
   declarations: [AgendamentoComponent, CalendarioAlternativoComponent, CrudServicoComponent],

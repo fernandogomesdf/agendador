@@ -39,8 +39,8 @@
   </p-table>
 </p-fieldset>
 
-<p-dialog header="Novo Serviço" [maximizable]="true" [modal]="true" [(visible)]="displayDialogNovo"
-  [contentStyle]="{'overflow':'visible'}">
+<p-dialog [header]="entidade.id ? 'Editar Serviço':'Novo Serviço'" [maximizable]="true" [modal]="true"
+  [(visible)]="displayDialog" [contentStyle]="{'overflow':'visible'}">
   <table>
     <tr>
       <td><label>Nome*: </label></td>
@@ -51,17 +51,19 @@
     <tr>
       <td><label>Categoria*: </label></td>
       <td>
-        <p-dropdown [style]="{'width':'250px'}" [options]="categorias" [(ngModel)]="entidade.categoria.id"></p-dropdown>
+        <p-dropdown filter="true" emptyFilterMessage="nada encontrado" [style]="{'width':'255px'}"
+          [options]="categorias" [(ngModel)]="entidade.categoria.id">
+        </p-dropdown>
       </td>
     </tr>
     <tr>
-      <td><label>Preço*: </label></td>
+      <td><label>Valor*: </label></td>
       <td>
         <div class="ui-g-12 ui-md-4">
           <div class="ui-inputgroup">
             <span class="ui-inputgroup-addon">R$</span>
             <input currencyMask [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text"
-              [(ngModel)]="entidade.preco" pInputText />
+              [(ngModel)]="entidade.valor" pInputText />
           </div>
         </div>
       </td>
@@ -75,7 +77,7 @@
               <span *ngIf="entidade.comissao.tipo == 'PERCENTUAL'">%</span>
               <span *ngIf="entidade.comissao.tipo == 'REAL'">R$</span>
             </span>
-            <input type="text" [(ngModel)]="entidade.comissao.valor" pInputText />
+            <input type="number" [(ngModel)]="entidade.comissao.valor" pInputText />
           </div>
         </div>
       </td>
@@ -92,7 +94,7 @@
       </td>
     </tr>
     <tr>
-      <td><label>Tempo*: </label></td>
+      <td><label>Duração*: </label></td>
       <td>
         <div class="ui-g-12 ui-md-4">
           <div class="ui-inputgroup">
@@ -107,7 +109,7 @@
     <tr>
       <td><label>Descrição: </label></td>
       <td>
-        <textarea pInputTextarea [rows]="5" [cols]="32" [(ngModel)]="entidade.descricao"></textarea>
+        <textarea pInputTextarea [rows]="8" [cols]="45" [(ngModel)]="entidade.descricao"></textarea>
       </td>
     </tr>
 

@@ -16,9 +16,10 @@ export class CrudServicoComponent implements OnInit {
   categorias: SelectItem[] = [];
   totalRecords: number;
   loading: boolean;
-  displayDialogNovo: boolean;
-  entidade: any = {};
+  displayDialog: boolean;
+  entidade: any;
   mensagensValidacao: string[] = [];
+  tituloDialog;
 
   @ViewChild("dt", { static: true }) dataTable: Table;
 
@@ -32,6 +33,7 @@ export class CrudServicoComponent implements OnInit {
       { field: 'descricao', header: 'Descrição' },
       { field: 'categoria', header: 'Categoria' }
     ];
+    this.entidade = {}
     this.entidade.comissao = {}
     this.entidade.categoria = {}
     this.entidade.comissao.tipo = 'PERCENTUAL'
@@ -58,12 +60,18 @@ export class CrudServicoComponent implements OnInit {
   }
 
   novo() {
-    this.displayDialogNovo = true
+    this.displayDialog = true
+    this.ngOnInit()
   }
 
   salvar() {
     if (this.isValido()) {
-
+      this.appService.requestPost('/servico/inserir', this.entidade).subscribe(data => {
+        this.appService.msgSucesso('Serviço incluído com sucesso!')
+        this.ngOnInit()
+        this.dataTable.reset()
+        this.displayDialog = false
+      })
     }
   }
 
@@ -75,6 +83,18 @@ export class CrudServicoComponent implements OnInit {
     if (!this.entidade.categoria.id) {
       this.mensagensValidacao.push("É necessário informar a categoria serviço.");
     }
+    if (!this.entidade.valor) {
+      this.mensagensValidacao.push("É necessário informar o valor do serviço.");
+    }
+    if (!this.entidade.comissao.valor) {
+      this.mensagensValidacao.push("É necessário informar o valor da comissão do serviço.");
+    }
+    if (!this.entidade.comissao.tipo) {
+      this.mensagensValidacao.push("É necessário informar o tipo da comissão do serviço.");
+    }
+    if (!this.entidade.duracao) {
+      this.mensagensValidacao.push("É necessário informar a duração do serviço.");
+    }
     for (let entry of this.mensagensValidacao) {
       this.appService.msgWarn(entry)
     }
@@ -82,7 +102,12 @@ export class CrudServicoComponent implements OnInit {
   }
 
   cancelar() {
-    this.displayDialogNovo = false
+    this.displayDialog = false
+  }
+
+  selecionaEditar(item) {
+    this.entidade = item;
+    this.displayDialog = true
   }
 
   carregarDados(event: LazyLoadEvent) {
