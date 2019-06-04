@@ -49,6 +49,12 @@
       </td>
     </tr>
     <tr>
+      <td><label>Categoria*: </label></td>
+      <td>
+        <p-dropdown [style]="{'width':'250px'}" [options]="categorias" [(ngModel)]="entidade.categoria.id"></p-dropdown>
+      </td>
+    </tr>
+    <tr>
       <td><label>Preço*: </label></td>
       <td>
         <div class="ui-g-12 ui-md-4">
@@ -58,6 +64,31 @@
               [(ngModel)]="entidade.preco" pInputText />
           </div>
         </div>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Comissão*: </label></td>
+      <td>
+        <div class="ui-g-12 ui-md-4">
+          <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon">
+              <span *ngIf="entidade.comissao.tipo == 'PERCENTUAL'">%</span>
+              <span *ngIf="entidade.comissao.tipo == 'REAL'">R$</span>
+            </span>
+            <input type="text" [(ngModel)]="entidade.comissao.valor" pInputText />
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Tipo da Comissão*: </label></td>
+      <td>
+        <p-radioButton name="tipocomissao" value="PERCENTUAL" [(ngModel)]="entidade.comissao.tipo">
+        </p-radioButton>&nbsp;
+        <b>percentual (%)</b>
+        &nbsp;&nbsp;
+        <p-radioButton name="tipocomissao" value="REAL" [(ngModel)]="entidade.comissao.tipo"></p-radioButton>
+        &nbsp;<b>real (R$)</b>
       </td>
     </tr>
     <tr>
@@ -79,15 +110,11 @@
         <textarea pInputTextarea [rows]="5" [cols]="32" [(ngModel)]="entidade.descricao"></textarea>
       </td>
     </tr>
-    <tr>
-      <td><label>Categoria: </label></td>
-      <td></td>
-    </tr>
+
   </table>
   <p-footer>
-    <button pButton (click)="cancelarNovo()" type="button" label="Cancelar" icon="fa fa-ban"
+    <button pButton (click)="cancelar()" type="button" label="Cancelar" icon="fa fa-ban"
       class="ui-button-raised ui-button-secondary"></button>
-    <button pButton (click)="salvarNovo()" type="button" label="Salvar" icon="fa fa-save"
-      class="ui-button-raised"></button>
+    <button pButton (click)="salvar()" type="button" label="Salvar" icon="fa fa-save" class="ui-button-raised"></button>
   </p-footer>
 </p-dialog>

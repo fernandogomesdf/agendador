@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from 'src/app/app.service';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent, SelectItem } from 'primeng/api';
 import { CurrencyPipe } from '@angular/common';
 import { Table } from 'primeng/table';
 
@@ -13,10 +13,12 @@ export class CrudServicoComponent implements OnInit {
 
   cols: any[];
   valores: any[];
+  categorias: SelectItem[] = [];
   totalRecords: number;
   loading: boolean;
   displayDialogNovo: boolean;
   entidade: any = {};
+  mensagensValidacao: string[] = [];
 
   @ViewChild("dt", { static: true }) dataTable: Table;
 
@@ -25,11 +27,14 @@ export class CrudServicoComponent implements OnInit {
   ngOnInit() {
     this.cols = [
       { field: 'nome', header: 'Nome' },
-      { field: 'preco', header: 'Preço', type: this.cp, arg1: 'BRL' },
+      { field: 'valor', header: 'Valor', type: this.cp, arg1: 'BRL' },
       { field: 'duracao', header: 'Duração (minutos)' },
       { field: 'descricao', header: 'Descrição' },
       { field: 'categoria', header: 'Categoria' }
     ];
+    this.entidade.comissao = {}
+    this.entidade.categoria = {}
+    this.entidade.comissao.tipo = 'PERCENTUAL'
   }
 
   confirmaExcluir(item) {
@@ -56,7 +61,27 @@ export class CrudServicoComponent implements OnInit {
     this.displayDialogNovo = true
   }
 
-  cancelarNovo() {
+  salvar() {
+    if (this.isValido()) {
+
+    }
+  }
+
+  isValido() {
+    this.mensagensValidacao = [];
+    if (!this.entidade.nome) {
+      this.mensagensValidacao.push("É necessário informar o nome do serviço.");
+    }
+    if (!this.entidade.categoria.id) {
+      this.mensagensValidacao.push("É necessário informar a categoria serviço.");
+    }
+    for (let entry of this.mensagensValidacao) {
+      this.appService.msgWarn(entry)
+    }
+    return this.mensagensValidacao.length == 0;
+  }
+
+  cancelar() {
     this.displayDialogNovo = false
   }
 
@@ -66,6 +91,13 @@ export class CrudServicoComponent implements OnInit {
       this.valores = data.entidade
       this.totalRecords = data.totalRecords
       this.loading = false;
+    })
+
+    this.appService.requestPost('/categoria/buscar', '{ first: 0, rows: 200 }').subscribe(data => {
+      data.entidade.forEach(element => {
+        this.categorias.push({ label: element.nome, value: element.id });
+      });
+      this.totalRecords = data.totalRecords
     })
   }
 }

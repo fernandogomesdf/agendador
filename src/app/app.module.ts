@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, LOCALE_ID } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { GestaoModule } from './gestao/gestao.module';
@@ -19,6 +19,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MenubarModule, FieldsetModule, EditorModule } from 'primeng/primeng';
+
+import { registerLocaleData } from '@angular/common';
+import localeBr from '@angular/common/locales/pt';
+
+registerLocaleData(localeBr, 'pt')
 
 @NgModule({
   declarations: [
@@ -43,7 +48,7 @@ import { MenubarModule, FieldsetModule, EditorModule } from 'primeng/primeng';
     FieldsetModule,
     EditorModule
   ],
-  providers: [AppService, MessageService, ConfirmationService],
+  providers: [AppService, MessageService, ConfirmationService, { provide: LOCALE_ID, useValue: 'pt' }],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent]
 })
