@@ -37,6 +37,12 @@ export class CrudServicoComponent implements OnInit {
     this.entidade.comissao = {}
     this.entidade.categoria = {}
     this.entidade.comissao.tipo = 'PERCENTUAL'
+
+    this.appService.requestPost('/categoria/buscar', '{ first: 0, rows: 200 }').subscribe(data => {
+      data.entidade.forEach(element => {
+        this.categorias.push({ label: element.nome, value: element.id });
+      });
+    })
   }
 
   confirmaExcluir(item) {
@@ -66,13 +72,24 @@ export class CrudServicoComponent implements OnInit {
 
   salvar() {
     if (this.isValido()) {
-      this.appService.requestPost('/servico/inserir', this.entidade).subscribe(data => {
-        this.appService.msgSucesso('Serviço incluído com sucesso!')
-        this.ngOnInit()
-        this.dataTable.reset()
-        this.displayDialog = false
-      })
+      if (this.entidade.id) {
+        this.appService.requestPost('/servico/alterar', this.entidade).subscribe(data => {
+          this.fecharEAtualizar()
+          this.appService.msgSucesso('Serviço alterado com sucesso!')
+        })
+      } else {
+        this.appService.requestPost('/servico/inserir', this.entidade).subscribe(data => {
+          this.fecharEAtualizar()
+          this.appService.msgSucesso('Serviço incluído com sucesso!')
+        })
+      }
     }
+  }
+
+  private fecharEAtualizar() {
+    this.ngOnInit();
+    this.dataTable.reset();
+    this.displayDialog = false;
   }
 
   isValido() {
@@ -116,13 +133,6 @@ export class CrudServicoComponent implements OnInit {
       this.valores = data.entidade
       this.totalRecords = data.totalRecords
       this.loading = false;
-    })
-
-    this.appService.requestPost('/categoria/buscar', '{ first: 0, rows: 200 }').subscribe(data => {
-      data.entidade.forEach(element => {
-        this.categorias.push({ label: element.nome, value: element.id });
-      });
-      this.totalRecords = data.totalRecords
     })
   }
 }

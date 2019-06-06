@@ -22,9 +22,10 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { CrudServicoComponent } from './crud-servico/crud-servico.component';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { FieldsetModule, InputTextareaModule } from 'primeng/primeng';
+
 import { FormsModule } from '@angular/forms';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { FieldsetModule, InputTextareaModule } from 'primeng/primeng';
 
 
 export function getJwtToken(): string {
