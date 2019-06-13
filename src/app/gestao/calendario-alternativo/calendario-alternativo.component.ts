@@ -15,7 +15,7 @@ export class CalendarioAlternativoComponent implements OnInit {
 
   events: any[];
   options: any;
-  displayDialogNovoEvento = true;
+  displayDialogNovoEvento = false;
 
   constructor() { }
 
@@ -32,7 +32,6 @@ export class CalendarioAlternativoComponent implements OnInit {
     this.options = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, resourceTimelinePlugin, resourceTimeGridPlugin],
       defaultView: 'resourceTimeGridDay',
-      defaultDate: '2017-02-01',
       editable: true,
       selectable: true,
       header: {
@@ -47,11 +46,12 @@ export class CalendarioAlternativoComponent implements OnInit {
         { id: 'c', title: 'Auditorium C' }
       ],
       eventClick: this.cliqueEvento,
-      dateClick: this.cliqueData,
+      dateClick: (e) => {
+        this.displayDialogNovoEvento = true;
+      },
       eventResize: this.mudancaEvento,
       eventDrop: this.mudancaEvento
     }
-
 
     EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
       if (data === 'salvou') {
@@ -74,7 +74,7 @@ export class CalendarioAlternativoComponent implements OnInit {
 
   cliqueData(evento) {
     console.log(evento)
-    alert(evento);
+    alert("evento")
   }
 
   mudancaEvento(evento) {
