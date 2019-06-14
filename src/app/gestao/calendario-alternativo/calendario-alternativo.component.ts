@@ -34,11 +34,11 @@ export class CalendarioAlternativoComponent implements OnInit {
       defaultView: 'resourceTimeGridDay',
       editable: true,
       selectable: true,
-      header: {
+      /*header: {
         left: 'prev,next',
         center: 'title',
         right: 'month,agendaWeek,agendaDay'
-      },
+      },*/
       schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
       resources: [
         { id: 'a', title: 'Auditorium A' },
@@ -50,7 +50,8 @@ export class CalendarioAlternativoComponent implements OnInit {
         this.displayDialogNovoEvento = true;
       },
       eventResize: this.mudancaEvento,
-      eventDrop: this.mudancaEvento
+      eventDrop: this.mudancaEvento,
+      locale: 'pt-br'
     }
 
     EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
