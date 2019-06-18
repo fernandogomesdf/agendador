@@ -1,29 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
 import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
+import { AppService } from 'src/app/app.service';
+import { FullCalendar } from 'primeng/fullcalendar';
 
 @Component({
   selector: 'app-calendario-alternativo',
   templateUrl: './calendario-alternativo.component.html',
   styleUrls: ['./calendario-alternativo.component.css']
 })
-export class CalendarioAlternativoComponent implements OnInit {
+export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
+
 
   events: any[];
   options: any;
   displayDialogNovoEvento = false;
+  @ViewChild('fc', { static: true }) fc: FullCalendar;
 
-  constructor() { }
+  constructor(private appService: AppService) { }
+
+  ngAfterViewInit(): void {
+    this.carregarEventosDoDia()
+  }
+
+  carregarEventosDoDia() {
+    this.appService.requestPost('/evento/buscar', { data: this.fc.getCalendar().state.currentDate }).subscribe(data => { })
+  }
 
   ngOnInit() {
     this.events = [
       {
         "title": "Repeating Event",
-        "start": "2017-02-01T16:00:00",
+        "start": new Date(),
         "end": "2017-02-01T16:30:00",
         "resourceId": "a"
       }
