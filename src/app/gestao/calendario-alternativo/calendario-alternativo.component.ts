@@ -48,6 +48,7 @@ export class CalendarioAlternativoComponent implements OnInit {
       eventClick: this.cliqueEvento,
       dateClick: (e) => {
         this.displayDialogNovoEvento = true;
+        EventEmitterService.get('dialogoNovoEvento').emit(e.date)
       },
       eventResize: this.mudancaEvento,
       eventDrop: this.mudancaEvento,

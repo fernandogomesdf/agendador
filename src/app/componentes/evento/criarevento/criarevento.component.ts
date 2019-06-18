@@ -31,14 +31,18 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
-      switch (data) {
-        case "salvar": {
-          this.salvar();
-          break;
-        }
-        case "cancelar": {
-          this.cancelar();
-          break;
+      if (data instanceof Date) {
+        this.agendamento.data = data
+      } else {
+        switch (data) {
+          case "salvar": {
+            this.salvar();
+            break;
+          }
+          case "cancelar": {
+            this.cancelar();
+            break;
+          }
         }
       }
     });
@@ -73,7 +77,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
     this.servicos.filter(function (item) {
       return servicosSelecionados.includes(item.value)
     }).forEach(elemento => {
-      precoAgendamento += elemento.preco;
+      precoAgendamento += elemento.valor;
     })
     this.agendamento.valor = precoAgendamento;
   }
@@ -102,10 +106,6 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
     if (!this.agendamento.data) {
       this.mensagensValidacao.push("É necessário informar a data.");
     }
-
-    /*if (!this.agendamento.hora) {
-      this.mensagensValidacao.push("É necessário informar a hora.");
-    }*/
 
     if (!this.agendamento.duracao) {
       this.mensagensValidacao.push("É necessário informar a duracao.");
@@ -143,7 +143,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
     this.criarEventoService.listarServicos().subscribe(data => {
       data = data.entidade
       data.forEach(element => {
-        this.servicos.push({ label: element.nome, value: element.id, preco: element.preco });
+        this.servicos.push({ label: element.nome, value: element.id, valor: element.valor });
       });
     });
 
@@ -170,5 +170,5 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 }
 
 export interface SelectItemRN extends SelectItem {
-  preco: any;
+  valor: any;
 }
