@@ -39,3 +39,7 @@ label {
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
 }
+
+.fc-toolbar.fc-header-toolbar {
+    margin-bottom: 0.5em !important;
+}

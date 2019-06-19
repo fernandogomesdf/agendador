@@ -14,8 +14,6 @@ import { FullCalendar } from 'primeng/fullcalendar';
   styleUrls: ['./calendario-alternativo.component.css']
 })
 export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
-
-
   events: any[];
   options: any;
   displayDialogNovoEvento = false;
@@ -28,29 +26,34 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   }
 
   carregarEventosDoDia() {
-    this.appService.requestPost('/evento/buscar', { data: this.fc.getCalendar().state.currentDate }).subscribe(data => { })
+    this.appService.requestPost('/evento/buscar', { data: this.fc.getCalendar().state.currentDate }).subscribe(data => {
+      this.events = []
+      data.forEach(element => {
+        this.events.push({
+          "title": element.cliente.nome,
+          "start": element.dataInicio,
+          "end": element.dataFim,
+          "resourceId": "a"
+        })
+      });
+    })
   }
 
   ngOnInit() {
-    this.events = [
+    /*this.events = [
       {
         "title": "Repeating Event",
         "start": new Date(),
         "end": "2017-02-01T16:30:00",
         "resourceId": "a"
       }
-    ];
+    ];*/
 
     this.options = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, resourceTimelinePlugin, resourceTimeGridPlugin],
       defaultView: 'resourceTimeGridDay',
       editable: true,
       selectable: true,
-      /*header: {
-        left: 'prev,next',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay'
-      },*/
       schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
       resources: [
         { id: 'a', title: 'Auditorium A' },
@@ -62,14 +65,39 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
         this.displayDialogNovoEvento = true;
         EventEmitterService.get('dialogoNovoEvento').emit(e.date)
       },
+      customButtons: {
+        myCustomLeft: {
+          icon: 'fc-icon-chevron-left',
+          click: () => {
+            this.fc.getCalendar().prev()
+          }
+        },
+        myCustomRight: {
+          icon: 'fc-icon-chevron-right',
+          click: () => {
+            this.fc.getCalendar().next()
+          }
+        },
+        myCustomHoje: {
+          text: 'hoje',
+          click: () => {
+            this.fc.getCalendar().today()
+          }
+        }
+      },
+      header: {
+        left: 'myCustomLeft,myCustomRight myCustomHoje',
+        center: 'title',
+        right: ''
+      },
       eventResize: this.mudancaEvento,
-      eventDrop: this.mudancaEvento,
-      locale: 'pt-br'
+      eventDrop: this.mudancaEvento
     }
 
     EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
       if (data === 'salvou') {
         this.displayDialogNovoEvento = false;
+        this.carregarEventosDoDia()
       }
     });
   }
@@ -84,6 +112,7 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
     } else {
       alert('Clicked ' + eventObj.title);
     }
+    console.log(eventObj)
   }
 
   cliqueData(evento) {

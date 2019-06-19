@@ -18,15 +18,12 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   servicos: SelectItemRN[] = [];
   profissionais: SelectItem[] = [];
   mensagensValidacao: string[] = [];
-
   agendamento: any = {};
-
   displayDialogNovoCliente = false;
 
   @ViewChild('proDD', { static: true }) proDD: Dropdown;
 
   constructor(private criarEventoService: CriareventoService, private appService: AppService) {
-
   }
 
   ngOnInit() {
