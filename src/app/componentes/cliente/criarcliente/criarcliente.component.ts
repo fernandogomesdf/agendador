@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
 import { AppService } from 'src/app/app.service';
-
-declare const moment: any;
+import moment from 'moment';
 
 @Component({
   selector: 'rn-criarcliente',

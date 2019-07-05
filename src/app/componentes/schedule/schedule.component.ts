@@ -1,12 +1,11 @@
-import { NgModule, Component, OnDestroy, DoCheck, OnChanges, OnInit, AfterViewChecked, SimpleChanges, AfterViewInit, Renderer2, CUSTOM_ELEMENTS_SCHEMA, ComponentRef, ComponentFactoryResolver, Injector, ApplicationRef, EmbeddedViewRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnDestroy, DoCheck, OnChanges, OnInit, AfterViewChecked, SimpleChanges, AfterViewInit, Renderer2, CUSTOM_ELEMENTS_SCHEMA, ComponentRef, ComponentFactoryResolver, Injector, ApplicationRef, EmbeddedViewRef, ChangeDetectorRef } from '@angular/core';
 
 import { MenuItem } from 'primeng/api';
 
 import * as interact from 'interactjs';
 import { EventoComponent } from '../evento/evento.component';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
-
-declare const moment: any;
+import moment from 'moment';
 
 @Component({
   selector: 'rn-schedule',

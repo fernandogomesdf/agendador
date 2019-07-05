@@ -5,8 +5,6 @@ import { Dropdown } from 'primeng/dropdown';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
 import { AppService } from 'src/app/app.service';
 
-declare const moment: any;
-
 @Component({
   selector: 'rn-criarevento',
   templateUrl: './criarevento.component.html',
