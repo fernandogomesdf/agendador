@@ -2,7 +2,6 @@ import { Component, OnDestroy, DoCheck, OnChanges, OnInit, AfterViewChecked, Sim
 
 import { MenuItem } from 'primeng/api';
 
-import * as interact from 'interactjs';
 import { EventoComponent } from '../evento/evento.component';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
 import moment from 'moment';
