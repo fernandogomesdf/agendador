@@ -23,7 +23,7 @@ export class LoginGuard implements CanActivate {
         return retorno;
     }
 
-    private isAuthenticated(): boolean {
+    public isAuthenticated(): boolean {
         let retorno = false;
         let token = this.jwtHelper.tokenGetter();
         if (token) {
