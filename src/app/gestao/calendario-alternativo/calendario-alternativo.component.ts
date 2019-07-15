@@ -23,6 +23,13 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.carregarEventosDoDia()
+    this.carregarRecursos()
+  }
+
+  carregarRecursos() {
+    this.appService.requestPost('/profissional/buscar', { data: this.fc.getCalendar().state.currentDate, first: 0, rows: 200 }).subscribe(data => {
+
+    })
   }
 
   carregarEventosDoDia() {
@@ -35,7 +42,7 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
           "end": element.dataFim,
           "resourceId": "a"
         })
-      });
+      })
     })
   }
 
@@ -56,9 +63,7 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
       selectable: true,
       schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
       resources: [
-        { id: 'a', title: 'Auditorium A' },
-        { id: 'b', title: 'Auditorium B' },
-        { id: 'c', title: 'Auditorium C' }
+        { id: 'a', title: 'Em espera' }
       ],
       eventClick: this.cliqueEvento,
       dateClick: (e) => {
@@ -90,8 +95,8 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
         center: 'title',
         right: ''
       },
-      eventResize: this.mudancaEvento,
-      eventDrop: this.mudancaEvento
+      eventResize: (event) => { console.log(event) },
+      eventDrop: (event) => { console.log(event) }
     }
 
     EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
@@ -121,7 +126,7 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   }
 
   mudancaEvento(evento) {
-    console.log(evento)
+    console.log(this.events)
     alert("mudancaEvento");
   }
 
