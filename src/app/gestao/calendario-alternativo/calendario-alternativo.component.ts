@@ -22,8 +22,8 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   constructor(private appService: AppService) { }
 
   ngAfterViewInit(): void {
-    this.carregarEventosDoDia()
     this.carregarRecursos()
+    this.carregarEventosDoDia()
   }
 
   carregarRecursos() {
@@ -33,21 +33,21 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
           this.fc.getCalendar().addResource({ id: element.id, title: element.nome })
         });
       }
-
     })
   }
 
   carregarEventosDoDia() {
     this.appService.requestPost('/evento/buscar', { data: this.fc.getCalendar().state.currentDate }).subscribe(data => {
-      this.events = []
-      data.forEach(element => {
-        this.events.push({
-          "title": element.cliente.nome,
-          "start": element.dataInicio,
-          "end": element.dataFim,
-          "resourceId": "a"
+      if (data) {
+        data.forEach(element => {
+          this.fc.getCalendar().addEvent({
+            "title": element.cliente.nome,
+            "start": element.dataInicio,
+            "end": element.dataFim,
+            "resourceId": "a"
+          })
         })
-      })
+      }
     })
   }
 
