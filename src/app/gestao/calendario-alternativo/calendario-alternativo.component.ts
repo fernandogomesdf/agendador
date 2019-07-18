@@ -28,6 +28,11 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
 
   carregarRecursos() {
     this.appService.requestPost('/profissional/buscar', { data: this.fc.getCalendar().state.currentDate, first: 0, rows: 200 }).subscribe(data => {
+      if (data) {
+        data.forEach(element => {
+          this.fc.getCalendar().addResource({ id: element.id, title: element.nome })
+        });
+      }
 
     })
   }
@@ -47,16 +52,18 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    /*this.events = [
-      {
-        "title": "Repeating Event",
-        "start": new Date(),
-        "end": "2017-02-01T16:30:00",
-        "resourceId": "a"
-      }
-    ];*/
+    this.options = this.getOptions()
 
-    this.options = {
+    EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
+      if (data === 'salvou') {
+        this.displayDialogNovoEvento = false;
+        this.carregarEventosDoDia()
+      }
+    });
+  }
+
+  getOptions() {
+    return {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, resourceTimelinePlugin, resourceTimeGridPlugin],
       defaultView: 'resourceTimeGridDay',
       editable: true,
@@ -98,13 +105,6 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
       eventResize: (event) => { console.log(event) },
       eventDrop: (event) => { console.log(event) }
     }
-
-    EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
-      if (data === 'salvou') {
-        this.displayDialogNovoEvento = false;
-        this.carregarEventosDoDia()
-      }
-    });
   }
 
   cliqueEvento(info) {
