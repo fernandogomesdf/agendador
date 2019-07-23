@@ -7,6 +7,8 @@ import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
 import { AppService } from 'src/app/app.service';
 import { FullCalendar } from 'primeng/fullcalendar';
+import { Evento } from 'src/app/componentes/evento/criarevento/evento';
+
 
 @Component({
   selector: 'app-calendario-alternativo',
@@ -73,11 +75,8 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
       resources: [
         { id: 'a', title: 'Em espera' }
       ],
-      eventClick: this.cliqueEvento,
-      dateClick: (e) => {
-        this.displayDialogNovoEvento = true;
-        EventEmitterService.get('dialogoNovoEvento').emit(e.date)
-      },
+      eventClick: (e) => { this.cliqueEvento(e) },
+      dateClick: (e) => { this.cliqueData(e) },
       customButtons: {
         myCustomLeft: {
           icon: 'fc-icon-chevron-left',
@@ -117,22 +116,24 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
     this.appService.requestPost('/evento/alterar', atualizacaoInicioFim).subscribe(data => { });
   }
 
+  cliqueData(e) {
+    this.displayDialogNovoEvento = true;
+    EventEmitterService.get('dialogoNovoEvento').emit(e.date)
+  }
+
   cliqueEvento(info) {
-    var eventObj = info.event;
+    var eventObj = info.event
     if (eventObj.url) {
       alert(
         'Clicked ' + eventObj.title + '.\n' +
         'Will open ' + eventObj.url + ' in a new tab'
       );
     } else {
-      alert('Clicked ' + eventObj.title);
+      this.displayDialogNovoEvento = true;
+      var evento = new Evento()
+      evento._id = eventObj.id
+      EventEmitterService.get('dialogoNovoEvento').emit(evento)
     }
-    console.log(eventObj)
-  }
-
-  cliqueData(evento) {
-    console.log(evento)
-    alert("evento")
   }
 
   mudancaEvento(evento) {

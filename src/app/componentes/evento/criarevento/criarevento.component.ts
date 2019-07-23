@@ -4,6 +4,7 @@ import { SelectItem } from 'primeng/api';
 import { Dropdown } from 'primeng/dropdown';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
 import { AppService } from 'src/app/app.service';
+import { Evento } from './evento';
 
 @Component({
   selector: 'rn-criarevento',
@@ -28,6 +29,10 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
     EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
       if (data instanceof Date) {
         this.agendamento.data = data
+      } if (data instanceof Evento) {
+        this.appService.requestGet('/evento/buscar/' + data._id).subscribe(data => {
+          this.carregarAgendamento(data)
+        })
       } else {
         switch (data) {
           case "salvar": {
@@ -64,6 +69,12 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   }
 
   ngOnDestroy() {
+  }
+
+  carregarAgendamento(evento) {
+    this.agendamento.id = evento.id;
+    this.agendamento.observacoes = evento.observacoes
+    this.agendamento.data = new Date(evento.dataInicio)
   }
 
   atualizarPrecoAgendamento(event) {
