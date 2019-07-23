@@ -37,10 +37,11 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   }
 
   carregarEventosDoDia() {
-    this.appService.requestPost('/evento/buscar', { data: this.fc.getCalendar().state.currentDate }).subscribe(data => {
+    this.appService.requestPost('/evento/buscar', { data: this.fc.getCalendar().state.currentDate, first: 0, rows: 200 }).subscribe(data => {
       if (data) {
         data.forEach(element => {
           this.fc.getCalendar().addEvent({
+            "id": element.id,
             "title": element.cliente.nome,
             "start": element.dataInicio,
             "end": element.dataFim,
@@ -102,9 +103,18 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
         center: 'title',
         right: ''
       },
-      eventResize: (event) => { console.log(event) },
-      eventDrop: (event) => { console.log(event) }
+      eventResize: (event) => { this.atualizarEvento(event) },
+      eventDrop: (event) => { this.atualizarEvento(event) }
     }
+  }
+
+  atualizarEvento(event) {
+    let atualizacaoInicioFim = {
+      id: event.event.id,
+      dataInicio: event.event.start,
+      dataFim: event.event.end
+    }
+    this.appService.requestPost('/evento/alterar', atualizacaoInicioFim).subscribe(data => { });
   }
 
   cliqueEvento(info) {
