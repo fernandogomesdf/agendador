@@ -28,7 +28,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
       if (data instanceof Date) {
-        this.agendamento.data = data
+        this.agendamento.dataInicio = data
       } if (data instanceof Evento) {
         this.appService.requestGet('/evento/buscar/' + data._id).subscribe(data => {
           this.carregarAgendamento(data)
@@ -74,7 +74,16 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   carregarAgendamento(evento) {
     this.agendamento.id = evento.id;
     this.agendamento.observacoes = evento.observacoes
-    this.agendamento.data = new Date(evento.dataInicio)
+    this.agendamento.dataInicio = new Date(evento.dataInicio)
+    this.agendamento.profissional = evento.profissional.id
+    this.agendamento.cliente = evento.cliente
+    this.setFoneNome(this.agendamento.cliente)
+    this.agendamento.valor = evento.valor
+    evento.servicos.forEach(element => {
+      this.agendamento.servicos = []
+      this.agendamento.servicos.push(element.id)
+    });
+    this.agendamento.duracao = evento.duracao
   }
 
   atualizarPrecoAgendamento(event) {
@@ -90,8 +99,8 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   salvar() {
     if (this.isValido()) {
-      this.appService.requestPost('/evento/inserir', this.agendamento).subscribe(data => {
-        this.appService.msgSucesso('Novo agendamento realizado com sucesso!');
+      this.appService.requestPost(this.agendamento.id ? '/evento/alterar' : '/evento/inserir', this.agendamento).subscribe(data => {
+        this.appService.msgSucesso('Agendamento salvo com sucesso!');
         this.agendamento = {};
         EventEmitterService.get('dialogoNovoEvento').emit('salvou');
       });
@@ -109,7 +118,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
       this.mensagensValidacao.push("É necessário informar o serviço.");
     }
 
-    if (!this.agendamento.data) {
+    if (!this.agendamento.dataInicio) {
       this.mensagensValidacao.push("É necessário informar a data.");
     }
 
@@ -162,15 +171,15 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   searchCliente(event) {
     this.criarEventoService.searchCliente(event).subscribe(data => {
-      data.forEach(element => {
-        this.setFoneNome(element);
+      data.forEach(cliente => {
+        this.setFoneNome(cliente);
       });
       this.resultsCliente = data;
     });
   }
 
-  setFoneNome(element) {
-    element.fone_nome = ''.concat(element.telefone.concat(' - ').concat(element.nome))
+  setFoneNome(cliente) {
+    cliente.fone_nome = ''.concat(cliente.telefone.concat(' - ').concat(cliente.nome))
   }
 
 }

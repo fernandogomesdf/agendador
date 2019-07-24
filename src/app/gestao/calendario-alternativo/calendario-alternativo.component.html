@@ -1,6 +1,6 @@
 <p-fullCalendar #fc [events]="events" [options]="options"></p-fullCalendar>
 
-<p-dialog header="Novo Agendamento" [maximizable]="true" modal="true" [(visible)]="displayDialogNovoEvento"
+<p-dialog [header]=[tituloNovoEvento] [maximizable]="true" modal="true" [(visible)]="displayDialogNovoEvento"
   [contentStyle]="{'overflow':'visible'}">
   <rn-criarevento></rn-criarevento>
   <p-footer>

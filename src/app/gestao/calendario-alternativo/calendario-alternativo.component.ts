@@ -18,7 +18,8 @@ import { Evento } from 'src/app/componentes/evento/criarevento/evento';
 export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   events: any[];
   options: any;
-  displayDialogNovoEvento = false;
+  displayDialogNovoEvento = false
+  tituloNovoEvento = "Novo Agendamento"
   @ViewChild('fc', { static: true }) fc: FullCalendar;
 
   constructor(private appService: AppService) { }
@@ -39,7 +40,7 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   }
 
   carregarEventosDoDia() {
-    this.appService.requestPost('/evento/buscar', { data: this.fc.getCalendar().state.currentDate, first: 0, rows: 200 }).subscribe(data => {
+    this.appService.requestPost('/evento/buscar', { dataInicio: this.fc.getCalendar().state.currentDate, first: 0, rows: 200 }).subscribe(data => {
       if (data) {
         data.forEach(element => {
           this.fc.getCalendar().addEvent({
@@ -129,6 +130,7 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
         'Will open ' + eventObj.url + ' in a new tab'
       );
     } else {
+      this.tituloNovoEvento = "Editar Agendamento"
       this.displayDialogNovoEvento = true;
       var evento = new Evento()
       evento._id = eventObj.id
