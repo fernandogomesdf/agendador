@@ -8,6 +8,8 @@ import { EventEmitterService } from 'src/app/service/eventemitter.service';
 import { AppService } from 'src/app/app.service';
 import { FullCalendar } from 'primeng/fullcalendar';
 import { Evento } from 'src/app/componentes/evento/criarevento/evento';
+import ptLocale from '@fullcalendar/core/locales/pt';
+import allLocales from '@fullcalendar/core/locales-all';
 
 
 @Component({
@@ -42,10 +44,11 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   carregarEventosDoDia() {
     this.appService.requestPost('/evento/buscar', { dataInicio: this.fc.getCalendar().state.currentDate, first: 0, rows: 200 }).subscribe(data => {
       if (data) {
+        this.fc.getCalendar().removeAllEvents()
         data.forEach(element => {
           this.fc.getCalendar().addEvent({
             "id": element.id,
-            "title": element.cliente.nome,
+            "title": element.cliente.nome + "\n" + " - " + "ID evento : " + element.id,
             "start": element.dataInicio,
             "end": element.dataFim,
             "resourceId": "a"
@@ -61,6 +64,7 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
     EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
       if (data === 'salvou') {
         this.displayDialogNovoEvento = false;
+        this.tituloNovoEvento = "Novo Agendamento"
         this.carregarEventosDoDia()
       }
     });
@@ -71,6 +75,8 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, resourceTimelinePlugin, resourceTimeGridPlugin],
       defaultView: 'resourceTimeGridDay',
       editable: true,
+      locales: allLocales,
+      locale: ptLocale,
       selectable: true,
       schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
       resources: [
@@ -81,20 +87,23 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
       customButtons: {
         myCustomLeft: {
           icon: 'fc-icon-chevron-left',
-          click: () => {
+          click: (arg) => {
             this.fc.getCalendar().prev()
+            this.carregarEventosDoDia()
           }
         },
         myCustomRight: {
           icon: 'fc-icon-chevron-right',
           click: () => {
             this.fc.getCalendar().next()
+            this.carregarEventosDoDia()
           }
         },
         myCustomHoje: {
           text: 'hoje',
           click: () => {
             this.fc.getCalendar().today()
+            this.carregarEventosDoDia()
           }
         }
       },
@@ -118,6 +127,7 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   }
 
   cliqueData(e) {
+    this.tituloNovoEvento = "Novo Agendamento"
     this.displayDialogNovoEvento = true;
     EventEmitterService.get('dialogoNovoEvento').emit(e.date)
   }

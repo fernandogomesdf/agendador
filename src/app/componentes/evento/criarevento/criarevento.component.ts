@@ -18,16 +18,29 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   profissionais: SelectItem[] = [];
   mensagensValidacao: string[] = [];
   agendamento: any = {};
+  pt: any;
   displayDialogNovoCliente = false;
 
   @ViewChild('proDD', { static: true }) proDD: Dropdown;
 
   constructor(private criarEventoService: CriareventoService, private appService: AppService) {
+    this.pt = {
+      firstDayOfWeek: 0,
+      dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+      dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+      dayNamesMin: ['Do', 'Se', 'Te', 'Qu', 'Qu', 'Se', 'Sa'],
+      monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho',
+        'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+      monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+      today: 'Hoje',
+      clear: 'Limpar'
+    };
   }
 
   ngOnInit() {
     EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
       if (data instanceof Date) {
+        this.agendamento = {}
         this.agendamento.dataInicio = data
       } if (data instanceof Evento) {
         this.appService.requestGet('/evento/buscar/' + data._id).subscribe(data => {
@@ -99,6 +112,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   salvar() {
     if (this.isValido()) {
+      this.agendamento.dataInicio = this.localToUtc(this.agendamento.dataInicio) // importante - fullcalendar usa horario UTC, primeng usa horario local
       this.appService.requestPost(this.agendamento.id ? '/evento/alterar' : '/evento/inserir', this.agendamento).subscribe(data => {
         this.appService.msgSucesso('Agendamento salvo com sucesso!');
         this.agendamento = {};
@@ -182,6 +196,13 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
     cliente.fone_nome = ''.concat(cliente.telefone.concat(' - ').concat(cliente.nome))
   }
 
+  private localToUtc(date: Date): Date {
+    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
+  }
+
+  private utcToLocal(date: Date): Date {
+    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+  }
 }
 
 export interface SelectItemRN extends SelectItem {
