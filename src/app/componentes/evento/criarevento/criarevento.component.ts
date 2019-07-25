@@ -5,6 +5,7 @@ import { Dropdown } from 'primeng/dropdown';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
 import { AppService } from 'src/app/app.service';
 import { Evento } from './evento';
+import { DateUtilService } from 'src/app/service/dateutil.service';
 
 @Component({
   selector: 'rn-criarevento',
@@ -112,12 +113,14 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   salvar() {
     if (this.isValido()) {
-      this.agendamento.dataInicio = this.localToUtc(this.agendamento.dataInicio) // importante - fullcalendar usa horario UTC, primeng usa horario local
+      let dataInicio = this.agendamento.dataInicio
+      this.agendamento.dataInicio = DateUtilService.localToUtc(dataInicio)
       this.appService.requestPost(this.agendamento.id ? '/evento/alterar' : '/evento/inserir', this.agendamento).subscribe(data => {
         this.appService.msgSucesso('Agendamento salvo com sucesso!');
         this.agendamento = {};
         EventEmitterService.get('dialogoNovoEvento').emit('salvou');
-      });
+      },
+        error => this.agendamento.dataInicio = dataInicio);
     }
   }
 
@@ -194,14 +197,6 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   setFoneNome(cliente) {
     cliente.fone_nome = ''.concat(cliente.telefone.concat(' - ').concat(cliente.nome))
-  }
-
-  private localToUtc(date: Date): Date {
-    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
-  }
-
-  private utcToLocal(date: Date): Date {
-    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
   }
 }
 

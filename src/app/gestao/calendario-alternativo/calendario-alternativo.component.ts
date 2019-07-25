@@ -10,6 +10,7 @@ import { FullCalendar } from 'primeng/fullcalendar';
 import { Evento } from 'src/app/componentes/evento/criarevento/evento';
 import ptLocale from '@fullcalendar/core/locales/pt';
 import allLocales from '@fullcalendar/core/locales-all';
+import { DateUtilService } from 'src/app/service/dateutil.service';
 
 
 @Component({
@@ -120,8 +121,8 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   atualizarEvento(event) {
     let atualizacaoInicioFim = {
       id: event.event.id,
-      dataInicio: event.event.start,
-      dataFim: event.event.end
+      dataInicio: DateUtilService.localToUtc(event.event.start),
+      dataFim: DateUtilService.localToUtc(event.event.end)
     }
     this.appService.requestPost('/evento/alterar', atualizacaoInicioFim).subscribe(data => { });
   }
