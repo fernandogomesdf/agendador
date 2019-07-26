@@ -26,6 +26,7 @@
     "@fullcalendar/interaction": "^4.2.0",
     "@fullcalendar/list": "^4.2.0",
     "@fullcalendar/luxon": "^4.2.0",
+    "@fullcalendar/moment": "^4.2.0",
     "@fullcalendar/resource-timegrid": "^4.2.0",
     "@fullcalendar/resource-timeline": "^4.2.0",
     "@fullcalendar/timegrid": "^4.2.0",

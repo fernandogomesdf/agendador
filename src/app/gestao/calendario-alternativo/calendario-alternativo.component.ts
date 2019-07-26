@@ -9,7 +9,6 @@ import { AppService } from 'src/app/app.service';
 import { FullCalendar } from 'primeng/fullcalendar';
 import { Evento } from 'src/app/componentes/evento/criarevento/evento';
 import ptLocale from '@fullcalendar/core/locales/pt';
-import allLocales from '@fullcalendar/core/locales-all';
 import { DateUtilService } from 'src/app/service/dateutil.service';
 
 
@@ -76,8 +75,17 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, resourceTimelinePlugin, resourceTimeGridPlugin],
       defaultView: 'resourceTimeGridDay',
       editable: true,
-      locales: allLocales,
+      allDaySlot: false,
+      nowIndicator: true,
       locale: ptLocale,
+      minTime: '06:00:00',
+      contentHeight: 'auto',
+      slotLabelFormat: {
+        hour: 'numeric',
+        minute: '2-digit',
+        omitZeroMinute: false,
+        meridiem: 'short'
+      },
       selectable: true,
       schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
       resources: [
