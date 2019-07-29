@@ -48,10 +48,10 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
         data.forEach(element => {
           this.fc.getCalendar().addEvent({
             "id": element.id,
-            "title": element.cliente.nome + "\n" + " - " + "ID evento : " + element.id,
+            "title": element.cliente.nome + "\n" + "ID evento : " + element.id,
             "start": element.dataInicio,
             "end": element.dataFim,
-            "resourceId": "a"
+            "resourceId": (element.profissional ? element.profissional : {}).id ? element.profissional.id : "a"
           })
         })
       }

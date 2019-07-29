@@ -89,7 +89,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
     this.agendamento.id = evento.id;
     this.agendamento.observacoes = evento.observacoes
     this.agendamento.dataInicio = new Date(evento.dataInicio)
-    this.agendamento.profissional = evento.profissional.id
+    if (evento.profissional) { this.agendamento.profissional = evento.profissional.id }
     this.agendamento.cliente = evento.cliente
     this.setFoneNome(this.agendamento.cliente)
     this.agendamento.valor = evento.valor
