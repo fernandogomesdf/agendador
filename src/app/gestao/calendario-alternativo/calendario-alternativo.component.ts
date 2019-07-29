@@ -130,8 +130,12 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
     let atualizacaoInicioFim = {
       id: event.event.id,
       dataInicio: DateUtilService.localToUtc(event.event.start),
-      dataFim: DateUtilService.localToUtc(event.event.end)
+      dataFim: DateUtilService.localToUtc(event.event.end),
+      profissional: {
+        id: event.event._def.resourceIds[0]
+      }
     }
+    console.log(atualizacaoInicioFim)
     this.appService.requestPost('/evento/alterar', atualizacaoInicioFim).subscribe(data => { });
   }
 

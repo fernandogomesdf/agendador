@@ -18,7 +18,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   servicos: SelectItemRN[] = [];
   profissionais: SelectItem[] = [];
   mensagensValidacao: string[] = [];
-  agendamento: any = {};
+  agendamento: any = { profissional: {} };
   pt: any;
   displayDialogNovoCliente = false;
 
@@ -41,7 +41,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
       if (data instanceof Date) {
-        this.agendamento = {}
+        this.agendamento = { profissional: {} }
         this.agendamento.dataInicio = data
       } if (data instanceof Evento) {
         this.appService.requestGet('/evento/buscar/' + data._id).subscribe(data => {
@@ -86,10 +86,11 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   }
 
   carregarAgendamento(evento) {
+    this.agendamento = { profissional: {} }
     this.agendamento.id = evento.id;
     this.agendamento.observacoes = evento.observacoes
     this.agendamento.dataInicio = new Date(evento.dataInicio)
-    if (evento.profissional) { this.agendamento.profissional = evento.profissional.id }
+    if (evento.profissional) { this.agendamento.profissional = evento.profissional }
     this.agendamento.cliente = evento.cliente
     this.setFoneNome(this.agendamento.cliente)
     this.agendamento.valor = evento.valor
