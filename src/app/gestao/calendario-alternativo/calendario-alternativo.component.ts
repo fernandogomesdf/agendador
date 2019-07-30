@@ -10,6 +10,7 @@ import { FullCalendar } from 'primeng/fullcalendar';
 import { Evento } from 'src/app/componentes/evento/criarevento/evento';
 import ptLocale from '@fullcalendar/core/locales/pt';
 import { DateUtilService } from 'src/app/service/dateutil.service';
+import * as moment from 'moment';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { DateUtilService } from 'src/app/service/dateutil.service';
 export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   events: any[];
   options: any;
+  clicouEvento: boolean = false;
   displayDialogNovoEvento = false
   tituloNovoEvento = "Novo Agendamento"
   @ViewChild('fc', { static: true }) fc: FullCalendar;
@@ -133,19 +135,21 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
       dataFim: DateUtilService.localToUtc(event.event.end),
       profissional: {
         id: event.event._def.resourceIds[0]
-      }
+      },
+      duracao: moment(event.event.end).diff(event.event.start, 'minutes')
     }
-    console.log(atualizacaoInicioFim)
     this.appService.requestPost('/evento/alterar', atualizacaoInicioFim).subscribe(data => { });
   }
 
   cliqueData(e) {
+    this.clicouEvento = false
     this.tituloNovoEvento = "Novo Agendamento"
     this.displayDialogNovoEvento = true;
     EventEmitterService.get('dialogoNovoEvento').emit(e.date)
   }
 
   cliqueEvento(info) {
+    this.clicouEvento = true
     var eventObj = info.event
     if (eventObj.url) {
       alert(
@@ -173,5 +177,9 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
 
   salvarNovoEvento() {
     EventEmitterService.get('dialogoNovoEvento').emit('salvar');
+  }
+
+  emAtendimento() {
+    EventEmitterService.get('dialogoNovoEvento').emit('em_atendimento');
   }
 }

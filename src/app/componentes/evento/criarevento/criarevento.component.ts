@@ -41,7 +41,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
       if (data instanceof Date) {
-        this.agendamento = { profissional: {} }
+        this.resetAgendamento()
         this.agendamento.dataInicio = data
       } if (data instanceof Evento) {
         this.appService.requestGet('/evento/buscar/' + data._id).subscribe(data => {
@@ -51,6 +51,10 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
         switch (data) {
           case "salvar": {
             this.salvar();
+            break;
+          }
+          case "em_atendimento": {
+            this.atualizarStatus(data);
             break;
           }
           case "cancelar": {
@@ -86,7 +90,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   }
 
   carregarAgendamento(evento) {
-    this.agendamento = { profissional: {} }
+    this.resetAgendamento()
     this.agendamento.id = evento.id;
     this.agendamento.observacoes = evento.observacoes
     this.agendamento.dataInicio = new Date(evento.dataInicio)
@@ -118,7 +122,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
       this.agendamento.dataInicio = DateUtilService.localToUtc(dataInicio)
       this.appService.requestPost(this.agendamento.id ? '/evento/alterar' : '/evento/inserir', this.agendamento).subscribe(data => {
         this.appService.msgSucesso('Agendamento salvo com sucesso!');
-        this.agendamento = {};
+        this.resetAgendamento()
         EventEmitterService.get('dialogoNovoEvento').emit('salvou');
       },
         error => this.agendamento.dataInicio = dataInicio);
@@ -174,8 +178,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.criarEventoService.listarServicos().subscribe(data => {
-      data = data.entidade
-      data.forEach(element => {
+      data.entidade.forEach(element => {
         this.servicos.push({ label: element.nome, value: element.id, valor: element.valor });
       });
     });
@@ -198,6 +201,20 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   setFoneNome(cliente) {
     cliente.fone_nome = ''.concat(cliente.telefone.concat(' - ').concat(cliente.nome))
+  }
+
+  resetAgendamento() {
+    this.agendamento = { profissional: {} }
+  }
+
+  atualizarStatus(status) {
+    let statusAgendamento = {
+      idEvento: this.agendamento.id,
+      status: status
+    }
+    this.appService.requestPost('/evento/alterar_status', statusAgendamento).subscribe(data => {
+
+    })
   }
 }
 
