@@ -53,11 +53,24 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
             "title": element.cliente.nome + "\n" + "ID evento : " + element.id,
             "start": element.dataInicio,
             "end": element.dataFim,
-            "resourceId": (element.profissional ? element.profissional : {}).id ? element.profissional.id : "a"
+            "resourceId": (element.profissional ? element.profissional : {}).id ? element.profissional.id : "a",
+            "color": this.getColor(element)
           })
         })
       }
     })
+  }
+
+  getColor(element: any) {
+    let color = ''
+    if (element) {
+      if (element.status == 'EM_ATENDIMENTO') {
+        color = '#e7a52c' // laranja
+      } else if (element.status == 'NAO_COMPARECEU') {
+        color = '#686868' // cinza
+      }
+    }
+    return color
   }
 
   ngOnInit() {
@@ -180,6 +193,10 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   }
 
   emAtendimento() {
-    EventEmitterService.get('dialogoNovoEvento').emit('em_atendimento');
+    EventEmitterService.get('dialogoNovoEvento').emit('EM_ATENDIMENTO');
+  }
+
+  naoCompareceu() {
+    EventEmitterService.get('dialogoNovoEvento').emit('NAO_COMPARECEU');
   }
 }

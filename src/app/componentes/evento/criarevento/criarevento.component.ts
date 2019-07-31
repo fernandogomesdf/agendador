@@ -49,18 +49,18 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
         })
       } else {
         switch (data) {
-          case "salvar": {
+          case "salvar":
             this.salvar();
             break;
-          }
-          case "em_atendimento": {
+          case ("EM_ATENDIMENTO"):
             this.atualizarStatus(data);
             break;
-          }
-          case "cancelar": {
+          case ("NAO_COMPARECEU"):
+            this.atualizarStatus(data);
+            break;
+          case "cancelar":
             this.cancelar();
             break;
-          }
         }
       }
     });
@@ -213,7 +213,8 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
       status: status
     }
     this.appService.requestPost('/evento/alterar_status', statusAgendamento).subscribe(data => {
-
+      this.appService.msgSucesso('Status alterado com sucesso!');
+      EventEmitterService.get('dialogoNovoEvento').emit('salvou');
     })
   }
 }

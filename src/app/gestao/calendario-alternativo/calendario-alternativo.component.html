@@ -5,8 +5,9 @@
   <rn-criarevento></rn-criarevento>
   <p-footer>
 
-    <button pButton type="button" label="Não compareceu" title="Coloca o status do agendamento para 'Não compareceu'"
-      icon="fa fa-times" class="ui-button-raised ui-button-gray" *ngIf="clicouEvento"></button>
+    <button pButton type="button" (click)="naoCompareceu()" label="Não compareceu"
+      title="Coloca o status do agendamento para 'Não compareceu'" icon="fa fa-times"
+      class="ui-button-raised ui-button-gray" *ngIf="clicouEvento"></button>
 
     <button pButton type="button" (click)="emAtendimento()" label="Em atendimento" icon="fa fa-briefcase"
       class="ui-button-raised ui-button-orange" title="Coloca o status do agendamento para 'Em atendimento'"
