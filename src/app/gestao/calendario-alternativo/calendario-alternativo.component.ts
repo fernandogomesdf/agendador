@@ -199,4 +199,8 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   naoCompareceu() {
     EventEmitterService.get('dialogoNovoEvento').emit('NAO_COMPARECEU');
   }
+
+  fecharFaturar() {
+    EventEmitterService.get('dialogoNovoEvento').emit('FECHAR_FATURAR');
+  }
 }

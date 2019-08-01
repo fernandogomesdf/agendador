@@ -12,7 +12,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { EditorModule } from 'primeng/editor';
 import { InputMaskModule } from 'primeng/inputmask';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { CalendarModule, DialogModule } from 'primeng/primeng';
+import { CalendarModule } from 'primeng/calendar';
+import { DialogModule } from 'primeng/dialog';
+import { AccordionModule } from 'primeng/accordion';
+import { TabViewModule } from 'primeng/tabview';
+
 import { CriarclienteComponent } from './cliente/criarcliente/criarcliente.component';
 
 @NgModule({
@@ -29,8 +33,9 @@ import { CriarclienteComponent } from './cliente/criarcliente/criarcliente.compo
     DropdownModule,
     RadioButtonModule,
     CalendarModule,
-    DialogModule
-
+    DialogModule,
+    AccordionModule,
+    TabViewModule
   ],
   declarations: [ScheduleComponent, CriareventoComponent, CriarclienteComponent],
   exports: [ScheduleComponent, CriareventoComponent, CriarclienteComponent],

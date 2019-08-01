@@ -94,3 +94,13 @@
       class="ui-button-raised"></button>
   </p-footer>
 </p-dialog>
+
+<p-dialog header="Faturamento" [maximizable]="true" [(visible)]="displayDialogFaturamento"
+  [contentStyle]="{'overflow':'visible'}">
+  <p-footer>
+    <button pButton (click)="cancelarFaturamento()" type="button" label="Cancelar" icon="fa fa-ban"
+      class="ui-button-raised ui-button-secondary"></button>
+    <button pButton (click)="faturar()" type="button" label="Faturar" icon="fa fa-money"
+      class="ui-button-raised"></button>
+  </p-footer>
+</p-dialog>

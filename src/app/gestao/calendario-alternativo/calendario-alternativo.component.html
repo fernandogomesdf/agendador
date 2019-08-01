@@ -13,8 +13,7 @@
       class="ui-button-raised ui-button-orange" title="Coloca o status do agendamento para 'Em atendimento'"
       *ngIf="clicouEvento"></button>
 
-
-    <button pButton type="button" label="Fechar e faturar"
+    <button pButton type="button" (click)="fecharFaturar()" label="Fechar e faturar"
       title="Solicita informações de pagamento e coloca o agendamento no status 'Fechado'" icon="fa fa-money"
       class="ui-button-raised ui-button-green" *ngIf="clicouEvento"></button>
 

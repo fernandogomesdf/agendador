@@ -21,6 +21,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   agendamento: any = { profissional: {} };
   pt: any;
   displayDialogNovoCliente = false;
+  displayDialogFaturamento = false;
 
   @ViewChild('proDD', { static: true }) proDD: Dropdown;
 
@@ -58,6 +59,10 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
           case ("NAO_COMPARECEU"):
             this.atualizarStatus(data);
             break;
+          case ("FECHAR_FATURAR"):
+            this.abrirFaturamento();
+            break;
+
           case "cancelar":
             this.cancelar();
             break;
@@ -216,6 +221,18 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
       this.appService.msgSucesso('Status alterado com sucesso!');
       EventEmitterService.get('dialogoNovoEvento').emit('salvou');
     })
+  }
+
+  abrirFaturamento() {
+    this.displayDialogFaturamento = true
+  }
+
+  faturar() {
+
+  }
+
+  cancelarFaturamento() {
+    this.displayDialogFaturamento = false
   }
 }
 
