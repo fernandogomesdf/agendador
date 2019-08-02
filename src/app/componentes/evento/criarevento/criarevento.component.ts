@@ -19,6 +19,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   profissionais: SelectItem[] = [];
   mensagensValidacao: string[] = [];
   agendamento: any = { profissional: {} };
+  faturamento: any = {};
   pt: any;
   displayDialogNovoCliente = false;
   displayDialogFaturamento = false;
@@ -224,6 +225,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   }
 
   abrirFaturamento() {
+    this.faturamento.dinheiro = this.agendamento.valor
     this.displayDialogFaturamento = true
   }
 
@@ -233,6 +235,21 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   cancelarFaturamento() {
     this.displayDialogFaturamento = false
+  }
+
+  getValorRecebido() {
+    let dinheiro = this.toFloat(this.faturamento.dinheiro)
+    let credito = this.toFloat(this.faturamento.credito)
+    let debito = this.toFloat(this.faturamento.debito)
+    return dinheiro + credito + debito
+  }
+
+  toFloat(valor) {
+    let double = 0
+    if (valor) {
+      double = parseFloat(valor)
+    }
+    return double
   }
 }
 
