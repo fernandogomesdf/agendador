@@ -19,7 +19,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   profissionais: SelectItem[] = [];
   mensagensValidacao: string[] = [];
   agendamento: any = { profissional: {} };
-  faturamento: any = {};
+  faturamento: any = { tipoDesconto: 'PERCENTUAL' };
   pt: any;
   displayDialogNovoCliente = false;
   displayDialogFaturamento = false;
@@ -241,7 +241,21 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
     let dinheiro = this.toFloat(this.faturamento.dinheiro)
     let credito = this.toFloat(this.faturamento.credito)
     let debito = this.toFloat(this.faturamento.debito)
-    return dinheiro + credito + debito
+    let resultado: number = (dinheiro + credito + debito)
+    if (this.faturamento.desconto && this.faturamento.tipoDesconto) {
+      resultado = this.descontar(resultado)
+    }
+    let resultadoFormatado = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(resultado)
+    return resultado ? resultadoFormatado : 0
+  }
+
+  descontar(valor: number): number {
+    if (this.faturamento.tipoDesconto == 'PERCENTUAL') {
+      valor = valor - ((this.faturamento.desconto / 100) * valor)
+    } else {
+      valor = valor - this.faturamento.desconto
+    }
+    return valor
   }
 
   toFloat(valor) {

@@ -101,43 +101,115 @@
   <table>
     <tr>
       <td><label>Valor do serviço :</label></td>
-      <td>{{agendamento.valor | currency:'BRL'}}</td>
+      <td>
+        <div class="ui-g-12 ui-md-4">
+          <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon">
+              <span>R$</span>
+            </span>
+            <input [(ngModel)]="agendamento.valor" currencyMask
+              [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" size="10" pInputText
+              readonly disabled />
+          </div>
+        </div>
+      </td>
     </tr>
     <tr>
-      <td><label>Dinheiro :</label></td>
-      <td><input [(ngModel)]="faturamento.dinheiro" currencyMask
-          [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" pInputText /></td>
+      <td><i class="fa fa-money"></i>&nbsp;&nbsp;<label>Dinheiro :</label></td>
+      <td>
+        <div class="ui-g-12 ui-md-4">
+          <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon">
+              <span>R$</span>
+            </span>
+            <input [(ngModel)]="faturamento.dinheiro" currencyMask
+              [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" size="10"
+              pInputText />
+            <button pButton type="button" icon="fa fa-arrow-left" class="ui-button"
+              title="Colocar o valor todo aqui"></button>
+          </div>
+        </div>
+      </td>
     </tr>
     <tr>
-      <td><label>Débito :</label></td>
-      <td><input [(ngModel)]="faturamento.debito" currencyMask
-          [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" pInputText /></td>
+      <td><i class="fa fa-credit-card"></i>&nbsp;&nbsp;<label>Débito :</label></td>
+      <td>
+        <div class="ui-g-12 ui-md-4">
+          <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon">
+              <span>R$</span>
+            </span>
+            <input [(ngModel)]="faturamento.debito" currencyMask
+              [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" size="10"
+              pInputText />
+            <button pButton type="button" icon="fa fa-arrow-left" class="ui-button"
+              title="Colocar o valor todo aqui"></button>
+          </div>
+        </div>
+      </td>
     </tr>
     <tr>
-      <td><label>Crédito :</label></td>
-      <td><input [(ngModel)]="faturamento.credito" currencyMask
-          [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" pInputText /></td>
+      <td><i class="fa fa-credit-card-alt"></i>&nbsp;&nbsp;<label>Crédito :</label></td>
+      <td>
+        <div class="ui-g-12 ui-md-4">
+          <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon">
+              <span>R$</span>
+            </span>
+            <input [(ngModel)]="faturamento.credito" currencyMask
+              [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" size="10"
+              pInputText />
+            <button pButton type="button" icon="fa fa-arrow-left" class="ui-button"
+              title="Colocar o valor todo aqui"></button>
+          </div>
+        </div>
+      </td>
     </tr>
     <tr>
       <td><label>Desconto :</label></td>
-      <td><input currencyMask [(ngModel)]="faturamento.desconto"
-          [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" pInputText /></td>
+      <td>
+        <div class="ui-g-12 ui-md-4">
+          <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon">
+              <span *ngIf="faturamento.tipoDesconto == 'PERCENTUAL'">%</span>
+              <span *ngIf="faturamento.tipoDesconto == 'REAL'">R$</span>
+            </span>
+            <input currencyMask [(ngModel)]="faturamento.desconto"
+              [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" size="10"
+              pInputText />
+          </div>
+        </div>
+      </td>
     </tr>
     <tr>
       <td><label>Tipo do Desconto*: </label></td>
-      <td>
+      <td align="center">
         <p-radioButton name="tipocomissao" [(ngModel)]="faturamento.tipoDesconto" value="PERCENTUAL">
         </p-radioButton>&nbsp;
-        <b>(%)</b>
+        (%)
         &nbsp;&nbsp;
         <p-radioButton name="tipocomissao" [(ngModel)]="faturamento.tipoDesconto" value="REAL"></p-radioButton>
-        &nbsp;<b>(R$)</b>
+        &nbsp;(R$)
       </td>
     </tr>
-    <tr *ngIf="getValorRecebido()">
+    <tr>
       <td><label>Total recebido :</label></td>
       <td>
-        {{getValorRecebido() | currency:'BRL'}}<br />
+        <div class="ui-g-12 ui-md-4">
+          <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon">
+              <span>R$</span>
+            </span>
+            <input currencyMask [value]="getValorRecebido()"
+              [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" size="10" pInputText
+              readonly style="font-weight: bold;" />
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>
         <font size="1">= (dinheiro + débito + crédito) - desconto</font>
       </td>
     </tr>
