@@ -28,6 +28,7 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { FieldsetModule, InputTextareaModule } from 'primeng/primeng';
 
 
+
 export function getJwtToken(): string {
   return sessionStorage.getItem('token');
 }

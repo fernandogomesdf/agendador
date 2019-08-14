@@ -1,7 +1,6 @@
 import { Component, OnInit, NgModule, CUSTOM_ELEMENTS_SCHEMA, Output, EventEmitter, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
 import { DragDropModule } from 'primeng/dragdrop';
 import * as interact from 'interactjs';
@@ -53,7 +52,7 @@ export class EventoComponent implements OnInit {
 }
 
 @NgModule({
-  imports: [CommonModule, FormsModule, BrowserAnimationsModule, ButtonModule, DragDropModule],
+  imports: [CommonModule, FormsModule, ButtonModule, DragDropModule],
   exports: [EventoComponent],
   declarations: [EventoComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

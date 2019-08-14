@@ -19,7 +19,7 @@
   <tr>
     <td><label>Profissional: </label></td>
     <td>
-      <p-dropdown #proDD placeholder="Selecione" [options]="profissionais" [(ngModel)]="agendamento.profissional"
+      <p-dropdown #proDD placeholder="Selecione" [options]="profissionais" [(ngModel)]="agendamento.profissional.id"
         [style]="{'width':'350px'}">
       </p-dropdown>
     </td>
@@ -36,7 +36,8 @@
   <tr>
     <td><label>Data*: </label></td>
     <td>
-      <p-calendar [(ngModel)]="agendamento.data" [showIcon]="true" [showTime]="true"></p-calendar>
+      <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="agendamento.dataInicio" [showIcon]="true" [showTime]="true"
+        [locale]="pt"></p-calendar>
     </td>
   </tr>
   <tr>
@@ -90,6 +91,16 @@
     <button pButton (click)="cancelarNovoCliente()" type="button" label="Cancelar" icon="fa fa-ban"
       class="ui-button-raised ui-button-secondary"></button>
     <button pButton (click)="salvarNovoCliente()" type="button" label="Salvar" icon="fa fa-save"
+      class="ui-button-raised"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Faturamento" [maximizable]="true" [(visible)]="displayDialogFaturamento"
+  [contentStyle]="{'overflow':'visible'}">
+  <p-footer>
+    <button pButton (click)="cancelarFaturamento()" type="button" label="Cancelar" icon="fa fa-ban"
+      class="ui-button-raised ui-button-secondary"></button>
+    <button pButton (click)="faturar()" type="button" label="Faturar" icon="fa fa-money"
       class="ui-button-raised"></button>
   </p-footer>
 </p-dialog>

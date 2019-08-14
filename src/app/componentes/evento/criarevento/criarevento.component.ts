@@ -4,8 +4,8 @@ import { SelectItem } from 'primeng/api';
 import { Dropdown } from 'primeng/dropdown';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
 import { AppService } from 'src/app/app.service';
-
-declare const moment: any;
+import { Evento } from './evento';
+import { DateUtilService } from 'src/app/service/dateutil.service';
 
 @Component({
   selector: 'rn-criarevento',
@@ -18,28 +18,54 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   servicos: SelectItemRN[] = [];
   profissionais: SelectItem[] = [];
   mensagensValidacao: string[] = [];
-  agendamento: any = {};
+  agendamento: any = { profissional: {} };
+  pt: any;
   displayDialogNovoCliente = false;
+  displayDialogFaturamento = false;
 
   @ViewChild('proDD', { static: true }) proDD: Dropdown;
 
   constructor(private criarEventoService: CriareventoService, private appService: AppService) {
+    this.pt = {
+      firstDayOfWeek: 0,
+      dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+      dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+      dayNamesMin: ['Do', 'Se', 'Te', 'Qu', 'Qu', 'Se', 'Sa'],
+      monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho',
+        'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+      monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+      today: 'Hoje',
+      clear: 'Limpar'
+    };
   }
 
   ngOnInit() {
     EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
       if (data instanceof Date) {
-        this.agendamento.data = data
+        this.resetAgendamento()
+        this.agendamento.dataInicio = data
+      } if (data instanceof Evento) {
+        this.appService.requestGet('/evento/buscar/' + data._id).subscribe(data => {
+          this.carregarAgendamento(data)
+        })
       } else {
         switch (data) {
-          case "salvar": {
+          case "salvar":
             this.salvar();
             break;
-          }
-          case "cancelar": {
+          case ("EM_ATENDIMENTO"):
+            this.atualizarStatus(data);
+            break;
+          case ("NAO_COMPARECEU"):
+            this.atualizarStatus(data);
+            break;
+          case ("FECHAR_FATURAR"):
+            this.abrirFaturamento();
+            break;
+
+          case "cancelar":
             this.cancelar();
             break;
-          }
         }
       }
     });
@@ -68,6 +94,22 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   ngOnDestroy() {
   }
 
+  carregarAgendamento(evento) {
+    this.resetAgendamento()
+    this.agendamento.id = evento.id;
+    this.agendamento.observacoes = evento.observacoes
+    this.agendamento.dataInicio = new Date(evento.dataInicio)
+    if (evento.profissional) { this.agendamento.profissional = evento.profissional }
+    this.agendamento.cliente = evento.cliente
+    this.setFoneNome(this.agendamento.cliente)
+    this.agendamento.valor = evento.valor
+    evento.servicos.forEach(element => {
+      this.agendamento.servicos = []
+      this.agendamento.servicos.push(element.id)
+    });
+    this.agendamento.duracao = evento.duracao
+  }
+
   atualizarPrecoAgendamento(event) {
     let servicosSelecionados = this.agendamento.servicos;
     let precoAgendamento: number = 0;
@@ -81,11 +123,14 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   salvar() {
     if (this.isValido()) {
-      this.appService.requestPost('/evento/inserir', this.agendamento).subscribe(data => {
-        this.appService.msgSucesso('Novo agendamento realizado com sucesso!');
-        this.agendamento = {};
+      let dataInicio = this.agendamento.dataInicio
+      this.agendamento.dataInicio = DateUtilService.localToUtc(dataInicio)
+      this.appService.requestPost(this.agendamento.id ? '/evento/alterar' : '/evento/inserir', this.agendamento).subscribe(data => {
+        this.appService.msgSucesso('Agendamento salvo com sucesso!');
+        this.resetAgendamento()
         EventEmitterService.get('dialogoNovoEvento').emit('salvou');
-      });
+      },
+        error => this.agendamento.dataInicio = dataInicio);
     }
   }
 
@@ -100,7 +145,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
       this.mensagensValidacao.push("É necessário informar o serviço.");
     }
 
-    if (!this.agendamento.data) {
+    if (!this.agendamento.dataInicio) {
       this.mensagensValidacao.push("É necessário informar a data.");
     }
 
@@ -138,8 +183,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.criarEventoService.listarServicos().subscribe(data => {
-      data = data.entidade
-      data.forEach(element => {
+      data.entidade.forEach(element => {
         this.servicos.push({ label: element.nome, value: element.id, valor: element.valor });
       });
     });
@@ -153,17 +197,43 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   searchCliente(event) {
     this.criarEventoService.searchCliente(event).subscribe(data => {
-      data.forEach(element => {
-        this.setFoneNome(element);
+      data.forEach(cliente => {
+        this.setFoneNome(cliente);
       });
       this.resultsCliente = data;
     });
   }
 
-  setFoneNome(element) {
-    element.fone_nome = ''.concat(element.telefone.concat(' - ').concat(element.nome))
+  setFoneNome(cliente) {
+    cliente.fone_nome = ''.concat(cliente.telefone.concat(' - ').concat(cliente.nome))
   }
 
+  resetAgendamento() {
+    this.agendamento = { profissional: {} }
+  }
+
+  atualizarStatus(status) {
+    let statusAgendamento = {
+      idEvento: this.agendamento.id,
+      status: status
+    }
+    this.appService.requestPost('/evento/alterar_status', statusAgendamento).subscribe(data => {
+      this.appService.msgSucesso('Status alterado com sucesso!');
+      EventEmitterService.get('dialogoNovoEvento').emit('salvou');
+    })
+  }
+
+  abrirFaturamento() {
+    this.displayDialogFaturamento = true
+  }
+
+  faturar() {
+
+  }
+
+  cancelarFaturamento() {
+    this.displayDialogFaturamento = false
+  }
 }
 
 export interface SelectItemRN extends SelectItem {

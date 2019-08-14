@@ -123,7 +123,7 @@ export class CrudServicoComponent implements OnInit {
   }
 
   selecionaEditar(item) {
-    this.entidade = item;
+    this.entidade = Object.assign({}, item)
     this.displayDialog = true
   }
 
