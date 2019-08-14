@@ -258,6 +258,22 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
     return valor
   }
 
+  tudoDinheiro() {
+    this.faturamento.dinheiro = this.agendamento.valor
+    this.faturamento.debito = undefined
+    this.faturamento.credito = undefined
+  }
+  tudoDebito() {
+    this.faturamento.debito = this.agendamento.valor
+    this.faturamento.credito = undefined
+    this.faturamento.dinheiro = undefined
+  }
+  tudoCredito() {
+    this.faturamento.credito = this.agendamento.valor
+    this.faturamento.debito = undefined
+    this.faturamento.dinheiro = undefined
+  }
+
   toFloat(valor) {
     let double = 0
     if (valor) {

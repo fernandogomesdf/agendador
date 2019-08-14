@@ -126,7 +126,7 @@
               [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" size="10"
               pInputText />
             <button pButton type="button" icon="fa fa-arrow-left" class="ui-button"
-              title="Colocar o valor todo aqui"></button>
+              title="Receber tudo nesta forma de pagamento" (click)="tudoDinheiro()"></button>
           </div>
         </div>
       </td>
@@ -143,7 +143,7 @@
               [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" size="10"
               pInputText />
             <button pButton type="button" icon="fa fa-arrow-left" class="ui-button"
-              title="Colocar o valor todo aqui"></button>
+              title="Receber tudo nesta forma de pagamento" (click)="tudoDebito()"></button>
           </div>
         </div>
       </td>
@@ -160,7 +160,7 @@
               [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" size="10"
               pInputText />
             <button pButton type="button" icon="fa fa-arrow-left" class="ui-button"
-              title="Colocar o valor todo aqui"></button>
+              title="Receber tudo nesta forma de pagamento" (click)="tudoCredito()"></button>
           </div>
         </div>
       </td>
@@ -200,9 +200,9 @@
             <span class="ui-inputgroup-addon">
               <span>R$</span>
             </span>
-            <input currencyMask [value]="getValorRecebido()"
+            <input #valorRecebido currencyMask [value]="getValorRecebido()"
               [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" size="10" pInputText
-              readonly style="font-weight: bold;" />
+              readonly [style.color]="valorRecebido.value.includes('-') ? 'red' : 'blue'" />
           </div>
         </div>
       </td>
