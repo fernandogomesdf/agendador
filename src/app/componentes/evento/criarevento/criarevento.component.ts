@@ -230,7 +230,13 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   }
 
   faturar() {
+    let faturar = {
+      faturamento: this.faturamento,
+      agendamento: this.agendamento
+    }
+    this.appService.requestPost('/faturamento/faturar', faturar).subscribe(data => {
 
+    })
   }
 
   cancelarFaturamento() {
@@ -246,6 +252,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
       resultado = this.descontar(resultado)
     }
     let resultadoFormatado = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(resultado)
+    this.faturamento.recebido = resultado
     return resultado ? resultadoFormatado : 0
   }
 
