@@ -68,6 +68,8 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
         color = '#e7a52c' // laranja
       } else if (element.status == 'NAO_COMPARECEU') {
         color = '#686868' // cinza
+      } else if (element.status == 'FECHADO') {
+        color = '#38908F' // verde
       }
     }
     return color

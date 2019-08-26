@@ -235,7 +235,11 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
       agendamento: this.agendamento
     }
     this.appService.requestPost('/faturamento/faturar', faturar).subscribe(data => {
-
+      if (data.comandas.length != 0) {
+        this.appService.msgSucesso('Agendamento faturado com sucesso!');
+        this.displayDialogFaturamento = false
+        EventEmitterService.get('dialogoNovoEvento').emit('salvou');
+      }
     })
   }
 
