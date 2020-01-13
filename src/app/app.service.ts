@@ -1,10 +1,11 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 
 import { Router, NavigationEnd } from '@angular/router';
-import { MessageService } from 'primeng/components/common/messageservice';
+
 import { map, share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MessageService } from 'primeng';
 
 @Injectable()
 export class AppService {

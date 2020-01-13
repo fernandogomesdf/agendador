@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DragDropModule } from 'primeng/dragdrop';
-import * as interact from 'interactjs';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
 
 @Component({
