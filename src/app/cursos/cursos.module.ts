@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CursosRoutingModule } from './cursos-routing.module';
@@ -8,6 +8,7 @@ import { CursosRoutingModule } from './cursos-routing.module';
     CommonModule,
     CursosRoutingModule
   ],
-  declarations: []
+  declarations: [],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CursosModule { }

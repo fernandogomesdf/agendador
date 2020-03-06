@@ -25,7 +25,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { FormsModule } from '@angular/forms';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
-import { FieldsetModule, InputTextareaModule } from 'primeng/primeng';
+import { FieldsetModule } from 'primeng/fieldset';
+import { InputTextareaModule } from 'primeng';
 
 
 

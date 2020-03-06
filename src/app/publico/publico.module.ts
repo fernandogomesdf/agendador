@@ -9,7 +9,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { PasswordModule } from 'primeng/password';
-import { CardModule, DropdownModule } from 'primeng/primeng';
+import { CardModule } from 'primeng/card';
+import { DropdownModule } from 'primeng/dropdown';
+
 
 @NgModule({
   imports: [
