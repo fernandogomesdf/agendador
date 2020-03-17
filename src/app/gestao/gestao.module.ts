@@ -24,9 +24,9 @@ import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { FormsModule } from '@angular/forms';
-import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { FieldsetModule } from 'primeng/fieldset';
 import { InputTextareaModule } from 'primeng';
+import { CurrencyMaskModule } from '../componentes/ng2-currency-mask/currency-mask.module';
 
 
 
@@ -51,6 +51,7 @@ export function getJwtToken(): string {
     RadioButtonModule,
     ButtonModule,
     TableModule,
+    CurrencyMaskModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: getJwtToken,

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { EventoModule, EventoComponent } from './evento/evento.component';
 import { CriareventoComponent } from './evento/criarevento/criarevento.component';
-import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { FormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { MultiSelectModule } from 'primeng/multiselect';
@@ -18,6 +17,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { TabViewModule } from 'primeng/tabview';
 
 import { CriarclienteComponent } from './cliente/criarcliente/criarcliente.component';
+import { CurrencyMaskModule } from './ng2-currency-mask/currency-mask.module';
 
 @NgModule({
   imports: [
