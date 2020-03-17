@@ -6,6 +6,7 @@ import { EventEmitterService } from 'src/app/service/eventemitter.service';
 import { AppService } from 'src/app/app.service';
 import { Evento } from './evento';
 import { DateUtilService } from 'src/app/service/dateutil.service';
+import { AgendadorEventEmmiterService } from 'src/app/services/agendadoreventemmiter.service';
 
 @Component({
   selector: 'rn-criarevento',
@@ -26,7 +27,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   @ViewChild('proDD', { static: true }) proDD: Dropdown;
 
-  constructor(private criarEventoService: CriareventoService, private appService: AppService) {
+  constructor(private criarEventoService: CriareventoService, private appService: AppService, private agendadorEmiter: AgendadorEventEmmiterService) {
     this.pt = {
       firstDayOfWeek: 0,
       dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
@@ -38,9 +39,18 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
       today: 'Hoje',
       clear: 'Limpar'
     };
+
+
   }
 
   ngOnInit() {
+
+    // TODO verificar e remover, achar solução para não duplicar
+    this.agendadorEmiter.dialogoEvento$.subscribe(data => {
+      alert(data)
+    })
+
+
     EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
       if (data instanceof Date) {
         this.resetAgendamento()

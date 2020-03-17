@@ -11,6 +11,7 @@ import { Evento } from 'src/app/componentes/evento/criarevento/evento';
 import ptLocale from '@fullcalendar/core/locales/pt';
 import { DateUtilService } from 'src/app/service/dateutil.service';
 import * as moment from 'moment';
+import { AgendadorEventEmmiterService } from 'src/app/services/agendadoreventemmiter.service';
 
 @Component({
   selector: 'app-calendario-alternativo',
@@ -25,7 +26,7 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   tituloNovoEvento = "Novo Agendamento"
   @ViewChild('fc', { static: true }) fc: FullCalendar;
 
-  constructor(private appService: AppService) { }
+  constructor(private appService: AppService, private agendadorEmiter: AgendadorEventEmmiterService) { }
 
   ngAfterViewInit(): void {
     this.carregarRecursos()
@@ -194,6 +195,7 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   }
 
   emAtendimento() {
+    this.agendadorEmiter.emit('TESTE')
     EventEmitterService.get('dialogoNovoEvento').emit('EM_ATENDIMENTO');
   }
 
