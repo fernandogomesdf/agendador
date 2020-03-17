@@ -12,7 +12,6 @@ import ptLocale from '@fullcalendar/core/locales/pt';
 import { DateUtilService } from 'src/app/service/dateutil.service';
 import * as moment from 'moment';
 
-
 @Component({
   selector: 'app-calendario-alternativo',
   templateUrl: './calendario-alternativo.component.html',

@@ -93,6 +93,7 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   }
 
   ngOnDestroy() {
+
   }
 
   carregarAgendamento(evento) {

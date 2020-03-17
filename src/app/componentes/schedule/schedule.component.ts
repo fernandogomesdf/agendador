@@ -97,8 +97,7 @@ export class ScheduleComponent implements DoCheck, OnDestroy, OnInit, OnChanges,
   ngDoCheck() {
   }
 
-  ngOnDestroy() {
-
+  ngOnDestroy() {    
   }
 
   outTd(event) {
