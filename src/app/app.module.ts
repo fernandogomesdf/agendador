@@ -25,6 +25,7 @@ import localeBr from '@angular/common/locales/pt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FieldsetModule } from 'primeng/fieldset';
 import { EditorModule } from 'primeng/editor';
+import { BlockUIModule } from 'primeng';
 
 registerLocaleData(localeBr, 'pt')
 
@@ -50,7 +51,8 @@ registerLocaleData(localeBr, 'pt')
     MenubarModule,
     ConfirmDialogModule,
     FieldsetModule,
-    EditorModule
+    EditorModule,
+    BlockUIModule
   ],
   providers: [AppService, MessageService, ConfirmationService, { provide: LOCALE_ID, useValue: 'pt' }],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],

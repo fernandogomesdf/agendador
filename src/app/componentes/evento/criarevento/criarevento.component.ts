@@ -39,18 +39,9 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
       today: 'Hoje',
       clear: 'Limpar'
     };
-
-
   }
 
   ngOnInit() {
-
-    // TODO verificar e remover, achar solução para não duplicar
-    this.agendadorEmiter.dialogoEvento$.subscribe(data => {
-      alert(data)
-    })
-
-
     EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
       if (data instanceof Date) {
         this.resetAgendamento()
@@ -103,7 +94,8 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
   }
 
   ngOnDestroy() {
-
+    EventEmitterService.get('dialogoNovoEvento').unsubscribe();
+    EventEmitterService.get('dialogoNovoCliente').unsubscribe();
   }
 
   carregarAgendamento(evento) {

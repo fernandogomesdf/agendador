@@ -7,7 +7,7 @@ export class EventEmitterService {
     } = {}
 
     static get(nomeEvento: string): EventEmitter<any> {
-        if (!this.emitters[nomeEvento])
+        if (!this.emitters[nomeEvento] || this.emitters[nomeEvento].isStopped)
             this.emitters[nomeEvento] = new EventEmitter<any>();
         return this.emitters[nomeEvento];
     }

@@ -195,7 +195,6 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   }
 
   emAtendimento() {
-    this.agendadorEmiter.emit('TESTE')
     EventEmitterService.get('dialogoNovoEvento').emit('EM_ATENDIMENTO');
   }
 
