@@ -5,4 +5,4 @@ export const routes: Routes = [
     { path: 'publico/login', component: LoginComponent },
 ];
 
-export const routing = RouterModule.forRoot(routes, { useHash: true });
+export const routing = RouterModule.forRoot(routes, { useHash: true, relativeLinkResolution: 'legacy' });
