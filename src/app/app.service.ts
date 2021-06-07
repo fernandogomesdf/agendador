@@ -5,7 +5,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { map, share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { MessageService } from 'primeng';
+import { MessageService } from 'primeng/api';
 
 @Injectable()
 export class AppService {

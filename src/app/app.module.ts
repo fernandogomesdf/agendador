@@ -25,7 +25,8 @@ import localeBr from '@angular/common/locales/pt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FieldsetModule } from 'primeng/fieldset';
 import { EditorModule } from 'primeng/editor';
-import { BlockUIModule } from 'primeng';
+import {BlockUIModule} from 'primeng/blockui';
+
 
 registerLocaleData(localeBr, 'pt')
 
