@@ -7,7 +7,7 @@
         <input type="text" pInputText size="50" placeholder="Busca"
           (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
         &nbsp;&nbsp;
-        <button pButton type="button" icon="fa fa-plus" (click)="novo()" label="Novo"></button>
+        <button pButton type="button" class="p-button-raised" icon="fa fa-plus" (click)="novo()" label="Novo"></button>
       </div>
     </ng-template>
     <ng-template pTemplate="header" let-columns>
@@ -28,10 +28,9 @@
         </td>
         <td>
           <center>
-            <button type="button" (click)="selecionaEditar(rowData)" pButton icon="fa fa-edit" title="Editar"></button>
+            <button type="button" (click)="selecionaEditar(rowData)" class="p-button-raised" pButton icon="fa fa-edit" title="Editar"></button>
             &nbsp;
-            <button type="button" (click)="confirmaExcluir(rowData)" pButton icon="fa fa-trash" title="Excluir"
-              class="ui-button-danger"></button>
+            <button type="button" (click)="confirmaExcluir(rowData)" class="p-button-raised p-button-danger" pButton icon="fa fa-trash" title="Excluir"></button>
           </center>
         </td>
       </tr>
