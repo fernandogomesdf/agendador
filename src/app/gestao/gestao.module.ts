@@ -25,8 +25,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { FormsModule } from '@angular/forms';
 import { FieldsetModule } from 'primeng/fieldset';
-import { InputTextareaModule } from 'primeng';
 import { CurrencyMaskModule } from '../componentes/ng2-currency-mask/currency-mask.module';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 
 
@@ -55,7 +55,7 @@ export function getJwtToken(): string {
     JwtModule.forRoot({
       config: {
         tokenGetter: getJwtToken,
-        whitelistedDomains: ['localhost:4200']
+        allowedDomains: ['localhost:4200']
       }
     }),
     ConfirmDialogModule,
