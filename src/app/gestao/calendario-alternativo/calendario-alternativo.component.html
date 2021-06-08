@@ -1,5 +1,15 @@
 <p-fullCalendar #fc [events]="events" [options]="options"></p-fullCalendar>
 
+
+<ng-template #userMenu let-user>
+	<section class="user-menu">
+		<div>Delete</div>
+		<div>Send to</div>
+	</section>
+</ng-template>
+
+<button (contextmenu)="open($event, null); $event.preventDefault();">abrirmenu</button>
+
 <p-dialog [header]=[tituloNovoEvento] [maximizable]="true" modal="true" [(visible)]="displayDialogNovoEvento"
   [contentStyle]="{'overflow':'visible'}">
   <rn-criarevento></rn-criarevento>

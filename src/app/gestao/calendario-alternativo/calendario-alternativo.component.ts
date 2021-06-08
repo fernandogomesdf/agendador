@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -12,6 +12,12 @@ import ptLocale from '@fullcalendar/core/locales/pt';
 import { DateUtilService } from 'src/app/service/dateutil.service';
 import * as moment from 'moment';
 import { AgendadorEventEmmiterService } from 'src/app/services/agendadoreventemmiter.service';
+import { MenuItem } from 'primeng/api';
+
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
+import { fromEvent, Subscription } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-calendario-alternativo',
@@ -21,12 +27,21 @@ import { AgendadorEventEmmiterService } from 'src/app/services/agendadoreventemm
 export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   events: any[];
   options: any;
+  items: MenuItem[];
   clicouEvento: boolean = false;
   displayDialogNovoEvento = false
   tituloNovoEvento = "Novo Agendamento"
   @ViewChild('fc', { static: true }) fc: FullCalendar;
 
-  constructor(private appService: AppService, private agendadorEmiter: AgendadorEventEmmiterService) { }
+  // contextmenu
+  @ViewChild('userMenu') userMenu: TemplateRef<any>;
+  overlayRef: OverlayRef | null;
+  sub: Subscription;
+  
+  constructor(private appService: AppService, 
+    private agendadorEmiter: AgendadorEventEmmiterService,
+    public overlay: Overlay,
+    public viewContainerRef: ViewContainerRef) { }
 
   ngAfterViewInit(): void {
     this.carregarRecursos()
@@ -85,6 +100,15 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
         this.carregarEventosDoDia()
       }
     });
+
+    this.items = [
+      {label: 'View', icon: 'pi pi-fw pi-search', command: () => alert('View')},
+      {label: 'Delete', icon: 'pi pi-fw pi-times', command: () => alert('Delete')}
+    ];
+  }
+
+  abrirmenu() {
+    
   }
 
   getOptions() {
@@ -204,5 +228,45 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
 
   fecharFaturar() {
     EventEmitterService.get('dialogoNovoEvento').emit('FECHAR_FATURAR');
+  }
+
+  open({ x, y }: MouseEvent, user) {
+    this.close();
+    const positionStrategy = this.overlay.position()
+      .flexibleConnectedTo({ x, y })
+      .withPositions([
+        {
+          originX: 'end',
+          originY: 'bottom',
+          overlayX: 'end',
+          overlayY: 'top',
+        }
+      ]);
+
+    this.overlayRef = this.overlay.create({
+      positionStrategy,
+      scrollStrategy: this.overlay.scrollStrategies.close()
+    });
+
+    this.overlayRef.attach(new TemplatePortal(this.userMenu, this.viewContainerRef, {
+      $implicit: user
+    }));
+
+    this.sub = fromEvent<MouseEvent>(document, 'click')
+      .pipe(
+        filter(event => {
+          const clickTarget = event.target as HTMLElement;
+          return !!this.overlayRef && !this.overlayRef.overlayElement.contains(clickTarget);
+        }),
+        take(1)
+      ).subscribe(() => this.close())
+  }
+
+  close() {
+    this.sub && this.sub.unsubscribe();
+    if (this.overlayRef) {
+      this.overlayRef.dispose();
+      this.overlayRef = null;
+    }
   }
 }

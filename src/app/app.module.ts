@@ -27,6 +27,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { EditorModule } from 'primeng/editor';
 import {BlockUIModule} from 'primeng/blockui';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 
 registerLocaleData(localeBr)
@@ -55,7 +56,8 @@ registerLocaleData(localeBr)
     FieldsetModule,
     EditorModule,
     BlockUIModule,
-    InputNumberModule
+    InputNumberModule,
+    OverlayModule
   ],
   providers: [AppService, MessageService, ConfirmationService, { provide: LOCALE_ID, useValue: 'pt' }],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],

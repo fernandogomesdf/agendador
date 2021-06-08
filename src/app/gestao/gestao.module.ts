@@ -27,6 +27,7 @@ import { FormsModule } from '@angular/forms';
 import { FieldsetModule } from 'primeng/fieldset';
 import { CurrencyMaskModule } from '../componentes/ng2-currency-mask/currency-mask.module';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 
 
@@ -61,7 +62,8 @@ export function getJwtToken(): string {
     ConfirmDialogModule,
     FieldsetModule,
     InputTextareaModule,
-    CurrencyMaskModule
+    CurrencyMaskModule,
+    OverlayModule
   ],
   providers: [LoginGuard, ConfirmationService, CurrencyPipe],
   declarations: [AgendamentoComponent, CalendarioAlternativoComponent, CrudServicoComponent],
