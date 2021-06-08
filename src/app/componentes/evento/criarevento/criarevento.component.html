@@ -20,7 +20,7 @@
     <td><label>Profissional: </label></td>
     <td>
       <p-dropdown #proDD placeholder="Selecione" [options]="profissionais" [(ngModel)]="agendamento.profissional.id"
-        [style]="{'width':'350px'}">
+        [style]="{'width':'503px'}">
       </p-dropdown>
     </td>
   </tr>
@@ -29,47 +29,37 @@
     <td>
       <p-multiSelect (onChange)="atualizarPrecoAgendamento($event)" defaultLabel="Selecione"
         selectedItemsLabel="{0} items selecionados" [options]="servicos" [(ngModel)]="agendamento.servicos"
-        [panelStyle]="{minWidth:'12em'}">
+        [panelStyle]="{minWidth:'503px'}" [style]="{'width':'503px'}">
       </p-multiSelect>
     </td>
   </tr>
   <tr>
     <td><label>Data*: </label></td>
     <td>
-      <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="agendamento.dataInicio" [showIcon]="true" [showTime]="true"
-        [locale]="pt"></p-calendar>
+      <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="agendamento.dataInicio" [showIcon]="true" [showTime]="true" [locale]="pt"></p-calendar>
     </td>
   </tr>
   <tr>
     <td><label>Valor*: </label></td>
     <td>
-      <div class="ui-g-12 ui-md-4">
-        <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon">R$</span>
-          <input currencyMask [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text"
-            [(ngModel)]="agendamento.valor" pInputText />
-        </div>
+      <div class="p-inputgroup" style="width: 257px;">
+          <span class="p-inputgroup-addon">R$</span>
+          <input currencyMask [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" [(ngModel)]="agendamento.valor" pInputText />
       </div>
     </td>
   </tr>
   <tr>
     <td><label>Duração*: </label></td>
     <td>
-      <div class="ui-g-12 ui-md-4">
-        <div class="ui-inputgroup">
-          <input type="number" [(ngModel)]="agendamento.duracao" step="30" pInputText />
-          <span class="ui-inputgroup-addon">min.</span>
-          <span *ngIf="agendamento.duracao" class="ui-inputgroup-addon">
-            = {{(agendamento.duracao/60 | number:'1.0-2') + 'h'}}</span>
-        </div>
-      </div>
-
+      <p-inputNumber [(ngModel)]="agendamento.duracao" [min]="1" [max]="3600" [step]="5" [showButtons]="true" spinnerMode="vertical" spinnerMode="vertical" ></p-inputNumber>
+      <span *ngIf="agendamento.duracao">
+            minutos -> {{agendamento.duracao / 60 | number}} hora(s)</span>
     </td>
   </tr>
   <tr>
     <td><label>Observações: </label></td>
     <td>
-      <p-editor [(ngModel)]="agendamento.observacoes" [style]="{'height':'220px', 'width':'550px'}">
+      <p-editor [(ngModel)]="agendamento.observacoes" [style]="{'height':'220px'}">
         <p-header>
           <span class="ql-formats">
             <button class="ql-bold" aria-label="Negrito"></button>

@@ -26,9 +26,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FieldsetModule } from 'primeng/fieldset';
 import { EditorModule } from 'primeng/editor';
 import {BlockUIModule} from 'primeng/blockui';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
-registerLocaleData(localeBr, 'pt')
+registerLocaleData(localeBr)
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ registerLocaleData(localeBr, 'pt')
     ConfirmDialogModule,
     FieldsetModule,
     EditorModule,
-    BlockUIModule
+    BlockUIModule,
+    InputNumberModule
   ],
   providers: [AppService, MessageService, ConfirmationService, { provide: LOCALE_ID, useValue: 'pt' }],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],

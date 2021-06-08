@@ -1,5 +1,5 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID } from '@angular/core';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { EventoModule, EventoComponent } from './evento/evento.component';
 import { CriareventoComponent } from './evento/criarevento/criarevento.component';
@@ -15,9 +15,13 @@ import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
 import { AccordionModule } from 'primeng/accordion';
 import { TabViewModule } from 'primeng/tabview';
+import localeBr from '@angular/common/locales/pt';
 
 import { CriarclienteComponent } from './cliente/criarcliente/criarcliente.component';
 import { CurrencyMaskModule } from './ng2-currency-mask/currency-mask.module';
+import { InputNumberModule } from 'primeng/inputnumber';
+
+registerLocaleData(localeBr)
 
 @NgModule({
   imports: [
@@ -35,11 +39,13 @@ import { CurrencyMaskModule } from './ng2-currency-mask/currency-mask.module';
     CalendarModule,
     DialogModule,
     AccordionModule,
-    TabViewModule
+    TabViewModule,
+    InputNumberModule
   ],
   declarations: [ScheduleComponent, CriareventoComponent, CriarclienteComponent],
   exports: [ScheduleComponent, CriareventoComponent, CriarclienteComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [EventoComponent]
+  entryComponents: [EventoComponent],
+  providers : [{ provide: LOCALE_ID, useValue: 'pt' }]
 })
 export class ComponentesModule { }
