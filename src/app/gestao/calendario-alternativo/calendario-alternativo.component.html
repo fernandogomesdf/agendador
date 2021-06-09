@@ -1,8 +1,6 @@
+<p-fullCalendar #fc [events]="events" [options]="options"></p-fullCalendar>
 
-
-
-<button (contextmenu)="onContextMenu($event, this)">abrir</button>
-
+<!--menu de contexto-->
 <div style="visibility: hidden; position: fixed"
     [style.left]="contextMenuPosition.x"
     [style.top]="contextMenuPosition.y"
@@ -12,13 +10,12 @@
 	<ng-template matMenuContent let-item="item">
 		<button mat-menu-item>Editar agendamento</button>
 		<button mat-menu-item>Finalizar e faturar</button>
-    <button mat-menu-item>Cancelar agendameto</button>
-    <button mat-menu-item>Excluir agendamento</button>
+    <button mat-menu-item>Não compareceu</button>
+    <button mat-menu-item (click)="excluirEvento()">Excluir agendamento</button>
 	</ng-template>
 </mat-menu>
 
-<p-fullCalendar #fc [events]="events" [options]="options"></p-fullCalendar>
-
+<!--dialogo de eventos-->
 <p-dialog [header]=[tituloNovoEvento] [maximizable]="true" modal="true" [(visible)]="displayDialogNovoEvento"
   [contentStyle]="{'overflow':'visible'}">
   <rn-criarevento></rn-criarevento>

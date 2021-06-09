@@ -31,8 +31,9 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   @ViewChild('fc', { static: true }) fc: FullCalendar;
 
   @ViewChild(MatMenuTrigger)
-  contextMenu: MatMenuTrigger;
-  contextMenuPosition = { x: '0px', y: '0px' };
+  contextMenu: MatMenuTrigger
+  contextMenuPosition = { x: '0px', y: '0px' }
+  eventIdContext: string
 
   
   constructor(private appService: AppService, 
@@ -63,6 +64,7 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
         data.forEach(element => {
           this.fc.getCalendar().addEvent({
             "id": element.id,
+            "classNames": ["eventid-" + element.id],
             "title": element.cliente.nome + "\n" + "ID evento : " + element.id,
             "start": element.dataInicio,
             "end": element.dataFim,
@@ -70,20 +72,20 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
             "color": this.getColor(element)
           })
         })
-
+        console.log(this.fc.getCalendar())
         this.atribuirMenuContextoAosEventos();
       }
     })
   }
 
   private atribuirMenuContextoAosEventos() {
-    let elements = this.elem.nativeElement.querySelectorAll('.fc-time-grid-event');
+    let elements = this.elem.nativeElement.querySelectorAll('.fc-time-grid-event')
     let _this = this;
     elements.forEach(element => {
       element.oncontextmenu = function (e) {
-        e.preventDefault();
-        _this.onContextMenu(e, element);
-        return false;
+        e.preventDefault()
+        _this.onContextMenu(e, element)
+        return false
       };
     });
   }
@@ -136,6 +138,7 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
         meridiem: 'short'
       },
       selectable: true,
+      slotDuration : '00:15:00',
       schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
       resources: [
         { id: 'a', title: 'Em espera' }
@@ -238,7 +241,6 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
     EventEmitterService.get('dialogoNovoEvento').emit('FECHAR_FATURAR');
   }
 
-
   onContextMenu(event: MouseEvent, item: any) {
     event.preventDefault();
     this.contextMenuPosition.x = event.clientX + 'px';
@@ -246,6 +248,19 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
     this.contextMenu.menuData = { 'item': item };
     this.contextMenu.menu.focusFirstItem('mouse');
     this.contextMenu.openMenu();
+
+    // procura o evento clicado
+    // o id do evento foi adicionado ao nome da classe como workaround
+    let classes = item.classList
+    classes.forEach(className => {
+      if (className.includes("eventid")) {
+        this.eventIdContext = className.split('-')[1]
+      }
+    });
+  }
+
+  excluirEvento() {
+    
   }
   
 }
