@@ -94,7 +94,7 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
     let color = ''
     if (element) {
       if (element.status == 'EM_ATENDIMENTO') {
-        color = '#e7a52c' // laranja
+        color = '#7300a8' // roxo
       } else if (element.status == 'NAO_COMPARECEU') {
         color = '#686868' // cinza
       } else if (element.status == 'FECHADO') {

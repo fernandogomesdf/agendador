@@ -1,5 +1,19 @@
 <p-blockUI [blocked]="blocked"></p-blockUI>
 
+<mat-toolbar color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Master Agendador</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+  </mat-toolbar>
+
 <p-menubar [model]="items" *ngIf="loginGuard.isAuthenticated()">
     <div>
         <button pButton type="button" icon="fa fa-sign-out" (click)="sair()" label="Sair"></button>
@@ -10,8 +24,8 @@
 
 <p-confirmDialog #cd header="Confirme" icon="pi pi-exclamation-triangle">
     <p-footer>
-        <button type="button" pButton icon="pi pi-times" label="Não" (click)="cd.reject()"></button>
-        <button type="button" pButton icon="pi pi-check" label="Sim" (click)="cd.accept()"></button>
+        <button type="button" pButton icon="pi pi-times" class="p-button-raised" label="Não" (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" class="p-button-danger p-button-raised" label="Sim" (click)="cd.accept()"></button>
     </p-footer>
 </p-confirmDialog>
 

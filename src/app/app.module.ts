@@ -29,6 +29,10 @@ import {BlockUIModule} from 'primeng/blockui';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { OverlayModule } from '@angular/cdk/overlay';
 
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+
 
 registerLocaleData(localeBr)
 
@@ -57,7 +61,10 @@ registerLocaleData(localeBr)
     EditorModule,
     BlockUIModule,
     InputNumberModule,
-    OverlayModule
+    OverlayModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [AppService, MessageService, ConfirmationService, { provide: LOCALE_ID, useValue: 'pt' }],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],

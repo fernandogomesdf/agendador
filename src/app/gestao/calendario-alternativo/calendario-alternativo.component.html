@@ -39,19 +39,19 @@
 
     <button pButton type="button" (click)="naoCompareceu()" label="Não compareceu"
       title="Coloca o status do agendamento para 'Não compareceu'" icon="fa fa-times"
-      class="ui-button-raised ui-button-gray" *ngIf="clicouEvento"></button>
+      class="p-button-raised ui-button-gray" *ngIf="clicouEvento"></button>
 
     <button pButton type="button" (click)="emAtendimento()" label="Em atendimento" icon="fa fa-briefcase"
-      class="ui-button-raised ui-button-orange" title="Coloca o status do agendamento para 'Em atendimento'"
+      class="p-button-raised ui-button-purple" title="Coloca o status do agendamento para 'Em atendimento'"
       *ngIf="clicouEvento"></button>
 
     <button pButton type="button" (click)="fecharFaturar()" label="Fechar e faturar"
       title="Solicita informações de pagamento e coloca o agendamento no status 'Fechado'" icon="fa fa-money"
-      class="ui-button-raised ui-button-green" *ngIf="clicouEvento"></button>
+      class="p-button-raised ui-button-green" *ngIf="clicouEvento"></button>
 
     <button pButton type="button" (click)="cancelarNovoEvento()" title="Fecha sem alterações" label="Cancelar"
-      icon="fa fa-ban" class="ui-button-raised ui-button-secondary"></button>
+      icon="fa fa-ban" class="p-button-raised p-button-secondary"></button>
     <button pButton type="button" (click)="salvarNovoEvento()" title="Salva as alterações do agendamento e fecha"
-      label="Salvar" icon="fa fa-save" class="ui-button-raised"></button>
+      label="Salvar" icon="fa fa-save" class="p-button-raised"></button>
   </p-footer>
 </p-dialog>
