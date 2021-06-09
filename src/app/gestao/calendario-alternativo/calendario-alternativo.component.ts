@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, TemplateRef, ViewContainerRef, ElementRef } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -38,7 +38,8 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   constructor(private appService: AppService, 
     private agendadorEmiter: AgendadorEventEmmiterService,
     public overlay: Overlay,
-    public viewContainerRef: ViewContainerRef) { }
+    public viewContainerRef: ViewContainerRef,
+    private elem: ElementRef) { }
 
   ngAfterViewInit(): void {
     this.carregarRecursos()
@@ -69,8 +70,22 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
             "color": this.getColor(element)
           })
         })
+
+        this.atribuirMenuContextoAosEventos();
       }
     })
+  }
+
+  private atribuirMenuContextoAosEventos() {
+    let elements = this.elem.nativeElement.querySelectorAll('.fc-time-grid-event');
+    let _this = this;
+    elements.forEach(element => {
+      element.oncontextmenu = function (e) {
+        e.preventDefault();
+        _this.onContextMenu(e, element);
+        return false;
+      };
+    });
   }
 
   getColor(element: any) {
@@ -102,10 +117,6 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
       {label: 'View', icon: 'pi pi-fw pi-search', command: () => alert('View')},
       {label: 'Delete', icon: 'pi pi-fw pi-times', command: () => alert('Delete')}
     ];
-  }
-
-  abrirmenu() {
-    
   }
 
   getOptions() {
