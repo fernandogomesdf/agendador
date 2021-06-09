@@ -12,7 +12,7 @@ import ptLocale from '@fullcalendar/core/locales/pt';
 import { DateUtilService } from 'src/app/service/dateutil.service';
 import * as moment from 'moment';
 import { AgendadorEventEmmiterService } from 'src/app/services/agendadoreventemmiter.service';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { Overlay } from '@angular/cdk/overlay';
 import { MatMenuTrigger } from '@angular/material/menu';
 
@@ -40,7 +40,8 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
     private agendadorEmiter: AgendadorEventEmmiterService,
     public overlay: Overlay,
     public viewContainerRef: ViewContainerRef,
-    private elem: ElementRef) { }
+    private elem: ElementRef,
+    private confirmationService: ConfirmationService) { }
 
   ngAfterViewInit(): void {
     this.carregarRecursos()
@@ -72,7 +73,6 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
             "color": this.getColor(element)
           })
         })
-        console.log(this.fc.getCalendar())
         this.atribuirMenuContextoAosEventos();
       }
     })
@@ -207,12 +207,20 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
         'Will open ' + eventObj.url + ' in a new tab'
       );
     } else {
-      this.tituloNovoEvento = "Editar Agendamento"
-      this.displayDialogNovoEvento = true;
-      var evento = new Evento()
-      evento._id = eventObj.id
-      EventEmitterService.get('dialogoNovoEvento').emit(evento)
+      this.abrirEditarAgendamento(eventObj.id);
     }
+  }
+
+  private abrirEditarAgendamento(id: any) {
+    this.tituloNovoEvento = "Editar Agendamento";
+    this.displayDialogNovoEvento = true;
+    var evento = new Evento();
+    evento._id = id;
+    EventEmitterService.get('dialogoNovoEvento').emit(evento);
+  }
+
+  editarAgendamento() {
+    this.abrirEditarAgendamento(this.eventIdContext) 
   }
 
   mudancaEvento(evento) {
@@ -259,8 +267,22 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
     });
   }
 
-  excluirEvento() {
-    
+  confirmaExcluir() {
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja excluir?',
+      accept: () => {
+        this.appService.requestGet('/evento/excluir/' + this.eventIdContext).subscribe(data => {
+          if (data.deletedCount > 0) {
+            this.appService.msgSucesso('Registro excluído com sucesso!')
+            this.carregarEventosDoDia()
+          }
+        })
+      },
+      reject: () => {
+      }
+    })
   }
+
+  
   
 }

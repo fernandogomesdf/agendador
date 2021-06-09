@@ -8,10 +8,10 @@
 </div>
 <mat-menu #contextMenu="matMenu">
 	<ng-template matMenuContent let-item="item">
-		<button mat-menu-item>Editar agendamento</button>
+		<button mat-menu-item (click)="editarAgendamento()">Editar agendamento</button>
 		<button mat-menu-item>Finalizar e faturar</button>
     <button mat-menu-item>Não compareceu</button>
-    <button mat-menu-item (click)="excluirEvento()">Excluir agendamento</button>
+    <button mat-menu-item (click)="confirmaExcluir()">Excluir agendamento</button>
 	</ng-template>
 </mat-menu>
 
