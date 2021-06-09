@@ -8,10 +8,26 @@
 </div>
 <mat-menu #contextMenu="matMenu">
 	<ng-template matMenuContent let-item="item">
-		<button mat-menu-item (click)="editarAgendamento()">Editar agendamento</button>
-		<button mat-menu-item>Finalizar e faturar</button>
-    <button mat-menu-item>Não compareceu</button>
-    <button mat-menu-item (click)="confirmaExcluir()">Excluir agendamento</button>
+		<button mat-menu-item (click)="editarAgendamento()">
+      <mat-icon>edit</mat-icon>
+      <span>Editar agendamento</span>
+    </button>
+		<button mat-menu-item>
+      <mat-icon>payments</mat-icon>
+      <span>Faturar e finalizar</span>
+    </button>
+    <button mat-menu-item (click)="atualizarNaoCompareceu()">
+      <mat-icon>clear</mat-icon>
+      <span>Não compareceu</span>
+    </button>
+    <button mat-menu-item (click)="atualizarEmAtendimento()">
+      <mat-icon>work_outline</mat-icon>
+      <span>Em atendimento</span>
+    </button>
+    <button mat-menu-item (click)="confirmaExcluir()">
+      <mat-icon>delete</mat-icon>
+      <span>Excluir agendamento</span>  
+    </button>
 	</ng-template>
 </mat-menu>
 

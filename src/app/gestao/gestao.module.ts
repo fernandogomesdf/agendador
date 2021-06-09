@@ -29,8 +29,8 @@ import { CurrencyMaskModule } from '../componentes/ng2-currency-mask/currency-ma
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import { OverlayModule } from '@angular/cdk/overlay';
 import {MatMenuModule} from '@angular/material/menu';
- 
-
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
 
 export function getJwtToken(): string {
   return sessionStorage.getItem('token');
@@ -65,7 +65,9 @@ export function getJwtToken(): string {
     InputTextareaModule,
     CurrencyMaskModule,
     OverlayModule,
-    MatMenuModule
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [LoginGuard, ConfirmationService, CurrencyPipe],
   declarations: [AgendamentoComponent, CalendarioAlternativoComponent, CrudServicoComponent],

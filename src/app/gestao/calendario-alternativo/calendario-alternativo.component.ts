@@ -223,6 +223,25 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
     this.abrirEditarAgendamento(this.eventIdContext) 
   }
 
+  atualizarNaoCompareceu() {
+    this.atualizarStatus('NAO_COMPARECEU');
+  }
+
+  atualizarEmAtendimento() {
+    this.atualizarStatus('EM_ATENDIMENTO');
+  }
+
+  private atualizarStatus(status) {
+    let statusAgendamento = {
+      idEvento: this.eventIdContext,
+      status: status
+    };
+    this.appService.requestPost('/evento/alterar_status', statusAgendamento).subscribe(data => {
+      this.appService.msgSucesso('Status alterado com sucesso!');
+      this.carregarEventosDoDia();
+    });
+  }
+
   mudancaEvento(evento) {
     console.log(this.events)
     alert("mudancaEvento");
