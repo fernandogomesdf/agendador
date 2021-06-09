@@ -13,11 +13,8 @@ import { DateUtilService } from 'src/app/service/dateutil.service';
 import * as moment from 'moment';
 import { AgendadorEventEmmiterService } from 'src/app/services/agendadoreventemmiter.service';
 import { MenuItem } from 'primeng/api';
-
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
-import { TemplatePortal } from '@angular/cdk/portal';
-import { fromEvent, Subscription } from 'rxjs';
-import { filter, take } from 'rxjs/operators';
+import { Overlay } from '@angular/cdk/overlay';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'app-calendario-alternativo',
@@ -33,10 +30,10 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   tituloNovoEvento = "Novo Agendamento"
   @ViewChild('fc', { static: true }) fc: FullCalendar;
 
-  // contextmenu
-  @ViewChild('userMenu') userMenu: TemplateRef<any>;
-  overlayRef: OverlayRef | null;
-  sub: Subscription;
+  @ViewChild(MatMenuTrigger)
+  contextMenu: MatMenuTrigger;
+  contextMenuPosition = { x: '0px', y: '0px' };
+
   
   constructor(private appService: AppService, 
     private agendadorEmiter: AgendadorEventEmmiterService,
@@ -158,7 +155,7 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
         }
       },
       header: {
-        left: 'myCustomLeft,myCustomRight myCustomHoje',
+        left: 'myCustomLeft,myCustomHoje,myCustomRight',
         center: 'title',
         right: ''
       },
@@ -230,43 +227,14 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
     EventEmitterService.get('dialogoNovoEvento').emit('FECHAR_FATURAR');
   }
 
-  open({ x, y }: MouseEvent, user) {
-    this.close();
-    const positionStrategy = this.overlay.position()
-      .flexibleConnectedTo({ x, y })
-      .withPositions([
-        {
-          originX: 'end',
-          originY: 'bottom',
-          overlayX: 'end',
-          overlayY: 'top',
-        }
-      ]);
 
-    this.overlayRef = this.overlay.create({
-      positionStrategy,
-      scrollStrategy: this.overlay.scrollStrategies.close()
-    });
-
-    this.overlayRef.attach(new TemplatePortal(this.userMenu, this.viewContainerRef, {
-      $implicit: user
-    }));
-
-    this.sub = fromEvent<MouseEvent>(document, 'click')
-      .pipe(
-        filter(event => {
-          const clickTarget = event.target as HTMLElement;
-          return !!this.overlayRef && !this.overlayRef.overlayElement.contains(clickTarget);
-        }),
-        take(1)
-      ).subscribe(() => this.close())
+  onContextMenu(event: MouseEvent, item: any) {
+    event.preventDefault();
+    this.contextMenuPosition.x = event.clientX + 'px';
+    this.contextMenuPosition.y = event.clientY + 'px';
+    this.contextMenu.menuData = { 'item': item };
+    this.contextMenu.menu.focusFirstItem('mouse');
+    this.contextMenu.openMenu();
   }
-
-  close() {
-    this.sub && this.sub.unsubscribe();
-    if (this.overlayRef) {
-      this.overlayRef.dispose();
-      this.overlayRef = null;
-    }
-  }
+  
 }
