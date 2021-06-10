@@ -26,11 +26,12 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { FormsModule } from '@angular/forms';
 import { FieldsetModule } from 'primeng/fieldset';
 import { CurrencyMaskModule } from '../componentes/ng2-currency-mask/currency-mask.module';
-import {InputTextareaModule} from 'primeng/inputtextarea';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { OverlayModule } from '@angular/cdk/overlay';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 export function getJwtToken(): string {
   return sessionStorage.getItem('token');
@@ -67,7 +68,8 @@ export function getJwtToken(): string {
     OverlayModule,
     MatMenuModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    InputNumberModule
   ],
   providers: [LoginGuard, ConfirmationService, CurrencyPipe],
   declarations: [AgendamentoComponent, CalendarioAlternativoComponent, CrudServicoComponent],

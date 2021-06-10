@@ -13,7 +13,6 @@ export class AppComponent implements OnInit {
 
   public blocked: boolean = false;
   title = 'rennova-web';
-  items: MenuItem[];
 
   constructor(public loginGuard: LoginGuard, public router: Router, private appService: AppService, private cdRef: ChangeDetectorRef) {
     appService.blockEmitter.subscribe(result => {
@@ -22,18 +21,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.items = [
-      {
-        label: 'Agendamentos',
-        icon: 'pi pi-fw pi-calendar',
-        routerLink: ['gestao/calendario_alternativo']
-      },
-      {
-        label: 'Serviços',
-        icon: 'pi pi-fw pi-briefcase',
-        routerLink: ['gestao/servicos']
-      }
-    ];
+    
   }
 
   sair() {

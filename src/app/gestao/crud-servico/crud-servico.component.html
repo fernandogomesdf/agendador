@@ -28,9 +28,11 @@
         </td>
         <td>
           <center>
-            <button type="button" (click)="selecionaEditar(rowData)" class="p-button-raised" pButton icon="fa fa-edit" title="Editar"></button>
+            <button type="button" (click)="selecionaEditar(rowData)" class="p-button-raised" pButton icon="fa fa-edit"
+              title="Editar"></button>
             &nbsp;
-            <button type="button" (click)="confirmaExcluir(rowData)" class="p-button-raised p-button-danger" pButton icon="fa fa-trash" title="Excluir"></button>
+            <button type="button" (click)="confirmaExcluir(rowData)" class="p-button-raised p-button-danger" pButton
+              icon="fa fa-trash" title="Excluir"></button>
           </center>
         </td>
       </tr>
@@ -44,40 +46,24 @@
     <tr>
       <td><label>Nome*: </label></td>
       <td>
-        <input type="text" size="30" [(ngModel)]="entidade.nome" pInputText />
+        <input type="text" [style]="{'width':'350px'}" [(ngModel)]="entidade.nome" pInputText />
       </td>
     </tr>
     <tr>
       <td><label>Categoria*: </label></td>
       <td>
         <p-dropdown placeholder="Selecione" filter="true" emptyFilterMessage="nada encontrado"
-          [style]="{'width':'255px'}" [options]="categorias" [(ngModel)]="entidade.categoria.id">
+          [style]="{'width':'350px'}" [options]="categorias" [(ngModel)]="entidade.categoria.id">
         </p-dropdown>
       </td>
     </tr>
     <tr>
       <td><label>Valor*: </label></td>
       <td>
-        <div class="ui-g-12 ui-md-4">
-          <div class="ui-inputgroup">
-            <span class="ui-inputgroup-addon">R$</span>
-            <input currencyMask [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text"
-              [(ngModel)]="entidade.valor" pInputText />
-          </div>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td><label>Comissão*: </label></td>
-      <td>
-        <div class="ui-g-12 ui-md-4">
-          <div class="ui-inputgroup">
-            <span class="ui-inputgroup-addon">
-              <span *ngIf="entidade.comissao.tipo == 'PERCENTUAL'">%</span>
-              <span *ngIf="entidade.comissao.tipo == 'REAL'">R$</span>
-            </span>
-            <input type="number" [(ngModel)]="entidade.comissao.valor" pInputText />
-          </div>
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon">R$</span>
+          <input currencyMask [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text"
+            [(ngModel)]="entidade.valor" pInputText />
         </div>
       </td>
     </tr>
@@ -86,22 +72,31 @@
       <td>
         <p-radioButton name="tipocomissao" value="PERCENTUAL" [(ngModel)]="entidade.comissao.tipo">
         </p-radioButton>&nbsp;
-        <b>percentual (%)</b>
+        percentual (%)
         &nbsp;&nbsp;
         <p-radioButton name="tipocomissao" value="REAL" [(ngModel)]="entidade.comissao.tipo"></p-radioButton>
-        &nbsp;<b>real (R$)</b>
+        &nbsp;real (R$)
+      </td>
+    </tr>
+    <tr>
+      <td><label>Comissão*: </label></td>
+      <td>
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon">
+            <span *ngIf="entidade.comissao.tipo == 'PERCENTUAL'">%</span>
+            <span *ngIf="entidade.comissao.tipo == 'REAL'">R$</span>
+          </span>
+          <input currencyMask [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }"
+            [(ngModel)]="entidade.comissao.valor" pInputText />
+        </div>
       </td>
     </tr>
     <tr>
       <td><label>Duração*: </label></td>
       <td>
-        <div class="ui-g-12 ui-md-4">
-          <div class="ui-inputgroup">
-            <input type="number" size="5" [(ngModel)]="entidade.duracao" step="30" pInputText />
-            <span class="ui-inputgroup-addon">min.</span>
-            <span *ngIf="entidade.duracao" class="ui-inputgroup-addon">
-              = {{(entidade.duracao/60 | number:'1.0-2') + 'h'}}</span>
-          </div>
+        <div class="ui-inputgroup">
+          <p-inputNumber [(ngModel)]="entidade.duracao" [min]="1" [max]="3600" step="5" [showButtons]="true">
+          </p-inputNumber>
         </div>
       </td>
     </tr>
@@ -111,11 +106,10 @@
         <textarea pInputTextarea [rows]="8" [cols]="45" [(ngModel)]="entidade.descricao"></textarea>
       </td>
     </tr>
-
   </table>
   <p-footer>
     <button pButton (click)="cancelar()" type="button" label="Cancelar" icon="fa fa-ban"
-      class="ui-button-raised ui-button-secondary"></button>
-    <button pButton (click)="salvar()" type="button" label="Salvar" icon="fa fa-save" class="ui-button-raised"></button>
+      class="p-button-raised p-button-secondary"></button>
+    <button pButton (click)="salvar()" type="button" label="Salvar" icon="fa fa-save" class="p-button-raised"></button>
   </p-footer>
 </p-dialog>

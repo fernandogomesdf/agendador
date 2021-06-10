@@ -12,8 +12,6 @@ export class LoginGuard implements CanActivate {
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-        console.log();
-
         let retorno = true;
         if (!this.isAuthenticated()) {
             sessionStorage.setItem('rotarequerida', next.url.toString());

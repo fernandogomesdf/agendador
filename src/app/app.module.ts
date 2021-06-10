@@ -25,14 +25,15 @@ import localeBr from '@angular/common/locales/pt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FieldsetModule } from 'primeng/fieldset';
 import { EditorModule } from 'primeng/editor';
-import {BlockUIModule} from 'primeng/blockui';
+import { BlockUIModule } from 'primeng/blockui';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { OverlayModule } from '@angular/cdk/overlay';
 
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
 
 registerLocaleData(localeBr)
 
@@ -64,7 +65,10 @@ registerLocaleData(localeBr)
     OverlayModule,
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSidenavModule,
+    MatMenuModule,
+    MatIconModule,
   ],
   providers: [AppService, MessageService, ConfirmationService, { provide: LOCALE_ID, useValue: 'pt' }],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
