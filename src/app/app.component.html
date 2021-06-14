@@ -35,11 +35,15 @@
     </mat-drawer>
     <mat-drawer-content>
         <mat-toolbar color="primary">
-            <button mat-icon-button (click)="drawer.toggle()">
+            <button mat-icon-button (click)="toggleMenu()">
                 <mat-icon>menu</mat-icon>
             </button>
             <span>Master Agendador</span>
             <span class="example-spacer"></span>
+
+            <span style="font-size: 12px;">
+                {{getNomeUsuario()}}
+            </span>
 
             <button mat-icon-button class="example-icon" (click)="sair()" *ngIf="loginGuard.isAuthenticated()">
                 <mat-icon>logout</mat-icon>

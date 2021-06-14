@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
       this.service.login(this.login).subscribe(result => {
         if (result.token) {
           sessionStorage.setItem('token', result.token);
+          sessionStorage.setItem('nome', result.entidade.nome);
           let rotaRequerida = sessionStorage.getItem('rotarequerida');
           if (rotaRequerida) {
             rotaRequerida = '/' + rotaRequerida.replace(/,/g, "/");
