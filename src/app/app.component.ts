@@ -24,12 +24,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
   }
 
-  toggleMenu() {
-    this.cdRef.detectChanges()
-    this.drawer.toggle()
-    this.cdRef.detectChanges()
-  }
-
   getNomeUsuario() {
     return sessionStorage.getItem('nome')
   }

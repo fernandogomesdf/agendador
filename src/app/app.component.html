@@ -1,59 +1,54 @@
 <p-blockUI [blocked]="blocked"></p-blockUI>
 
+<mat-menu #menu="matMenu">
+    <button routerLink="gestao/calendario_alternativo" mat-menu-item>
+        <mat-icon>event</mat-icon>
+        <span>Agendamentos</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon>people</mat-icon>
+        <span>Clientes</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon>assignment_ind</mat-icon>
+        <span>Profissionais</span>
+    </button>
+    <button routerLink="gestao/servicos" mat-menu-item>
+        <mat-icon>work_outline</mat-icon>
+        <span>Serviços</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon>category</mat-icon>
+        <span>Categorias</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon>attach_money</mat-icon>
+        <span>Faturamento</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <span>Configuração</span>
+    </button>
+</mat-menu>
 
-<mat-drawer-container autosize>
-    <mat-drawer #drawer mode="side" class="example-sidenav">
-        <button routerLink="gestao/calendario_alternativo" mat-menu-item>
-            <mat-icon>event</mat-icon>
-            <span>Agendamentos</span>
-        </button>
-        <button mat-menu-item>
-            <mat-icon>people</mat-icon>
-            <span>Clientes</span>
-        </button>
-        <button mat-menu-item>
-            <mat-icon>assignment_ind</mat-icon>
-            <span>Profissionais</span>
-        </button>
-        <button routerLink="gestao/servicos" mat-menu-item>
-            <mat-icon>work_outline</mat-icon>
-            <span>Serviços</span>
-        </button>
-        <button mat-menu-item>
-            <mat-icon>category</mat-icon>
-            <span>Categorias</span>
-        </button>
-        <button mat-menu-item>
-            <mat-icon>attach_money</mat-icon>
-            <span>Faturamento</span>
-        </button>
-        <button mat-menu-item>
-            <mat-icon>settings</mat-icon>
-            <span>Configuração</span>
-        </button>
+<mat-toolbar color="primary">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span>Master Agendador</span>
+    <span class="example-spacer"></span>
 
-    </mat-drawer>
-    <mat-drawer-content>
-        <mat-toolbar color="primary">
-            <button mat-icon-button (click)="toggleMenu()">
-                <mat-icon>menu</mat-icon>
-            </button>
-            <span>Master Agendador</span>
-            <span class="example-spacer"></span>
+    <span style="font-size: 12px;">
+        {{getNomeUsuario()}}
+    </span>
 
-            <span style="font-size: 12px;">
-                {{getNomeUsuario()}}
-            </span>
-
-            <button mat-icon-button class="example-icon" (click)="sair()" *ngIf="loginGuard.isAuthenticated()">
-                <mat-icon>logout</mat-icon>
-            </button>
-        </mat-toolbar>
-        <div style="padding: 10px;">
-            <router-outlet></router-outlet>
-        </div>
-    </mat-drawer-content>
-</mat-drawer-container>
+    <button mat-icon-button class="example-icon" (click)="sair()" *ngIf="loginGuard.isAuthenticated()">
+        <mat-icon>logout</mat-icon>
+    </button>
+</mat-toolbar>
+<div style="padding: 10px;">
+    <router-outlet></router-outlet>
+</div>
 
 <p-confirmDialog #cd header="Confirme" icon="pi pi-exclamation-triangle">
     <p-footer>
