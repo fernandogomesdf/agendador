@@ -1,7 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
-import { ScheduleComponent } from './schedule/schedule.component';
-import { EventoModule, EventoComponent } from './evento/evento.component';
 import { FormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { MultiSelectModule } from 'primeng/multiselect';
@@ -27,7 +25,6 @@ registerLocaleData(localeBr)
   imports: [
     CommonModule,
     FormsModule,
-    EventoModule,
     CurrencyMaskModule,
     AutoCompleteModule,
     InputTextModule,
@@ -42,10 +39,10 @@ registerLocaleData(localeBr)
     TabViewModule,
     InputNumberModule
   ],
-  declarations: [ScheduleComponent, DialogoeventoComponent, CriarclienteComponent],
-  exports: [ScheduleComponent, DialogoeventoComponent, CriarclienteComponent],
+  declarations: [DialogoeventoComponent, CriarclienteComponent],
+  exports: [DialogoeventoComponent, CriarclienteComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [EventoComponent],
+  entryComponents: [],
   providers: [{ provide: LOCALE_ID, useValue: 'pt' }]
 })
 export class ComponentesModule { }

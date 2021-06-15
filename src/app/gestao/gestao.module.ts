@@ -2,7 +2,6 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/cor
 import { CommonModule, CurrencyPipe } from '@angular/common';
 
 import { GestaoRoutingModule } from './gestao-routing.module';
-import { AgendamentoComponent } from './agendamento/agendamento.component';
 import { ComponentesModule } from '../componentes/componentes.module';
 import { CalendarioAlternativoComponent } from './calendario-alternativo/calendario-alternativo.component';
 
@@ -72,7 +71,7 @@ export function getJwtToken(): string {
     InputNumberModule
   ],
   providers: [LoginGuard, ConfirmationService, CurrencyPipe],
-  declarations: [AgendamentoComponent, CalendarioAlternativoComponent, CrudServicoComponent],
+  declarations: [CalendarioAlternativoComponent, CrudServicoComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class GestaoModule { }
