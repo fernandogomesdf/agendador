@@ -3,7 +3,6 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 
 import { GestaoRoutingModule } from './gestao-routing.module';
 import { ComponentesModule } from '../componentes/componentes.module';
-import { CalendarioAlternativoComponent } from './calendario-alternativo/calendario-alternativo.component';
 
 import { FullCalendarModule } from 'primeng/fullcalendar';
 import { DialogModule } from 'primeng/dialog';
@@ -31,6 +30,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { AgendamentoComponent } from './agendamento/agendamento.component';
 
 export function getJwtToken(): string {
   return sessionStorage.getItem('token');
@@ -71,7 +71,7 @@ export function getJwtToken(): string {
     InputNumberModule
   ],
   providers: [LoginGuard, ConfirmationService, CurrencyPipe],
-  declarations: [CalendarioAlternativoComponent, CrudServicoComponent],
+  declarations: [AgendamentoComponent, CrudServicoComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class GestaoModule { }

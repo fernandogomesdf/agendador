@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { CalendarioAlternativoComponent } from './calendario-alternativo.component';
+import { AgendamentoComponent } from './agendamento.component';
 
 describe('CalendarioAlternativoComponent', () => {
-  let component: CalendarioAlternativoComponent;
-  let fixture: ComponentFixture<CalendarioAlternativoComponent>;
+  let component: AgendamentoComponent;
+  let fixture: ComponentFixture<AgendamentoComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ CalendarioAlternativoComponent ]
+      declarations: [ AgendamentoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CalendarioAlternativoComponent);
+    fixture = TestBed.createComponent(AgendamentoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

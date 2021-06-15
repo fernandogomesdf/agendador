@@ -3,7 +3,6 @@ import { NgModule, NO_ERRORS_SCHEMA, LOCALE_ID, CUSTOM_ELEMENTS_SCHEMA } from '@
 
 import { AppComponent } from './app.component';
 import { GestaoModule } from './gestao/gestao.module';
-import { CursosModule } from './cursos/cursos.module';
 import { PublicoModule } from './publico/publico.module';
 import { ComponentesModule } from './componentes/componentes.module';
 import { routing } from './routes/app.routes';
@@ -48,7 +47,6 @@ registerLocaleData(localeBr)
     BrowserAnimationsModule,
     HttpClientModule,
     GestaoModule,
-    CursosModule,
     PublicoModule,
     ComponentesModule,
     ButtonModule,

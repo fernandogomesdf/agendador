@@ -17,11 +17,11 @@ import { Overlay } from '@angular/cdk/overlay';
 import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
-  selector: 'app-calendario-alternativo',
-  templateUrl: './calendario-alternativo.component.html',
-  styleUrls: ['./calendario-alternativo.component.css']
+  selector: 'app-agendamento',
+  templateUrl: './agendamento.component.html',
+  styleUrls: ['./agendamento.component.css']
 })
-export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
+export class AgendamentoComponent implements OnInit, AfterViewInit {
   events: any[];
   options: any;
   items: MenuItem[];
@@ -35,8 +35,8 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   contextMenuPosition = { x: '0px', y: '0px' }
   eventIdContext: string
 
-  
-  constructor(private appService: AppService, 
+
+  constructor(private appService: AppService,
     private agendadorEmiter: AgendadorEventEmmiterService,
     public overlay: Overlay,
     public viewContainerRef: ViewContainerRef,
@@ -116,8 +116,8 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
     });
 
     this.items = [
-      {label: 'View', icon: 'pi pi-fw pi-search', command: () => alert('View')},
-      {label: 'Delete', icon: 'pi pi-fw pi-times', command: () => alert('Delete')}
+      { label: 'View', icon: 'pi pi-fw pi-search', command: () => alert('View') },
+      { label: 'Delete', icon: 'pi pi-fw pi-times', command: () => alert('Delete') }
     ];
   }
 
@@ -138,7 +138,7 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
         meridiem: 'short'
       },
       selectable: true,
-      slotDuration : '00:15:00',
+      slotDuration: '00:15:00',
       schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
       resources: [
         { id: 'a', title: 'Em espera' }
@@ -220,7 +220,7 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   }
 
   editarAgendamento() {
-    this.abrirEditarAgendamento(this.eventIdContext) 
+    this.abrirEditarAgendamento(this.eventIdContext)
   }
 
   atualizarNaoCompareceu() {
@@ -269,7 +269,7 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
   }
 
   fecharFaturarContexto() {
-    
+
   }
 
   onContextMenu(event: MouseEvent, item: any) {
@@ -306,6 +306,6 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
     })
   }
 
-  
-  
+
+
 }
