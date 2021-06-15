@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CriareventoService } from './dialogoevento.service';
+import { DialogoeventoService } from './dialogoevento.service';
 
-describe('CriareventoService', () => {
+describe('DialogoeventoService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: CriareventoService = TestBed.get(CriareventoService);
+    const service: DialogoeventoService = TestBed.get(DialogoeventoService);
     expect(service).toBeTruthy();
   });
 });

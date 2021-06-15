@@ -7,7 +7,7 @@ import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
 import { AppService } from 'src/app/app.service';
 import { FullCalendar } from 'primeng/fullcalendar';
-import { Evento } from 'src/app/componentes/evento/dialogoevento/evento';
+import { Evento } from 'src/app/componentes/dialogoevento/evento';
 import ptLocale from '@fullcalendar/core/locales/pt';
 import { DateUtilService } from 'src/app/service/dateutil.service';
 import * as moment from 'moment';

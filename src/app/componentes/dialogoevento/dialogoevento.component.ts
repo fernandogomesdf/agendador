@@ -27,7 +27,7 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
 
   @ViewChild('proDD', { static: true }) proDD: Dropdown;
 
-  constructor(private criarEventoService: DialogoeventoService, private appService: AppService, private agendadorEmiter: AgendadorEventEmmiterService) {
+  constructor(private dialogoEventoService: DialogoeventoService, private appService: AppService, private agendadorEmiter: AgendadorEventEmmiterService) {
 
   }
 
@@ -175,13 +175,13 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.criarEventoService.listarServicos().subscribe(data => {
+    this.dialogoEventoService.listarServicos().subscribe(data => {
       data.entidade.forEach(element => {
         this.servicos.push({ label: element.nome, value: element.id, valor: element.valor });
       });
     });
 
-    this.criarEventoService.listarProfissionais().subscribe(data => {
+    this.dialogoEventoService.listarProfissionais().subscribe(data => {
       data.forEach(element => {
         this.profissionais.push({ label: element.nome, value: element.id });
       });
@@ -189,7 +189,7 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
   }
 
   searchCliente(event) {
-    this.criarEventoService.searchCliente(event).subscribe(data => {
+    this.dialogoEventoService.searchCliente(event).subscribe(data => {
       data.forEach(cliente => {
         this.setFoneNome(cliente);
       });

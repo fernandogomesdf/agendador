@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { DialogoeventoComponent } from './dialogoevento.component';
 
-describe('CriareventoComponent', () => {
+describe('DialogoeventoComponent', () => {
   let component: DialogoeventoComponent;
   let fixture: ComponentFixture<DialogoeventoComponent>;
 

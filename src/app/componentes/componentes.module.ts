@@ -19,7 +19,7 @@ import localeBr from '@angular/common/locales/pt';
 import { CriarclienteComponent } from './cliente/criarcliente/criarcliente.component';
 import { CurrencyMaskModule } from './ng2-currency-mask/currency-mask.module';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { DialogoeventoComponent } from './evento/dialogoevento/dialogoevento.component';
+import { DialogoeventoComponent } from './dialogoevento/dialogoevento.component';
 
 registerLocaleData(localeBr)
 
