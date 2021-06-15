@@ -4,7 +4,7 @@ import { AppService } from 'src/app/app.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CriareventoService {
+export class DialogoeventoService {
 
   constructor(private appService: AppService) { }
 

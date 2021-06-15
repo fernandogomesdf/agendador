@@ -1,20 +1,18 @@
 <p-fullCalendar #fc [events]="events" [options]="options"></p-fullCalendar>
 
 <!--menu de contexto-->
-<div style="visibility: hidden; position: fixed"
-    [style.left]="contextMenuPosition.x"
-    [style.top]="contextMenuPosition.y"
-    [matMenuTriggerFor]="contextMenu">
+<div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+  [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
 </div>
 <mat-menu #contextMenu="matMenu">
-	<ng-template matMenuContent>
-		<button mat-menu-item (click)="editarAgendamento()">
+  <ng-template matMenuContent>
+    <button mat-menu-item (click)="editarAgendamento()">
       <mat-icon>edit</mat-icon>
       <span>Editar agendamento</span>
     </button>
-		<button mat-menu-item>
+    <button mat-menu-item (click)="fecharFaturarContexto()">
       <mat-icon>payments</mat-icon>
-      <span>Faturar e finalizar</span>
+      <span>Fechar e faturar</span>
     </button>
     <button mat-menu-item (click)="atualizarNaoCompareceu()">
       <mat-icon>clear</mat-icon>
@@ -26,9 +24,9 @@
     </button>
     <button mat-menu-item (click)="confirmaExcluir()">
       <mat-icon>delete</mat-icon>
-      <span>Excluir agendamento</span>  
+      <span>Excluir agendamento</span>
     </button>
-	</ng-template>
+  </ng-template>
 </mat-menu>
 
 <!--dialogo de eventos-->

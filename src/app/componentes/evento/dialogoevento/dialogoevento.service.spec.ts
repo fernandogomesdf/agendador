@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CriareventoService } from './criarevento.service';
+import { CriareventoService } from './dialogoevento.service';
 
 describe('CriareventoService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

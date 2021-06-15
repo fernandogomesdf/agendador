@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ApplicationRef, ViewChild, Input } from '@angular/core';
-import { CriareventoService } from './criarevento.service';
+import { DialogoeventoService } from './dialogoevento.service';
 import { SelectItem } from 'primeng/api';
 import { Dropdown } from 'primeng/dropdown';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
@@ -10,10 +10,10 @@ import { AgendadorEventEmmiterService } from 'src/app/services/agendadoreventemm
 
 @Component({
   selector: 'rn-criarevento',
-  templateUrl: './criarevento.component.html',
-  styleUrls: ['./criarevento.component.css']
+  templateUrl: './dialogoevento.component.html',
+  styleUrls: ['./dialogoevento.component.css']
 })
-export class CriareventoComponent implements OnInit, AfterViewInit {
+export class DialogoeventoComponent implements OnInit, AfterViewInit {
 
   resultsCliente: string[];
   servicos: SelectItemRN[] = [];
@@ -27,8 +27,8 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
 
   @ViewChild('proDD', { static: true }) proDD: Dropdown;
 
-  constructor(private criarEventoService: CriareventoService, private appService: AppService, private agendadorEmiter: AgendadorEventEmmiterService) {
-    
+  constructor(private criarEventoService: DialogoeventoService, private appService: AppService, private agendadorEmiter: AgendadorEventEmmiterService) {
+
   }
 
   ngOnInit() {
@@ -54,7 +54,6 @@ export class CriareventoComponent implements OnInit, AfterViewInit {
           case ("FECHAR_FATURAR"):
             this.abrirFaturamento();
             break;
-
           case "cancelar":
             this.cancelar();
             break;

@@ -7,7 +7,7 @@ import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
 import { AppService } from 'src/app/app.service';
 import { FullCalendar } from 'primeng/fullcalendar';
-import { Evento } from 'src/app/componentes/evento/criarevento/evento';
+import { Evento } from 'src/app/componentes/evento/dialogoevento/evento';
 import ptLocale from '@fullcalendar/core/locales/pt';
 import { DateUtilService } from 'src/app/service/dateutil.service';
 import * as moment from 'moment';
@@ -266,6 +266,10 @@ export class CalendarioAlternativoComponent implements OnInit, AfterViewInit {
 
   fecharFaturar() {
     EventEmitterService.get('dialogoNovoEvento').emit('FECHAR_FATURAR');
+  }
+
+  fecharFaturarContexto() {
+    
   }
 
   onContextMenu(event: MouseEvent, item: any) {
