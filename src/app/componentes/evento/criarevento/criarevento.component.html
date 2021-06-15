@@ -20,7 +20,7 @@
     <td><label>Profissional: </label></td>
     <td>
       <p-dropdown #proDD placeholder="Selecione" [options]="profissionais" [(ngModel)]="agendamento.profissional.id"
-        [style]="{'width':'503px'}">
+        [style]="{'width':'523px'}">
       </p-dropdown>
     </td>
   </tr>
@@ -29,20 +29,20 @@
     <td>
       <p-multiSelect (onChange)="atualizarPrecoAgendamento($event)" defaultLabel="Selecione"
         selectedItemsLabel="{0} items selecionados" [options]="servicos" [(ngModel)]="agendamento.servicos"
-        [panelStyle]="{minWidth:'503px'}" [style]="{'width':'503px'}">
+        [panelStyle]="{minWidth:'k'}" [style]="{'width':'503px'}">
       </p-multiSelect>
     </td>
   </tr>
   <tr>
     <td><label>Data*: </label></td>
     <td>
-      <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="agendamento.dataInicio" [showIcon]="true" [showTime]="true" [locale]="pt"></p-calendar>
+      <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="agendamento.dataInicio" [showIcon]="true" [showTime]="true"></p-calendar>
     </td>
   </tr>
   <tr>
     <td><label>Valor*: </label></td>
     <td>
-      <div class="p-inputgroup" style="width: 229px;">
+      <div class="p-inputgroup" style="width: 260px;">
           <span class="p-inputgroup-addon">R$</span>
           <input currencyMask [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" [(ngModel)]="agendamento.valor" pInputText />
       </div>

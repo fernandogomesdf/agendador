@@ -68,7 +68,7 @@ registerLocaleData(localeBr)
     MatButtonModule,
     MatSidenavModule,
     MatMenuModule,
-    MatIconModule,
+    MatIconModule
   ],
   providers: [AppService, MessageService, ConfirmationService, { provide: LOCALE_ID, useValue: 'pt' }],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
