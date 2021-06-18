@@ -48,6 +48,14 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
     this.carregarEventosDoDia()
   }
 
+  private corrigeBotaoCalendario() {
+    var myCustomCalendar = document.getElementsByClassName("fc-myCustomCalendar-button")[0];
+    myCustomCalendar.innerHTML = '';
+    var i = document.createElement("i");
+    i.setAttribute('class', 'pi pi-calendar');
+    myCustomCalendar.appendChild(i);
+  }
+
   carregarRecursos() {
     this.appService.requestPost('/profissional/buscar', { data: this.fc.getCalendar().state.currentDate, first: 0, rows: 200 }).subscribe(data => {
       if (data) {
@@ -56,6 +64,9 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
         });
       }
     })
+
+    // altera o botao myCustomCalendar
+    this.corrigeBotaoCalendario();
   }
 
   carregarEventosDoDia() {
@@ -76,6 +87,9 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
         this.atribuirMenuContextoAosEventos();
       }
     })
+
+    // altera o botao myCustomCalendar
+    this.corrigeBotaoCalendario();
   }
 
   private atribuirMenuContextoAosEventos() {
@@ -166,10 +180,16 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
             this.fc.getCalendar().today()
             this.carregarEventosDoDia()
           }
+        },
+        myCustomCalendar: {
+          icon: 'myCustomCalendar',
+          click: () => {
+
+          }
         }
       },
       header: {
-        left: 'myCustomLeft,myCustomHoje,myCustomRight',
+        left: 'myCustomLeft,myCustomHoje,myCustomRight,myCustomCalendar',
         center: 'title',
         right: ''
       },
