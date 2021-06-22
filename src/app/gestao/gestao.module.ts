@@ -33,6 +33,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AgendamentoComponent } from './agendamento/agendamento.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 export function getJwtToken(): string {
   return sessionStorage.getItem('token');
@@ -72,7 +73,8 @@ export function getJwtToken(): string {
     MatButtonModule,
     InputNumberModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    OverlayPanelModule
   ],
   providers: [LoginGuard, ConfirmationService, CurrencyPipe],
   declarations: [AgendamentoComponent, CrudServicoComponent],

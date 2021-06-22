@@ -1,3 +1,14 @@
+<p-dialog #dserv header="Serviços" [(visible)]="displayDialogServicos" [modal]="true" [draggable]="false">
+  <ng-template ngFor let-item [ngForOf]="servicos" let-i="index">
+    {{item.label}}<br />
+  </ng-template>
+  <p-footer>
+    <br />
+    <button pButton type="button" label="Ok" icon="fa fa-check" class="p-button-raised"
+      (click)="dserv.close()"></button>
+  </p-footer>
+</p-dialog>
+
 <table>
   <tr>
     <td><label>Cliente*: </label></td>
@@ -30,7 +41,9 @@
       <p-multiSelect (onChange)="atualizarPrecoAgendamento($event)" defaultLabel="Selecione"
         selectedItemsLabel="{0} items selecionados" [options]="servicos" [(ngModel)]="agendamento.servicos"
         [panelStyle]="{minWidth:'k'}" [style]="{'width':'523px'}">
-      </p-multiSelect>
+      </p-multiSelect>&nbsp;
+      <button pButton type="button" label="Ver" icon="fa fa-eye" class="p-button-raised"
+        *ngIf="agendamento.servicos && agendamento.servicos.length > 0" (click)="verServicos()"></button>
     </td>
   </tr>
   <tr>

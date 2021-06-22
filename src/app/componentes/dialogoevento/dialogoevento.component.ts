@@ -25,6 +25,7 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
   pt: any;
   displayDialogNovoCliente = false;
   displayDialogFaturamento = false;
+  displayDialogServicos = false;
 
   @ViewChild('proDD', { static: true }) proDD: Dropdown;
 
@@ -179,6 +180,10 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
     this.displayDialogNovoCliente = true;
   }
 
+  verServicos() {
+    this.displayDialogServicos = true
+  }
+
   //TODO remover
   getAgendamento(): string {
     return JSON.stringify(this.agendamento);
@@ -187,7 +192,7 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dialogoEventoService.listarServicos().subscribe(data => {
       data.entidade.forEach(element => {
-        this.servicos.push({ label: element.nome, value: element.id, valor: element.valor });
+        this.servicos.push({ label: element.nome + " - " + element.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }), value: element.id, valor: element.valor });
       });
     });
 
