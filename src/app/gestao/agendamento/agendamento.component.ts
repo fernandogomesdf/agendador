@@ -16,6 +16,7 @@ import { ConfirmationService, MenuItem } from 'primeng/api';
 import { Overlay } from '@angular/cdk/overlay';
 import { MatMenuTrigger } from '@angular/material/menu';
 
+
 @Component({
   selector: 'app-agendamento',
   templateUrl: './agendamento.component.html',
@@ -29,11 +30,14 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
   displayDialogNovoEvento = false
   tituloNovoEvento = "Novo Agendamento"
   @ViewChild('fc', { static: true }) fc: FullCalendar;
+  @ViewChild('picker', { static: true }) picker: any;
 
   @ViewChild(MatMenuTrigger)
   contextMenu: MatMenuTrigger
+
   contextMenuPosition = { x: '0px', y: '0px' }
   eventIdContext: string
+  hiddenDatePicker: any
 
 
   constructor(private appService: AppService,
@@ -46,6 +50,11 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.carregarRecursos()
     this.carregarEventosDoDia()
+  }
+
+  onDate(evt) {
+    this.fc.getCalendar().gotoDate(new Date(this.hiddenDatePicker));
+    this.corrigeBotaoCalendario();
   }
 
   private corrigeBotaoCalendario() {
@@ -184,7 +193,7 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
         myCustomCalendar: {
           icon: 'myCustomCalendar',
           click: () => {
-
+            this.picker.open()
           }
         }
       },

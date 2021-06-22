@@ -1,3 +1,6 @@
+<input matInput type="hidden" [(ngModel)]="hiddenDatePicker" [matDatepicker]="picker" (dateInput)="onDate($event)"/>
+<mat-datepicker #picker ></mat-datepicker>
+
 <p-fullCalendar #fc [events]="events" [options]="options"></p-fullCalendar>
 
 <!--menu de contexto-->

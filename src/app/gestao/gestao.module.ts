@@ -30,7 +30,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AgendamentoComponent } from './agendamento/agendamento.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 export function getJwtToken(): string {
   return sessionStorage.getItem('token');
@@ -68,7 +70,9 @@ export function getJwtToken(): string {
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    InputNumberModule
+    InputNumberModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [LoginGuard, ConfirmationService, CurrencyPipe],
   declarations: [AgendamentoComponent, CrudServicoComponent],
