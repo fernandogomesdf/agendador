@@ -15,6 +15,7 @@ import { AgendadorEventEmmiterService } from 'src/app/services/agendadoreventemm
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { Overlay } from '@angular/cdk/overlay';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { Faturamento } from 'src/app/componentes/dialogoevento/faturamento';
 
 
 @Component({
@@ -298,7 +299,12 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
   }
 
   fecharFaturarContexto() {
-
+    let faturamento = new Faturamento()
+    faturamento.idEvento = this.eventIdContext
+    this.displayDialogNovoEvento = true
+    this.clicouEvento = true
+    this.tituloNovoEvento = "Editar Agendamento";
+    EventEmitterService.get('dialogoNovoEvento').emit(faturamento);
   }
 
   onContextMenu(event: MouseEvent, item: any) {

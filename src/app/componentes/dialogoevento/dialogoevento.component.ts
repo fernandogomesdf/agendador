@@ -7,6 +7,7 @@ import { AppService } from 'src/app/app.service';
 import { Evento } from './evento';
 import { DateUtilService } from 'src/app/service/dateutil.service';
 import { AgendadorEventEmmiterService } from 'src/app/services/agendadoreventemmiter.service';
+import { Faturamento } from './faturamento';
 
 @Component({
   selector: 'rn-criarevento',
@@ -40,6 +41,12 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
         this.appService.requestGet('/evento/buscar/' + data._id).subscribe(data => {
           this.carregarAgendamento(data)
         })
+      } else if (data instanceof Faturamento) {
+        this.appService.requestGet('/evento/buscar/' + data.idEvento).subscribe(data => {
+          this.carregarAgendamento(data)
+        })
+        this.dialogoEventoService
+        this.displayDialogFaturamento = true
       } else {
         switch (data) {
           case "salvar":
@@ -57,6 +64,9 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
           case "cancelar":
             this.cancelar();
             break;
+          default:
+            console.log(data)
+            break
         }
       }
     });
