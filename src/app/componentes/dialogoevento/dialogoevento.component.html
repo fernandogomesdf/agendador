@@ -1,11 +1,11 @@
-<p-dialog #dserv header="Serviços" [(visible)]="displayDialogServicos" [modal]="true" [draggable]="false">
+<p-dialog header="Serviços" [(visible)]="displayDialogServicos" [modal]="true" [draggable]="false">
   <ng-template ngFor let-item [ngForOf]="servicosConsultados" let-i="index">
-    {{item.nome}} - {{item.valor | currency:'BRL':true:'1.2-2'}}<br />
+    {{item.nome}} - {{item.valor | currency:'BRL':'symbol':'1.2-2'}}<br />
   </ng-template>
   <p-footer>
     <br />
     <button pButton type="button" label="Ok" icon="fa fa-check" class="p-button-raised"
-      (click)="dserv.close()"></button>
+      (click)="fecharServicos()"></button>
   </p-footer>
 </p-dialog>
 

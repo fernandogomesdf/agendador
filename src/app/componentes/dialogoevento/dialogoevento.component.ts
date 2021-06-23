@@ -192,6 +192,10 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
     })
   }
 
+  fecharServicos(){
+    this.displayDialogServicos = false
+  }
+
   //TODO remover
   getAgendamento(): string {
     return JSON.stringify(this.agendamento);
