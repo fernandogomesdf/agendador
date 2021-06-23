@@ -112,8 +112,8 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
     this.agendamento.cliente = evento.cliente
     this.setFoneNome(this.agendamento.cliente)
     this.agendamento.valor = evento.valor
+    this.agendamento.servicos = []
     evento.servicos.forEach(element => {
-      this.agendamento.servicos = []
       this.agendamento.servicos.push(element.id)
     });
     this.agendamento.duracao = evento.duracao
@@ -192,7 +192,7 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
     })
   }
 
-  fecharServicos(){
+  fecharServicos() {
     this.displayDialogServicos = false
   }
 

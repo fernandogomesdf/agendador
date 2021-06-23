@@ -1,6 +1,6 @@
 <p-dialog header="Serviços" [(visible)]="displayDialogServicos" [modal]="true" [draggable]="false">
   <ng-template ngFor let-item [ngForOf]="servicosConsultados" let-i="index">
-    {{item.nome}} - {{item.valor | currency:'BRL':'symbol':'1.2-2'}}<br />
+    - {{item.nome}} - {{item.valor | currency:'BRL':'symbol':'1.2-2'}}<br />
   </ng-template>
   <p-footer>
     <br />
