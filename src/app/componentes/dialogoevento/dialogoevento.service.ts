@@ -16,6 +16,10 @@ export class DialogoeventoService {
     return this.appService.requestPost('/servico/buscar', '{first:0, rows:200}');
   }
 
+  listarServicosSelecionados(servicos): any {
+    return this.appService.requestPost('/servico/buscar', '{first:0, rows:200, servicos : '+ JSON.stringify(servicos) +'}');
+  }
+
   listarProfissionais(): any {
     return this.appService.requestPost('/profissional/buscar', '{first:0, rows:200}');
   }

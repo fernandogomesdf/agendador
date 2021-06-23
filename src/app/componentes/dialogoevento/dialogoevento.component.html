@@ -1,6 +1,6 @@
 <p-dialog #dserv header="Serviços" [(visible)]="displayDialogServicos" [modal]="true" [draggable]="false">
-  <ng-template ngFor let-item [ngForOf]="servicos" let-i="index">
-    {{item.label}}<br />
+  <ng-template ngFor let-item [ngForOf]="servicosConsultados" let-i="index">
+    {{item.nome}} - {{item.valor | currency:'BRL':true:'1.2-2'}}<br />
   </ng-template>
   <p-footer>
     <br />
@@ -91,7 +91,7 @@
 <!-- {{getAgendamento()}} -->
 
 <p-dialog header="Novo Cliente" [maximizable]="true" [(visible)]="displayDialogNovoCliente"
-  [contentStyle]="{'overflow':'visible'}">
+  [contentStyle]="{'overflow':'visible'}" [modal]="true" [draggable]="false">
   <rn-criarcliente></rn-criarcliente>
   <p-footer>
     <button pButton (click)="cancelarNovoCliente()" type="button" label="Cancelar" icon="fa fa-ban"

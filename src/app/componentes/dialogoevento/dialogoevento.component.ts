@@ -16,16 +16,17 @@ import { Faturamento } from './faturamento';
 })
 export class DialogoeventoComponent implements OnInit, AfterViewInit {
 
-  resultsCliente: string[];
-  servicos: SelectItemRN[] = [];
-  profissionais: SelectItem[] = [];
-  mensagensValidacao: string[] = [];
-  agendamento: any = { profissional: {} };
-  faturamento: any = { tipoDesconto: 'PERCENTUAL' };
-  pt: any;
-  displayDialogNovoCliente = false;
-  displayDialogFaturamento = false;
-  displayDialogServicos = false;
+  resultsCliente: string[]
+  servicos: SelectItemRN[] = []
+  servicosConsultados = []
+  profissionais: SelectItem[] = []
+  mensagensValidacao: string[] = []
+  agendamento: any = { profissional: {} }
+  faturamento: any = { tipoDesconto: 'PERCENTUAL' }
+  pt: any
+  displayDialogNovoCliente = false
+  displayDialogFaturamento = false
+  displayDialogServicos = false
 
   @ViewChild('proDD', { static: true }) proDD: Dropdown;
 
@@ -91,6 +92,10 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
         }
       }
     });
+  }
+
+  consultarServicosSelecionados() {
+
   }
 
   ngOnDestroy() {
@@ -182,6 +187,9 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
 
   verServicos() {
     this.displayDialogServicos = true
+    this.dialogoEventoService.listarServicosSelecionados(this.agendamento.servicos).subscribe(data => {
+      this.servicosConsultados = data.entidade
+    })
   }
 
   //TODO remover
