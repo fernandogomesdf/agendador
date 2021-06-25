@@ -55,7 +55,8 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
 
   onDate(evt) {
     this.fc.getCalendar().gotoDate(new Date(this.hiddenDatePicker));
-    this.corrigeBotaoCalendario();
+    this.corrigeBotaoCalendario()
+    this.carregarEventosDoDia()
   }
 
   private corrigeBotaoCalendario() {
