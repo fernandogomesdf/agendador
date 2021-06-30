@@ -122,7 +122,7 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
         color = '#7300a8' // roxo
       } else if (element.status == 'NAO_COMPARECEU') {
         color = '#686868' // cinza
-      } else if (element.status == 'FECHADO') {
+      } else if (element.status == 'FATURADO') {
         color = '#38908F' // verde
       }
     }

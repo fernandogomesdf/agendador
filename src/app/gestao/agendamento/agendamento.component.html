@@ -1,4 +1,4 @@
-<input matInput type="hidden" [(ngModel)]="hiddenDatePicker" [matDatepicker]="picker" (dateInput)="onDate($event)"/>
+<input matInput type="hidden" [(ngModel)]="hiddenDatePicker" [matDatepicker]="picker" (dateInput)="onDate($event)" />
 <mat-datepicker #picker></mat-datepicker>
 
 <p-fullCalendar #fc [events]="events" [options]="options"></p-fullCalendar>
@@ -47,7 +47,7 @@
       *ngIf="clicouEvento"></button>
 
     <button pButton type="button" (click)="fecharFaturar()" label="Fechar e faturar"
-      title="Solicita informações de pagamento e coloca o agendamento no status 'Fechado'" icon="fa fa-money"
+      title="Solicita informações de pagamento e coloca o agendamento no status 'Faturado'" icon="fa fa-money"
       class="p-button-raised ui-button-green" *ngIf="clicouEvento"></button>
 
     <button pButton type="button" (click)="cancelarNovoEvento()" title="Fecha sem alterações" label="Cancelar"
