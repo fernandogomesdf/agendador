@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AgendamentoComponent } from './agendamento.component';
 
-describe('CalendarioAlternativoComponent', () => {
+describe('AgendamentoComponent', () => {
   let component: AgendamentoComponent;
   let fixture: ComponentFixture<AgendamentoComponent>;
 

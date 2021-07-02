@@ -7,7 +7,7 @@ import { AgendamentoComponent } from './agendamento/agendamento.component';
 
 const routes: Routes = [
   { path: 'publico/login', component: LoginComponent },
-  { path: 'gestao/calendario_alternativo', component: AgendamentoComponent, canActivate: [LoginGuard] },
+  { path: 'gestao/agendamentos', component: AgendamentoComponent, canActivate: [LoginGuard] },
   { path: 'gestao/servicos', component: CrudServicoComponent, canActivate: [LoginGuard] },
   { path: '', component: AgendamentoComponent, canActivate: [LoginGuard] }
 ];
