@@ -266,7 +266,7 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
     this.displayDialogFaturamento = false
   }
 
-  getValorRecebido() {
+  getValorRecebido(formatar: boolean) {
     let dinheiro = this.toFloat(this.faturamento.dinheiro)
     let credito = this.toFloat(this.faturamento.credito)
     let debito = this.toFloat(this.faturamento.debito)
@@ -276,7 +276,26 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
     }
     let resultadoFormatado = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(resultado)
     this.faturamento.recebido = resultado
-    return resultado ? resultadoFormatado : 0
+    return resultado ? (formatar ? resultadoFormatado : +resultado) : 0
+  }
+
+  getValorServicos(): number {
+    return +this.agendamento.valor
+  }
+
+  getValorQueFalta(): number {
+    let dinheiro = this.toFloat(this.faturamento.dinheiro)
+    let credito = this.toFloat(this.faturamento.credito)
+    let debito = this.toFloat(this.faturamento.debito)
+    let somatorioRecebido: number = (dinheiro + credito + debito)
+    let valorDesconto = 0;
+    if (this.faturamento.tipoDesconto == 'PERCENTUAL') {
+      valorDesconto =  ((somatorioRecebido * this.faturamento.desconto) / 100)  
+    } else {
+      valorDesconto = +this.faturamento.desconto
+    }
+
+    return +this.getValorServicos() - +this.getValorRecebido(false) - (valorDesconto ? valorDesconto : 0)
   }
 
   descontar(valor: number): number {
