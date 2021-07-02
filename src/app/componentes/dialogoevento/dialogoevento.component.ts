@@ -283,6 +283,16 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
     return +this.agendamento.valor
   }
 
+  getValorQueSobra(): number {
+    let valorQueFalta = this.getValorQueFalta()
+    if (valorQueFalta && valorQueFalta < 0) {
+      valorQueFalta = Math.abs(valorQueFalta)
+    } else {
+      valorQueFalta = 0
+    }
+    return valorQueFalta
+  }
+
   getValorQueFalta(): number {
     let dinheiro = this.toFloat(this.faturamento.dinheiro)
     let credito = this.toFloat(this.faturamento.credito)
@@ -290,12 +300,16 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
     let somatorioRecebido: number = (dinheiro + credito + debito)
     let valorDesconto = 0;
     if (this.faturamento.tipoDesconto == 'PERCENTUAL') {
-      valorDesconto =  ((somatorioRecebido * this.faturamento.desconto) / 100)  
+      valorDesconto = ((somatorioRecebido * this.faturamento.desconto) / 100)
     } else {
       valorDesconto = +this.faturamento.desconto
     }
 
     return +this.getValorServicos() - +this.getValorRecebido(false) - (valorDesconto ? valorDesconto : 0)
+  }
+
+  abs(valor: number) {
+    return Math.abs(valor)
   }
 
   descontar(valor: number): number {

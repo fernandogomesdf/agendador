@@ -191,9 +191,15 @@
     <tr>
       <td></td>
       <td>
-        <font size="1">= (dinheiro + débito + crédito) - desconto</font><br />
+        <font size="1">= (dinheiro + débito + crédito) - desconto</font>
+        <br />
+        <br />
         <span style="color: red;" *ngIf="getValorQueFalta() >= 0.01">falta {{ getValorQueFalta() |
           currency:'BRL':'symbol':'1.2-2'}}</span>
+
+        <span style="color: red;" *ngIf="getValorQueSobra() > 0">cobrando a mais {{ getValorQueSobra() |
+          currency:'BRL':'symbol':'1.2-2'}}</span>
+
       </td>
     </tr>
   </table>
@@ -201,7 +207,7 @@
   <p-footer>
     <button pButton (click)="cancelarFaturamento()" type="button" label="Cancelar" icon="fa fa-ban"
       class="p-button-raised p-button-secondary"></button>
-    <button pButton (click)="faturar()" [disabled]="getValorQueFalta() >= 0.01" type="button" label="Faturar" icon="fa fa-money"
-      class="p-button-raised ui-button-green"></button>
+    <button pButton (click)="faturar()" [disabled]="getValorQueFalta() >= 0.01" type="button" label="Faturar"
+      icon="fa fa-money" class="p-button-raised ui-button-green"></button>
   </p-footer>
 </p-dialog>
