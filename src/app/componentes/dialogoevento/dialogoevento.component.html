@@ -54,12 +54,12 @@
     </td>
   </tr>
   <tr>
-    <td><label>Valor*: </label></td>
+    <td><label>Valor total: </label></td>
     <td>
       <div class="p-inputgroup" style="width: 260px;">
         <span class="p-inputgroup-addon">R$</span>
         <input currencyMask [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text"
-          [(ngModel)]="agendamento.valor" pInputText />
+          [(ngModel)]="agendamento.valor" pInputText disabled />
       </div>
     </td>
   </tr>

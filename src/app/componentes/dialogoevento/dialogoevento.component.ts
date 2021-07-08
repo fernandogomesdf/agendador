@@ -244,8 +244,12 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
   }
 
   abrirFaturamento() {
-    this.faturamento.dinheiro = this.agendamento.valor
     this.displayDialogFaturamento = true
+    this.appService.requestPost('/comanda/buscar', { data: this.agendamento }).subscribe(data => {
+      console.log(data)
+    })
+
+    //
   }
 
   faturar() {
