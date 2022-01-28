@@ -4,7 +4,6 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import { GestaoRoutingModule } from './gestao-routing.module';
 import { ComponentesModule } from '../componentes/componentes.module';
 
-import { FullCalendarModule } from 'primeng/fullcalendar';
 import { DialogModule } from 'primeng/dialog';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { MultiSelectModule } from 'primeng/multiselect';
@@ -34,7 +33,24 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AgendamentoComponent } from './agendamento/agendamento.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
+// plugins do calendario
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
+import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
+
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  dayGridPlugin,
+  interactionPlugin,
+  timeGridPlugin,
+  resourceTimelinePlugin,
+  resourceTimeGridPlugin
+]);
+
+// armazenamento do token
 export function getJwtToken(): string {
   return sessionStorage.getItem('token');
 }

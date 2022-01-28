@@ -1,12 +1,8 @@
-import { Component, OnInit, ViewChild, AfterViewInit, TemplateRef, ViewContainerRef, ElementRef } from '@angular/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
-import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
+import { FullCalendar } from 'primeng/fullcalendar';
+
+import { Component, OnInit, ViewChild, AfterViewInit, ViewContainerRef, ElementRef } from '@angular/core';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
 import { AppService } from 'src/app/app.service';
-import { FullCalendar } from 'primeng/fullcalendar';
 import { Evento } from 'src/app/componentes/dialogoevento/evento';
 import ptLocale from '@fullcalendar/core/locales/pt';
 import { DateUtilService } from 'src/app/service/dateutil.service';
@@ -16,7 +12,6 @@ import { ConfirmationService, MenuItem } from 'primeng/api';
 import { Overlay } from '@angular/cdk/overlay';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Faturamento } from 'src/app/componentes/dialogoevento/faturamento';
-
 
 @Component({
   selector: 'app-agendamento',
@@ -148,7 +143,6 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
 
   getOptions() {
     return {
-      plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, resourceTimelinePlugin, resourceTimeGridPlugin],
       defaultView: 'resourceTimeGridDay',
       editable: true,
       allDaySlot: false,

@@ -22,27 +22,26 @@ import { DialogoeventoComponent } from './dialogoevento/dialogoevento.component'
 registerLocaleData(localeBr)
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    CurrencyMaskModule,
-    AutoCompleteModule,
-    InputTextModule,
-    EditorModule,
-    MultiSelectModule,
-    InputMaskModule,
-    DropdownModule,
-    RadioButtonModule,
-    CalendarModule,
-    DialogModule,
-    AccordionModule,
-    TabViewModule,
-    InputNumberModule
-  ],
-  declarations: [DialogoeventoComponent, CriarclienteComponent],
-  exports: [DialogoeventoComponent, CriarclienteComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [],
-  providers: [{ provide: LOCALE_ID, useValue: 'pt' }]
+    imports: [
+        CommonModule,
+        FormsModule,
+        CurrencyMaskModule,
+        AutoCompleteModule,
+        InputTextModule,
+        EditorModule,
+        MultiSelectModule,
+        InputMaskModule,
+        DropdownModule,
+        RadioButtonModule,
+        CalendarModule,
+        DialogModule,
+        AccordionModule,
+        TabViewModule,
+        InputNumberModule
+    ],
+    declarations: [DialogoeventoComponent, CriarclienteComponent],
+    exports: [DialogoeventoComponent, CriarclienteComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    providers: [{ provide: LOCALE_ID, useValue: 'pt' }]
 })
 export class ComponentesModule { }
