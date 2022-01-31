@@ -139,7 +139,6 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
   }
 
   carregarEventosDoDia() {
-    console.log(this.fc.getApi().getDate())
     this.appService.requestPost('/evento/buscar', { dataInicio: this.fc.getApi().getDate(), first: 0, rows: 200 }).subscribe(data => {
       if (data) {
         this.fc.getApi().removeAllEvents()
@@ -162,8 +161,9 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
     this.corrigeBotaoCalendario();
   }
 
+  // TODO corrigir, nao abre menu de contexto
   private atribuirMenuContextoAosEventos() {
-    let elements = this.elem.nativeElement.querySelectorAll('.fc-time-grid-event')
+    let elements = this.elem.nativeElement.querySelectorAll('.fc-timegrid-event')
     let _this = this;
     elements.forEach(element => {
       element.oncontextmenu = function (e) {
@@ -171,6 +171,24 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
         _this.onContextMenu(e, element)
         return false
       };
+    });
+  }
+
+  onContextMenu(event: MouseEvent, item: any) {
+    event.preventDefault();
+    this.contextMenuPosition.x = event.clientX + 'px';
+    this.contextMenuPosition.y = event.clientY + 'px';
+    this.contextMenu.menuData = { 'item': item };
+    this.contextMenu.menu.focusFirstItem('mouse');
+    this.contextMenu.openMenu();
+
+    // procura o evento clicado
+    // o id do evento foi adicionado ao nome da classe como workaround
+    let classes = item.classList
+    classes.forEach(className => {
+      if (className.includes("eventid")) {
+        this.eventIdContext = className.split('-')[1]
+      }
     });
   }
 
@@ -302,23 +320,7 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
     EventEmitterService.get('dialogoNovoEvento').emit(faturamento);
   }
 
-  onContextMenu(event: MouseEvent, item: any) {
-    event.preventDefault();
-    this.contextMenuPosition.x = event.clientX + 'px';
-    this.contextMenuPosition.y = event.clientY + 'px';
-    this.contextMenu.menuData = { 'item': item };
-    this.contextMenu.menu.focusFirstItem('mouse');
-    this.contextMenu.openMenu();
 
-    // procura o evento clicado
-    // o id do evento foi adicionado ao nome da classe como workaround
-    let classes = item.classList
-    classes.forEach(className => {
-      if (className.includes("eventid")) {
-        this.eventIdContext = className.split('-')[1]
-      }
-    });
-  }
 
   confirmaExcluir() {
     this.confirmationService.confirm({
