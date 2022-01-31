@@ -1,5 +1,3 @@
-import { FullCalendar } from 'primeng/fullcalendar';
-
 import { Component, OnInit, ViewChild, AfterViewInit, ViewContainerRef, ElementRef } from '@angular/core';
 import { EventEmitterService } from 'src/app/service/eventemitter.service';
 import { AppService } from 'src/app/app.service';
@@ -12,6 +10,8 @@ import { ConfirmationService, MenuItem } from 'primeng/api';
 import { Overlay } from '@angular/cdk/overlay';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Faturamento } from 'src/app/componentes/dialogoevento/faturamento';
+import { Calendar, CalendarOptions } from '@fullcalendar/core';
+import { FullCalendarComponent } from '@fullcalendar/angular';
 
 @Component({
   selector: 'app-agendamento',
@@ -25,7 +25,8 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
   clicouEvento: boolean = false;
   displayDialogNovoEvento = false
   tituloNovoEvento = "Novo Agendamento"
-  @ViewChild('fc', { static: true }) fc: FullCalendar;
+
+  @ViewChild('fc', { static: true }) fc: FullCalendarComponent;
   @ViewChild('picker', { static: true }) picker: any;
 
   @ViewChild(MatMenuTrigger)
@@ -35,6 +36,66 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
   eventIdContext: string
   hiddenDatePicker: any
 
+  calendarOptions: CalendarOptions = {
+    timeZone: 'America/Sao_Paulo',
+    initialView: 'resourceTimeGridDay',
+    editable: true,
+    allDaySlot: false,
+    nowIndicator: true,
+    locale: ptLocale,
+    slotMinTime: '06:00:00',
+    contentHeight: 'auto',
+    slotLabelFormat: {
+      hour: 'numeric',
+      minute: '2-digit',
+      omitZeroMinute: false,
+      meridiem: 'short'
+    },
+    selectable: true,
+    slotDuration: '00:15:00',
+    schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+    resources: [
+      { id: 'a', title: 'Em espera' }
+    ],
+    eventClick: (e) => { this.cliqueEvento(e) },
+    dateClick: (e) => { this.cliqueData(e) },
+    customButtons: {
+      myCustomLeft: {
+        icon: 'fc-icon-chevron-left',
+        click: (arg) => {
+          this.fc.getApi().prev()
+          this.carregarEventosDoDia()
+        }
+      },
+      myCustomRight: {
+        icon: 'fc-icon-chevron-right',
+        click: () => {
+          this.fc.getApi().next()
+          this.carregarEventosDoDia()
+        }
+      },
+      myCustomHoje: {
+        text: 'hoje',
+        click: () => {
+          this.fc.getApi().today()
+          this.carregarEventosDoDia()
+        }
+      },
+      myCustomCalendar: {
+        icon: 'myCustomCalendar',
+        click: () => {
+          this.picker.open()
+        }
+      }
+    },
+    headerToolbar: {
+      left: 'myCustomLeft,myCustomHoje,myCustomRight,myCustomCalendar',
+      center: 'title',
+      right: ''
+    },
+    eventResize: (event) => { this.atualizarEvento(event) },
+    eventDrop: (event) => { this.atualizarEvento(event) }
+  };
 
   constructor(private appService: AppService,
     private agendadorEmiter: AgendadorEventEmmiterService,
@@ -49,7 +110,7 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
   }
 
   onDate(evt) {
-    this.fc.getCalendar().gotoDate(new Date(this.hiddenDatePicker));
+    this.fc.getApi().gotoDate(new Date(this.hiddenDatePicker));
     this.corrigeBotaoCalendario()
     this.carregarEventosDoDia()
   }
@@ -63,10 +124,12 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
   }
 
   carregarRecursos() {
-    this.appService.requestPost('/profissional/buscar', { data: this.fc.getCalendar().state.currentDate, first: 0, rows: 200 }).subscribe(data => {
+
+    console.log()
+    this.appService.requestPost('/profissional/buscar', { first: 0, rows: 200 }).subscribe(data => {
       if (data) {
         data.forEach(element => {
-          this.fc.getCalendar().addResource({ id: element.id, title: element.nome })
+          this.fc.getApi().addResource({ id: element.id, title: element.nome })
         });
       }
     })
@@ -76,11 +139,12 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
   }
 
   carregarEventosDoDia() {
-    this.appService.requestPost('/evento/buscar', { dataInicio: this.fc.getCalendar().state.currentDate, first: 0, rows: 200 }).subscribe(data => {
+    console.log(this.fc.getApi().getDate())
+    this.appService.requestPost('/evento/buscar', { dataInicio: this.fc.getApi().getDate(), first: 0, rows: 200 }).subscribe(data => {
       if (data) {
-        this.fc.getCalendar().removeAllEvents()
+        this.fc.getApi().removeAllEvents()
         data.forEach(element => {
-          this.fc.getCalendar().addEvent({
+          this.fc.getApi().addEvent({
             "id": element.id,
             "classNames": ["eventid-" + element.id],
             "title": element.cliente.nome + "\n" + "ID evento : " + element.id,
@@ -125,8 +189,6 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.options = this.getOptions()
-
     EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
       if (data === 'salvou') {
         this.displayDialogNovoEvento = false;
@@ -139,68 +201,6 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
       { label: 'View', icon: 'pi pi-fw pi-search', command: () => alert('View') },
       { label: 'Delete', icon: 'pi pi-fw pi-times', command: () => alert('Delete') }
     ];
-  }
-
-  getOptions() {
-    return {
-      defaultView: 'resourceTimeGridDay',
-      editable: true,
-      allDaySlot: false,
-      nowIndicator: true,
-      locale: ptLocale,
-      minTime: '06:00:00',
-      contentHeight: 'auto',
-      slotLabelFormat: {
-        hour: 'numeric',
-        minute: '2-digit',
-        omitZeroMinute: false,
-        meridiem: 'short'
-      },
-      selectable: true,
-      slotDuration: '00:15:00',
-      schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-      resources: [
-        { id: 'a', title: 'Em espera' }
-      ],
-      eventClick: (e) => { this.cliqueEvento(e) },
-      dateClick: (e) => { this.cliqueData(e) },
-      customButtons: {
-        myCustomLeft: {
-          icon: 'fc-icon-chevron-left',
-          click: (arg) => {
-            this.fc.getCalendar().prev()
-            this.carregarEventosDoDia()
-          }
-        },
-        myCustomRight: {
-          icon: 'fc-icon-chevron-right',
-          click: () => {
-            this.fc.getCalendar().next()
-            this.carregarEventosDoDia()
-          }
-        },
-        myCustomHoje: {
-          text: 'hoje',
-          click: () => {
-            this.fc.getCalendar().today()
-            this.carregarEventosDoDia()
-          }
-        },
-        myCustomCalendar: {
-          icon: 'myCustomCalendar',
-          click: () => {
-            this.picker.open()
-          }
-        }
-      },
-      header: {
-        left: 'myCustomLeft,myCustomHoje,myCustomRight,myCustomCalendar',
-        center: 'title',
-        right: ''
-      },
-      eventResize: (event) => { this.atualizarEvento(event) },
-      eventDrop: (event) => { this.atualizarEvento(event) }
-    }
   }
 
   atualizarEvento(event) {
