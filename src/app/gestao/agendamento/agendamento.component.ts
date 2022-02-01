@@ -161,7 +161,6 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
     this.corrigeBotaoCalendario();
   }
 
-  // TODO corrigir, nao abre menu de contexto
   private atribuirMenuContextoAosEventos() {
     let elements = this.elem.nativeElement.querySelectorAll('.fc-timegrid-event')
     let _this = this;
