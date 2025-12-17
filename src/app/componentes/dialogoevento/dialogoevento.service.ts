@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppService } from 'src/app/app.service';
+import { AppService } from '../../app.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class DialogoeventoService {
     return this.appService.requestPost('/servico/buscar', '{first:0, rows:200}');
   }
 
-  listarServicosSelecionados(servicos): any {
+  listarServicosSelecionados(servicos: any): any {
     return this.appService.requestPost('/servico/buscar', '{first:0, rows:200, servicos : '+ JSON.stringify(servicos) +'}');
   }
 

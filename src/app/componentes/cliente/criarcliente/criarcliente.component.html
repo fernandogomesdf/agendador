@@ -1,46 +1,60 @@
-<table>
-    <tr>
-        <td><label>Nome*: </label></td>
-        <td>
-            <input type="text" [(ngModel)]="cliente.nome" size="36" pInputText />
-        </td>
-    </tr>
-    <tr>
-        <td><label>Telefone*: </label></td>
-        <td>
-            <p-inputMask [(ngModel)]="cliente.telefone" size="12" mask="(99) 99999-9999"></p-inputMask>
-            &nbsp;&nbsp; <label> CPF: </label>
-            <p-inputMask [(ngModel)]="cliente.cpf" size="14" mask="999.999.999-99"></p-inputMask>
-        </td>
-    </tr>
-    <tr>
-        <td><label>E-mail: </label></td>
-        <td>
-            <input type="text" [(ngModel)]="cliente.email" size="36" pInputText />
-        </td>
-    </tr>
-    <tr>
-        <td><label>Sexo: </label></td>
-        <td>
-            F <p-radioButton name="sexo" value="F" [(ngModel)]="cliente.sexo"></p-radioButton>
-            M <p-radioButton name="sexo" value="M" [(ngModel)]="cliente.sexo"></p-radioButton>
+<div class="form-grid">
+  <!-- Nome -->
+  <div class="form-field">
+    <label class="form-label">Nome <span class="required">*</span></label>
+    <input type="text" name="nome" [(ngModel)]="cliente.nome" pInputText placeholder="Nome completo do cliente" />
+  </div>
 
-            &nbsp;&nbsp; <label>Aniversário: </label>
-            <p-inputMask [(ngModel)]="cliente.diaMesAniversario" size="3" mask="99/99"></p-inputMask>
-        </td>
-    </tr>
-    <tr>
-        <td><label>Observações: </label></td>
-        <td>
-            <p-editor [(ngModel)]="cliente.observacoes" [style]="{'height':'180px', 'width':'350px'}">
-                <p-header>
-                    <span class="ql-formats">
-                        <button class="ql-bold" aria-label="Negrito"></button>
-                        <button class="ql-italic" aria-label="Itálico"></button>
-                        <button class="ql-underline" aria-label="Sublinhado"></button>
-                    </span>
-                </p-header>
-            </p-editor>
-        </td>
-    </tr>
-</table>
+  <!-- Telefone e CPF -->
+  <div class="form-row">
+    <div class="form-field">
+      <label class="form-label">Telefone <span class="required">*</span></label>
+      <p-inputMask name="telefone" [(ngModel)]="cliente.telefone" mask="(99) 99999-9999" placeholder="(00) 00000-0000"></p-inputMask>
+    </div>
+    <div class="form-field">
+      <label class="form-label">CPF</label>
+      <p-inputMask name="cpf" [(ngModel)]="cliente.cpf" mask="999.999.999-99" placeholder="000.000.000-00"></p-inputMask>
+    </div>
+  </div>
+
+  <!-- E-mail -->
+  <div class="form-field">
+    <label class="form-label">E-mail</label>
+    <input type="email" name="email" [(ngModel)]="cliente.email" pInputText placeholder="email@exemplo.com" />
+  </div>
+
+  <!-- Sexo e Aniversário -->
+  <div class="form-row">
+    <div class="form-field">
+      <label class="form-label">Sexo</label>
+      <div class="flex align-items-center gap-4 mt-2">
+        <div class="flex align-items-center gap-2">
+          <p-radioButton name="sexo" value="F" [(ngModel)]="cliente.sexo"></p-radioButton>
+          <label>Feminino</label>
+        </div>
+        <div class="flex align-items-center gap-2">
+          <p-radioButton name="sexo" value="M" [(ngModel)]="cliente.sexo"></p-radioButton>
+          <label>Masculino</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Aniversário</label>
+      <p-inputMask name="aniversario" [(ngModel)]="cliente.diaMesAniversario" mask="99/99" placeholder="DD/MM"></p-inputMask>
+    </div>
+  </div>
+
+  <!-- Observações -->
+  <div class="form-field">
+    <label class="form-label">Observações</label>
+    <p-editor name="observacoes" [(ngModel)]="cliente.observacoes" [style]="{'height':'120px'}">
+      <ng-template pTemplate="header">
+        <span class="ql-formats">
+          <button class="ql-bold" aria-label="Negrito"></button>
+          <button class="ql-italic" aria-label="Itálico"></button>
+          <button class="ql-underline" aria-label="Sublinhado"></button>
+        </span>
+      </ng-template>
+    </p-editor>
+  </div>
+</div>

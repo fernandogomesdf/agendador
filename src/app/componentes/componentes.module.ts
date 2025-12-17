@@ -1,46 +1,42 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
+import { DialogoeventoComponent } from './dialogoevento/dialogoevento.component';
 import { FormsModule } from '@angular/forms';
-import { AutoCompleteModule } from 'primeng/autocomplete';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputTextModule } from 'primeng/inputtext';
-import { EditorModule } from 'primeng/editor';
-import { InputMaskModule } from 'primeng/inputmask';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
-import { AccordionModule } from 'primeng/accordion';
-import { TabViewModule } from 'primeng/tabview';
+import { ButtonModule } from 'primeng/button';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { Select } from 'primeng/select';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { DatePicker } from 'primeng/datepicker';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
+
 import localeBr from '@angular/common/locales/pt';
 
-import { CriarclienteComponent } from './cliente/criarcliente/criarcliente.component';
-import { CurrencyMaskModule } from './ng2-currency-mask/currency-mask.module';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { DialogoeventoComponent } from './dialogoevento/dialogoevento.component';
+
+import { CommonsModule } from '../commons/commons.module';
 
 registerLocaleData(localeBr)
 
 @NgModule({
     imports: [
         CommonModule,
+        CommonsModule,
         FormsModule,
-        CurrencyMaskModule,
-        AutoCompleteModule,
-        InputTextModule,
-        EditorModule,
-        MultiSelectModule,
-        InputMaskModule,
-        DropdownModule,
-        RadioButtonModule,
-        CalendarModule,
         DialogModule,
-        AccordionModule,
-        TabViewModule,
-        InputNumberModule
+        ButtonModule,
+        AutoCompleteModule,
+        Select,
+        MultiSelectModule,
+        DatePicker,
+        InputTextModule,
+        InputNumberModule,
+        CurrencyMaskModule,
+        DialogoeventoComponent
     ],
-    declarations: [DialogoeventoComponent, CriarclienteComponent],
-    exports: [DialogoeventoComponent, CriarclienteComponent],
+    declarations: [],
+    exports: [DialogoeventoComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [{ provide: LOCALE_ID, useValue: 'pt' }]
 })

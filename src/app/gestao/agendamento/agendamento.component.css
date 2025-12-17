@@ -1,6 +1,61 @@
+/* FullCalendar custom button */
 .fc-myCustomCalendar-button {
   font-family: "PrimeIcons" !important;
   text-indent: 0;
   font-size: 1rem;
   content: "\e99e";
+}
+
+/* Dialog footer layout */
+.dialog-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.status-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color, #e2e8f0);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+/* Calendar overlay enhancement */
+.calendar-overlay {
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .status-buttons {
+    flex-direction: column;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .status-buttons button,
+  .action-buttons button {
+    width: 100%;
+  }
 }

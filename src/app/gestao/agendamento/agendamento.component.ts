@@ -1,42 +1,74 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ViewContainerRef, ElementRef } from '@angular/core';
-import { EventEmitterService } from 'src/app/service/eventemitter.service';
-import { AppService } from 'src/app/app.service';
-import { Evento } from 'src/app/componentes/dialogoevento/evento';
+import { Component, OnInit, ViewChild, AfterViewInit, ViewContainerRef, ElementRef, PLATFORM_ID, inject as ngInject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { EventEmitterService } from '../../services/eventemitter.service';
+import { AppService } from '../../app.service';
+import { Evento } from '../../componentes/dialogoevento/evento';
 import ptLocale from '@fullcalendar/core/locales/pt';
-import { DateUtilService } from 'src/app/service/dateutil.service';
-import * as moment from 'moment';
-import { AgendadorEventEmmiterService } from 'src/app/services/agendadoreventemmiter.service';
+import { DateUtilService } from '../../services/dateutil.service';
+import moment from 'moment';
+// FullCalendar plugins agora registrados localmente (remoção de registerPlugins global devido a SSR)
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
+import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
+import { AgendadorEventEmmiterService } from '../../services/agendadoreventemmiter.service';
 import { ConfirmationService, MenuItem } from 'primeng/api';
-import { Overlay } from '@angular/cdk/overlay';
-import { MatMenuTrigger } from '@angular/material/menu';
-import { Faturamento } from 'src/app/componentes/dialogoevento/faturamento';
-import { Calendar, CalendarOptions } from '@fullcalendar/core';
+import { ContextMenu } from 'primeng/contextmenu';
+import { Faturamento } from '../../componentes/dialogoevento/faturamento';
+import { CalendarOptions, Calendar } from '@fullcalendar/core';
 import { FullCalendarComponent } from '@fullcalendar/angular';
+import { DatePickerModule, DatePicker } from 'primeng/datepicker';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { ComponentesModule } from '../../componentes/componentes.module';
 
 @Component({
   selector: 'app-agendamento',
   templateUrl: './agendamento.component.html',
-  styleUrls: ['./agendamento.component.css']
+  styleUrls: ['./agendamento.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    FullCalendarModule,
+    DatePickerModule,
+    ContextMenuModule,
+    DialogModule,
+    ButtonModule,
+    ComponentesModule
+  ]
 })
 export class AgendamentoComponent implements OnInit, AfterViewInit {
-  events: any[];
+  events: any[] = [];
   options: any;
-  items: MenuItem[];
+  items: MenuItem[] = [];
+  menuItems: MenuItem[] = [];
+  public isBrowserEnv = false;
   clicouEvento: boolean = false;
   displayDialogNovoEvento = false
   tituloNovoEvento = "Novo Agendamento"
 
-  @ViewChild('fc', { static: true }) fc: FullCalendarComponent;
-  @ViewChild('picker', { static: true }) picker: any;
+  // Como o calendário é renderizado condicionalmente (*ngIf) apenas no browser,
+  // precisamos de static:false para que o ViewChild seja resolvido depois que o elemento aparecer.
+  @ViewChild('fc', { static: false }) fc?: FullCalendarComponent;
+  @ViewChild('dp', { static: false }) dp?: DatePicker;
+  @ViewChild('cm', { static: false }) contextMenu?: ContextMenu;
 
-  @ViewChild(MatMenuTrigger)
-  contextMenu: MatMenuTrigger
+  datePickerTop = '0px';
+  datePickerLeft = '0px';
 
   contextMenuPosition = { x: '0px', y: '0px' }
-  eventIdContext: string
-  hiddenDatePicker: any
+  eventIdContext: string = ''
+  hiddenDatePicker: Date = new Date();
+  showCalendarOverlay = false;
 
-  calendarOptions: CalendarOptions = {
+  calendarOptions: any = {
+    plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin, resourceTimelinePlugin, resourceTimeGridPlugin],
     timeZone: 'America/Sao_Paulo',
     initialView: 'resourceTimeGridDay',
     editable: true,
@@ -57,34 +89,44 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
     resources: [
       { id: 'a', title: 'Em espera' }
     ],
-    eventClick: (e) => { this.cliqueEvento(e) },
-    dateClick: (e) => { this.cliqueData(e) },
+    eventClick: (e: any) => { this.cliqueEvento(e) },
+    dateClick: (e: any) => { this.cliqueData(e) },
+    eventDidMount: (info: any) => { this.anexarContextoEvento(info); },
     customButtons: {
       myCustomLeft: {
         icon: 'fc-icon-chevron-left',
-        click: (arg) => {
-          this.fc.getApi().prev()
-          this.carregarEventosDoDia()
+        click: () => {
+          const api = this.getCalendarApi();
+          if (!api) { return; }
+          api.prev();
+          this.carregarEventosDoDia();
         }
       },
       myCustomRight: {
         icon: 'fc-icon-chevron-right',
         click: () => {
-          this.fc.getApi().next()
-          this.carregarEventosDoDia()
+          const api = this.getCalendarApi();
+          if (!api) { return; }
+          api.next();
+          this.carregarEventosDoDia();
         }
       },
       myCustomHoje: {
         text: 'hoje',
         click: () => {
-          this.fc.getApi().today()
-          this.carregarEventosDoDia()
+          const api = this.getCalendarApi();
+          if (!api) { return; }
+          api.today();
+          this.carregarEventosDoDia();
         }
       },
       myCustomCalendar: {
         icon: 'myCustomCalendar',
-        click: () => {
-          this.picker.open()
+        click: (mouseEvent: MouseEvent, htmlElement: HTMLElement) => {
+          const rect = htmlElement.getBoundingClientRect();
+          this.datePickerTop = (rect.bottom + window.scrollY) + 'px';
+          this.datePickerLeft = (rect.left + window.scrollX) + 'px';
+          this.showCalendarOverlay = !this.showCalendarOverlay;
         }
       }
     },
@@ -93,100 +135,141 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
       center: 'title',
       right: ''
     },
-    eventResize: (event) => { this.atualizarEvento(event) },
-    eventDrop: (event) => { this.atualizarEvento(event) }
+    eventResize: (event: any) => { this.atualizarEvento(event) },
+    eventDrop: (event: any) => { this.atualizarEvento(event) }
   };
 
   constructor(private appService: AppService,
     private agendadorEmiter: AgendadorEventEmmiterService,
-    public overlay: Overlay,
     public viewContainerRef: ViewContainerRef,
     private elem: ElementRef,
-    private confirmationService: ConfirmationService) { }
-
-  ngAfterViewInit(): void {
-    this.carregarRecursos()
-    this.carregarEventosDoDia()
+    private confirmationService: ConfirmationService) {
+    // Define o flag antes da primeira verificação de mudança para evitar ExpressionChangedAfterItHasBeenCheckedError
+    this.isBrowserEnv = isPlatformBrowser(this.platformId);
   }
 
-  onDate(evt) {
-    this.fc.getApi().gotoDate(new Date(this.hiddenDatePicker));
-    this.corrigeBotaoCalendario()
-    this.carregarEventosDoDia()
+  private platformId = ngInject(PLATFORM_ID);
+  private isBrowser(): boolean { return isPlatformBrowser(this.platformId); }
+
+  ngAfterViewInit(): void {
+    if (!this.isBrowser()) { return; }
+    // Deferimos para garantir que o *ngIf já inseriu o componente do calendário no DOM.
+    setTimeout(() => {
+      this.initCalendarData();
+    });
+  }
+
+  private initCalendarData() {
+    const api = this.getCalendarApi();
+    if (!api) { return; }
+    this.carregarRecursos();
+    this.carregarEventosDoDia();
+  }
+
+  private getCalendarApi() {
+    return this.fc?.getApi();
+  }
+
+  onDate(evt: any) {
+    const api = this.getCalendarApi();
+    if (!api) { return; }
+    // PrimeNG Calendar emits the Date object directly or via event.value
+    const selectedDate = evt.value || evt;
+    if (selectedDate) {
+      api.gotoDate(selectedDate);
+      this.corrigeBotaoCalendario();
+      this.carregarEventosDoDia();
+      this.showCalendarOverlay = false;
+    }
   }
 
   private corrigeBotaoCalendario() {
-    var myCustomCalendar = document.getElementsByClassName("fc-myCustomCalendar-button")[0];
-    myCustomCalendar.innerHTML = '';
-    var i = document.createElement("i");
-    i.setAttribute('class', 'pi pi-calendar');
-    myCustomCalendar.appendChild(i);
+    if (!this.isBrowser()) { return; }
+    const btn = document.getElementsByClassName("fc-myCustomCalendar-button")[0] as HTMLElement | undefined;
+    if (!btn) return;
+    btn.innerHTML = '';
+    const i = document.createElement('i');
+    i.className = 'pi pi-calendar';
+    btn.appendChild(i);
   }
 
   carregarRecursos() {
-
-    console.log()
-    this.appService.requestPost('/profissional/buscar', { first: 0, rows: 200 }).subscribe(data => {
+    if (!this.isBrowser()) { return; }
+    const api = this.getCalendarApi();
+    if (!api) { return; }
+    const token = this.getToken();
+    if (!token) { return; }
+    this.appService.requestPost('/profissional/buscar', { first: 0, rows: 200 }).subscribe((data: any[]) => {
       if (data) {
-        data.forEach(element => {
-          this.fc.getApi().addResource({ id: element.id, title: element.nome })
+        data.forEach((element: any) => {
+          (api as any).addResource({ id: element.id, title: element.nome })
         });
       }
-    })
+    });
 
     // altera o botao myCustomCalendar
     this.corrigeBotaoCalendario();
   }
 
   carregarEventosDoDia() {
-    this.appService.requestPost('/evento/buscar', { dataInicio: this.fc.getApi().getDate(), first: 0, rows: 200 }).subscribe(data => {
-      if (data) {
-        this.fc.getApi().removeAllEvents()
-        data.forEach(element => {
-          this.fc.getApi().addEvent({
-            "id": element.id,
-            "classNames": ["eventid-" + element.id],
-            "title": element.cliente.nome + "\n" + "ID evento : " + element.id,
-            "start": element.dataInicio,
-            "end": element.dataFim,
-            "resourceId": (element.profissional ? element.profissional : {}).id ? element.profissional.id : "a",
-            "color": this.getColor(element)
-          })
-        })
-        this.atribuirMenuContextoAosEventos();
+    if (!this.isBrowser()) { 
+      console.log('[DEBUG] carregarEventosDoDia: não é browser');
+      return; 
+    }
+    const api = this.getCalendarApi();
+    if (!api) { 
+      console.log('[DEBUG] carregarEventosDoDia: api não disponível');
+      return; 
+    }
+    const token = this.getToken();
+    if (!token) { 
+      console.log('[DEBUG] carregarEventosDoDia: token não disponível');
+      return; 
+    }
+    
+    const dataInicio = api.getDate();
+    // Converter para ISO string para o backend
+    const dataInicioISO = dataInicio.toISOString();
+    console.log('[DEBUG] carregarEventosDoDia: buscando eventos para data:', dataInicioISO);
+    
+    this.appService.requestPost('/evento/buscar', { dataInicio: dataInicioISO, first: 0, rows: 200 }).subscribe({
+      next: (data: any[]) => {
+        console.log('[DEBUG] carregarEventosDoDia: resposta recebida:', data);
+        if (data) {
+          api.removeAllEvents();
+          data.forEach((element: any) => {
+            api.addEvent({
+              id: element.id,
+              classNames: ["eventid-" + element.id],
+              title: element.cliente.nome + "\n" + "ID evento : " + element.id,
+              start: element.dataInicio,
+              end: element.dataFim,
+              resourceId: (element.profissional ? element.profissional : {}).id ? element.profissional.id : "a",
+              color: this.getColor(element)
+            });
+          });
+          console.log('[DEBUG] carregarEventosDoDia: eventos adicionados:', data.length);
+        }
+      },
+      error: (err) => {
+        console.error('[DEBUG] carregarEventosDoDia: erro ao buscar eventos:', err);
       }
-    })
+    });
 
     // altera o botao myCustomCalendar
     this.corrigeBotaoCalendario();
   }
 
-  private atribuirMenuContextoAosEventos() {
-    let elements = this.elem.nativeElement.querySelectorAll('.fc-timegrid-event')
-    let _this = this;
-    elements.forEach(element => {
-      element.oncontextmenu = function (e) {
-        e.preventDefault()
-        _this.onContextMenu(e, element)
-        return false
-      };
-    });
-  }
+  private anexarContextoEvento(info: any) {
+    const el = info.el;
+    if (!el || (el as any)._contextBound) { return; }
+    (el as any)._contextBound = true;
 
-  onContextMenu(event: MouseEvent, item: any) {
-    event.preventDefault();
-    this.contextMenuPosition.x = event.clientX + 'px';
-    this.contextMenuPosition.y = event.clientY + 'px';
-    this.contextMenu.menuData = { 'item': item };
-    this.contextMenu.menu.focusFirstItem('mouse');
-    this.contextMenu.openMenu();
-
-    // procura o evento clicado
-    // o id do evento foi adicionado ao nome da classe como workaround
-    let classes = item.classList
-    classes.forEach(className => {
-      if (className.includes("eventid")) {
-        this.eventIdContext = className.split('-')[1]
+    el.addEventListener('contextmenu', (e: MouseEvent) => {
+      e.preventDefault();
+      this.eventIdContext = info.event.id;
+      if (this.contextMenu) {
+        this.contextMenu.show(e);
       }
     });
   }
@@ -206,6 +289,7 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    if (!this.isBrowser()) { return; }
     EventEmitterService.get('dialogoNovoEvento').subscribe(data => {
       if (data === 'salvou') {
         this.displayDialogNovoEvento = false;
@@ -214,13 +298,51 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
       }
     });
 
-    this.items = [
-      { label: 'View', icon: 'pi pi-fw pi-search', command: () => alert('View') },
-      { label: 'Delete', icon: 'pi pi-fw pi-times', command: () => alert('Delete') }
+    this.menuItems = [
+      {
+        label: 'Editar agendamento',
+        icon: 'pi pi-pencil',
+        command: () => {
+          this.contextMenu?.hide();
+          setTimeout(() => this.editarAgendamento(), 100);
+        }
+      },
+      {
+        label: 'Fechar e faturar',
+        icon: 'pi pi-wallet',
+        command: () => {
+          this.contextMenu?.hide();
+          setTimeout(() => this.fecharFaturarContexto(), 100);
+        }
+      },
+      {
+        label: 'Não compareceu',
+        icon: 'pi pi-times',
+        command: () => {
+          this.contextMenu?.hide();
+          setTimeout(() => this.atualizarNaoCompareceu(), 100);
+        }
+      },
+      {
+        label: 'Em atendimento',
+        icon: 'pi pi-briefcase',
+        command: () => {
+          this.contextMenu?.hide();
+          setTimeout(() => this.atualizarEmAtendimento(), 100);
+        }
+      },
+      {
+        label: 'Excluir agendamento',
+        icon: 'pi pi-trash',
+        command: () => {
+          this.contextMenu?.hide();
+          setTimeout(() => this.confirmaExcluir(), 100);
+        }
+      }
     ];
   }
 
-  atualizarEvento(event) {
+  atualizarEvento(event: any) {
     let atualizacaoInicioFim = {
       id: event.event.id,
       dataInicio: DateUtilService.localToUtc(event.event.start),
@@ -233,14 +355,15 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
     this.appService.requestPost('/evento/alterar', atualizacaoInicioFim).subscribe(data => { });
   }
 
-  cliqueData(e) {
+  cliqueData(e: any) {
+    if (!this.isBrowser()) { return; }
     this.clicouEvento = false
     this.tituloNovoEvento = "Novo Agendamento"
     this.displayDialogNovoEvento = true;
     EventEmitterService.get('dialogoNovoEvento').emit(e.date)
   }
 
-  cliqueEvento(info) {
+  cliqueEvento(info: any) {
     this.clicouEvento = true
     var eventObj = info.event
     if (eventObj.url) {
@@ -273,7 +396,8 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
     this.atualizarStatus('EM_ATENDIMENTO');
   }
 
-  private atualizarStatus(status) {
+  private atualizarStatus(status: string) {
+    if (!this.isBrowser()) { return; }
     let statusAgendamento = {
       idEvento: this.eventIdContext,
       status: status
@@ -284,7 +408,7 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
     });
   }
 
-  mudancaEvento(evento) {
+  mudancaEvento(evento: any) {
     console.log(this.events)
     alert("mudancaEvento");
   }
@@ -311,6 +435,7 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
   }
 
   fecharFaturarContexto() {
+    if (!this.isBrowser()) { return; }
     let faturamento = new Faturamento()
     faturamento.idEvento = this.eventIdContext
     this.displayDialogNovoEvento = true
@@ -319,9 +444,8 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
     EventEmitterService.get('dialogoNovoEvento').emit(faturamento);
   }
 
-
-
   confirmaExcluir() {
+    if (!this.isBrowser()) { return; }
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja excluir?',
       accept: () => {
@@ -337,6 +461,9 @@ export class AgendamentoComponent implements OnInit, AfterViewInit {
     })
   }
 
-
+  private getToken(): string | null {
+    if (typeof window === 'undefined') return null;
+    try { return sessionStorage.getItem('token'); } catch { return null; }
+  }
 
 }

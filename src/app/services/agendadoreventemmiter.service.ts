@@ -1,17 +1,6 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Injectable, EventEmitter } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class AgendadorEventEmmiterService {
-
-  private dialogoEvento = new Subject<string>();
-  dialogoEvento$ = this.dialogoEvento.asObservable();
-
-  constructor() { }
-
-  emit(mensagem: string) {
-    this.dialogoEvento.next(mensagem);
-  }
+  agendamentoAtualizado = new EventEmitter<any>();
 }

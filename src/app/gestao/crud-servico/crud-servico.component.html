@@ -1,13 +1,15 @@
 <p-fieldset legend="Serviços">
   <p-table #dt [columns]="cols" [value]="valores" [paginator]="true" [lazy]="true" [rows]="10"
-    (onLazyLoad)="loadValoresLazy($event)" [totalRecords]="totalRecords" [loading]="loading">
+    (onLazyLoad)="loadValoresLazy($event)" [totalRecords]="totalRecords" [loading]="loading"
+    [tableStyle]="{'min-width': '50rem'}" styleClass="p-datatable-striped">
     <ng-template pTemplate="caption">
-      <div style="text-align: left">
-        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-        <input type="text" pInputText size="50" placeholder="Busca"
-          (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
-        &nbsp;&nbsp;
-        <button pButton type="button" class="p-button-raised" icon="fa fa-plus" (click)="novo()" label="Novo"></button>
+      <div class="table-header">
+        <div class="search-box">
+          <i class="pi pi-search"></i>
+          <input type="text" pInputText placeholder="Buscar serviços..."
+            (input)="$any(dt).filterGlobal($any($event.target).value, 'contains')">
+        </div>
+        <button pButton type="button" icon="pi pi-plus" (click)="novo()" label="Novo Serviço"></button>
       </div>
     </ng-template>
     <ng-template pTemplate="header" let-columns>
@@ -15,25 +17,34 @@
         <th *ngFor="let col of columns">
           {{col.header}}
         </th>
-        <th>Ações</th>
+        <th style="width: 120px; text-align: center;">Ações</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
       <tr>
         <td *ngFor="let col of columns">
-          <div *ngIf="col.field == 'categoria'; else elseBlock">{{rowData['categoria'].nome}}</div>
+          <div *ngIf="col.field == 'categoria'; else elseBlock">
+            <span class="badge-categoria">{{rowData['categoria'].nome}}</span>
+          </div>
           <ng-template #elseBlock>
             {{ col.type ? col.type.transform(rowData[col.field], col.arg1, col.arg2, col.arg3) : rowData[col.field] }}
           </ng-template>
         </td>
         <td>
-          <center>
-            <button type="button" (click)="selecionaEditar(rowData)" class="p-button-raised" pButton icon="fa fa-edit"
-              title="Editar"></button>
-            &nbsp;
-            <button type="button" (click)="confirmaExcluir(rowData)" class="p-button-raised p-button-danger" pButton
-              icon="fa fa-trash" title="Excluir"></button>
-          </center>
+          <div class="action-buttons">
+            <button type="button" (click)="selecionaEditar(rowData)" pButton icon="pi pi-pencil"
+              class="p-button-rounded p-button-text" title="Editar"></button>
+            <button type="button" (click)="confirmaExcluir(rowData)" pButton
+              icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger" title="Excluir"></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6" class="text-center p-4">
+          <i class="pi pi-inbox text-4xl text-color-secondary mb-3"></i>
+          <p class="text-color-secondary">Nenhum serviço encontrado</p>
         </td>
       </tr>
     </ng-template>
@@ -41,75 +52,84 @@
 </p-fieldset>
 
 <p-dialog [header]="entidade.id ? 'Editar Serviço':'Novo Serviço'" [maximizable]="true" [modal]="true"
-  [(visible)]="displayDialog" [contentStyle]="{'overflow':'visible'}">
-  <table>
-    <tr>
-      <td><label>Nome*: </label></td>
-      <td>
-        <input type="text" [style]="{'width':'350px'}" [(ngModel)]="entidade.nome" pInputText />
-      </td>
-    </tr>
-    <tr>
-      <td><label>Categoria*: </label></td>
-      <td>
-        <p-dropdown placeholder="Selecione" filter="true" emptyFilterMessage="nada encontrado"
-          [style]="{'width':'350px'}" [options]="categorias" [(ngModel)]="entidade.categoria.id">
-        </p-dropdown>
-      </td>
-    </tr>
-    <tr>
-      <td><label>Valor*: </label></td>
-      <td>
-        <div class="p-inputgroup">
-          <span class="p-inputgroup-addon">R$</span>
-          <input currencyMask [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text"
-            [(ngModel)]="entidade.valor" pInputText />
+  [(visible)]="displayDialog" [contentStyle]="{'overflow':'visible'}" [style]="{width: '500px'}">
+  <div class="form-grid">
+    <!-- Nome -->
+    <div class="form-field">
+      <label class="form-label">Nome <span class="required">*</span></label>
+      <input type="text" name="nome" [(ngModel)]="entidade.nome" pInputText placeholder="Nome do serviço" />
+    </div>
+
+    <!-- Categoria -->
+    <div class="form-field">
+      <label class="form-label">Categoria <span class="required">*</span></label>
+      <p-select name="categoria" placeholder="Selecione a categoria" [filter]="true" emptyFilterMessage="Nada encontrado"
+        [style]="{'width':'100%'}" [options]="categorias" [(ngModel)]="entidade.categoria.id">
+      </p-select>
+    </div>
+
+    <!-- Valor -->
+    <div class="form-field">
+      <label class="form-label">Valor <span class="required">*</span></label>
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon">R$</span>
+        <input name="valor" currencyMask [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text"
+          [(ngModel)]="entidade.valor" pInputText placeholder="0,00" />
+      </div>
+    </div>
+
+    <!-- Tipo da Comissão -->
+    <div class="form-field">
+      <label class="form-label">Tipo da Comissão <span class="required">*</span></label>
+      <div class="flex align-items-center gap-4 mt-2">
+        <div class="flex align-items-center gap-2">
+          <p-radioButton name="tipocomissao" value="PERCENTUAL" [(ngModel)]="entidade.comissao.tipo"></p-radioButton>
+          <label>Percentual (%)</label>
         </div>
-      </td>
-    </tr>
-    <tr>
-      <td><label>Tipo da Comissão*: </label></td>
-      <td>
-        <p-radioButton name="tipocomissao" value="PERCENTUAL" [(ngModel)]="entidade.comissao.tipo">
-        </p-radioButton>&nbsp;
-        percentual (%)
-        &nbsp;&nbsp;
-        <p-radioButton name="tipocomissao" value="REAL" [(ngModel)]="entidade.comissao.tipo"></p-radioButton>
-        &nbsp;real (R$)
-      </td>
-    </tr>
-    <tr>
-      <td><label>Comissão*: </label></td>
-      <td>
-        <div class="p-inputgroup">
-          <span class="p-inputgroup-addon">
-            <span *ngIf="entidade.comissao.tipo == 'PERCENTUAL'">%</span>
-            <span *ngIf="entidade.comissao.tipo == 'REAL'">R$</span>
-          </span>
-          <input currencyMask [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }"
-            [(ngModel)]="entidade.comissao.valor" pInputText />
+        <div class="flex align-items-center gap-2">
+          <p-radioButton name="tipocomissao" value="REAL" [(ngModel)]="entidade.comissao.tipo"></p-radioButton>
+          <label>Valor Fixo (R$)</label>
         </div>
-      </td>
-    </tr>
-    <tr>
-      <td><label>Duração*: </label></td>
-      <td>
-        <div class="ui-inputgroup">
-          <p-inputNumber [(ngModel)]="entidade.duracao" [min]="1" [max]="3600" step="5" [showButtons]="true">
-          </p-inputNumber>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td><label>Descrição: </label></td>
-      <td>
-        <textarea pInputTextarea [rows]="8" [cols]="45" [(ngModel)]="entidade.descricao"></textarea>
-      </td>
-    </tr>
-  </table>
-  <p-footer>
-    <button pButton (click)="cancelar()" type="button" label="Cancelar" icon="fa fa-ban"
-      class="p-button-raised p-button-secondary"></button>
-    <button pButton (click)="salvar()" type="button" label="Salvar" icon="fa fa-save" class="p-button-raised"></button>
-  </p-footer>
+      </div>
+    </div>
+
+    <!-- Valor da Comissão -->
+    <div class="form-field">
+      <label class="form-label">Comissão <span class="required">*</span></label>
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon">
+          <span *ngIf="entidade.comissao.tipo == 'PERCENTUAL'">%</span>
+          <span *ngIf="entidade.comissao.tipo == 'REAL'">R$</span>
+        </span>
+        <input name="comissao" currencyMask [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }"
+          [(ngModel)]="entidade.comissao.valor" pInputText placeholder="0,00" />
+      </div>
+    </div>
+
+    <!-- Duração -->
+    <div class="form-field">
+      <label class="form-label">Duração <span class="required">*</span></label>
+      <div class="flex align-items-center gap-3">
+        <p-inputNumber name="duracao" [(ngModel)]="entidade.duracao" [min]="1" [max]="3600" [step]="5" [showButtons]="true"
+          suffix=" min" [style]="{'width':'150px'}">
+        </p-inputNumber>
+        <span class="text-color-secondary text-sm" *ngIf="entidade.duracao">
+          <i class="pi pi-clock"></i> {{entidade.duracao / 60 | number:'1.0-1'}} hora(s)
+        </span>
+      </div>
+    </div>
+
+    <!-- Descrição -->
+    <div class="form-field">
+      <label class="form-label">Descrição</label>
+      <textarea name="descricao" pInputTextarea [rows]="4" [(ngModel)]="entidade.descricao" 
+        placeholder="Descrição do serviço (opcional)" [style]="{'width':'100%'}"></textarea>
+    </div>
+  </div>
+  
+  <ng-template pTemplate="footer">
+    <button pButton (click)="cancelar()" type="button" label="Cancelar" icon="pi pi-times"
+      class="p-button-secondary"></button>
+    <button pButton (click)="salvar()" type="button" label="Salvar" icon="pi pi-check"></button>
+  </ng-template>
 </p-dialog>

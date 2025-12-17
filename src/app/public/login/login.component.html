@@ -1,0 +1,31 @@
+<p-toast></p-toast>
+<div class="login-container">
+    <p-card styleClass="login-card">
+        <div class="login-header">
+            <h2>Bem-vindo!</h2>
+            <p>Entre com sua conta para continuar</p>
+        </div>
+
+        <div class="p-fluid">
+            <div class="field mb-3">
+                <label for="emailoucpf" class="login-label">Email ou CPF</label>
+                <input id="emailoucpf" type="text" pInputText [(ngModel)]="login.emailoucpf" placeholder="Digite seu email ou CPF" class="w-full">
+            </div>
+
+            <div class="field mb-3">
+                <label for="senha" class="login-label">Senha</label>
+                <p-password id="senha" [(ngModel)]="login.senha" [feedback]="false" [toggleMask]="true" placeholder="Digite sua senha" styleClass="w-full" inputStyleClass="w-full"></p-password>
+            </div>
+
+            <div class="flex align-items-center justify-content-between mb-4">
+                <div class="flex align-items-center">
+                    <p-checkbox [(ngModel)]="lembrar" [binary]="true" inputId="rememberme"></p-checkbox>
+                    <label for="rememberme" class="ml-2 login-label">Lembrar-me</label>
+                </div>
+                <a class="font-medium no-underline text-blue-500 cursor-pointer hover:text-blue-700 transition-colors">Esqueceu a senha?</a>
+            </div>
+
+            <p-button label="Entrar" (onClick)="efetuarLogin()" [loading]="loading" styleClass="w-full p-button-lg"></p-button>
+        </div>
+    </p-card>
+</div>

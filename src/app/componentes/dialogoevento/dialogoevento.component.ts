@@ -1,24 +1,56 @@
-import { Component, OnInit, AfterViewInit, ApplicationRef, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { DialogoeventoService } from './dialogoevento.service';
 import { SelectItem } from 'primeng/api';
-import { Dropdown } from 'primeng/dropdown';
-import { EventEmitterService } from 'src/app/service/eventemitter.service';
-import { AppService } from 'src/app/app.service';
+import { Select } from 'primeng/select';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { DatePicker } from 'primeng/datepicker';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { CriarclienteComponent } from '../cliente/criarcliente/criarcliente.component';
+import { EventEmitterService } from '../../services/eventemitter.service';
+import { AppService } from '../../app.service';
 import { Evento } from './evento';
-import { DateUtilService } from 'src/app/service/dateutil.service';
-import { AgendadorEventEmmiterService } from 'src/app/services/agendadoreventemmiter.service';
+import { DateUtilService } from '../../services/dateutil.service';
+import { AgendadorEventEmmiterService } from '../../services/agendadoreventemmiter.service';
 import { Faturamento } from './faturamento';
+import { EditorModule } from 'primeng/editor';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'rn-criarevento',
   templateUrl: './dialogoevento.component.html',
-  styleUrls: ['./dialogoevento.component.css']
+  styleUrls: ['./dialogoevento.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    DialogModule,
+    ButtonModule,
+    AutoCompleteModule,
+    Select,
+    MultiSelectModule,
+    DatePicker,
+    InputTextModule,
+    InputNumberModule,
+    CurrencyMaskModule,
+    CriarclienteComponent,
+    EditorModule,
+    RadioButtonModule,
+    DividerModule
+  ]
 })
 export class DialogoeventoComponent implements OnInit, AfterViewInit {
 
-  resultsCliente: string[]
+  resultsCliente: any[] = [];
   servicos: SelectItemRN[] = []
-  servicosConsultados = []
+  servicosConsultados: any[] = []
   profissionais: SelectItem[] = []
   mensagensValidacao: string[] = []
   agendamento: any = { profissional: {} }
@@ -28,7 +60,7 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
   displayDialogFaturamento = false
   displayDialogServicos = false
 
-  @ViewChild('proDD', { static: true }) proDD: Dropdown;
+  @ViewChild('proDD', { static: true }) proDD!: Select;
 
   constructor(private dialogoEventoService: DialogoeventoService, private appService: AppService, private agendadorEmiter: AgendadorEventEmmiterService) {
 
@@ -103,7 +135,7 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
     EventEmitterService.get('dialogoNovoCliente').unsubscribe();
   }
 
-  carregarAgendamento(evento) {
+  carregarAgendamento(evento: any) {
     this.resetAgendamento()
     this.agendamento.id = evento.id;
     this.agendamento.observacoes = evento.observacoes
@@ -113,13 +145,13 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
     this.setFoneNome(this.agendamento.cliente)
     this.agendamento.valor = evento.valor
     this.agendamento.servicos = []
-    evento.servicos.forEach(element => {
+    evento.servicos.forEach((element: any) => {
       this.agendamento.servicos.push(element.id)
     });
     this.agendamento.duracao = evento.duracao
   }
 
-  atualizarPrecoAgendamento(event) {
+  atualizarPrecoAgendamento(event: any) {
     let servicosSelecionados = this.agendamento.servicos;
     let precoAgendamento: number = 0;
     this.servicos.filter(function (item) {
@@ -187,7 +219,7 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
 
   verServicos() {
     this.displayDialogServicos = true
-    this.dialogoEventoService.listarServicosSelecionados(this.agendamento.servicos).subscribe(data => {
+    this.dialogoEventoService.listarServicosSelecionados(this.agendamento.servicos).subscribe((data: any) => {
       this.servicosConsultados = data.entidade
     })
   }
@@ -202,29 +234,29 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dialogoEventoService.listarServicos().subscribe(data => {
-      data.entidade.forEach(element => {
+    this.dialogoEventoService.listarServicos().subscribe((data: any) => {
+      data.entidade.forEach((element: any) => {
         this.servicos.push({ label: element.nome + " - " + element.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }), value: element.id, valor: element.valor });
       });
     });
 
-    this.dialogoEventoService.listarProfissionais().subscribe(data => {
-      data.forEach(element => {
+    this.dialogoEventoService.listarProfissionais().subscribe((data: any) => {
+      data.forEach((element: any) => {
         this.profissionais.push({ label: element.nome, value: element.id });
       });
     });
   }
 
-  searchCliente(event) {
-    this.dialogoEventoService.searchCliente(event).subscribe(data => {
-      data.forEach(cliente => {
+  searchCliente(event: any) {
+    this.dialogoEventoService.searchCliente(event).subscribe((data: any) => {
+      data.forEach((cliente: any) => {
         this.setFoneNome(cliente);
       });
       this.resultsCliente = data;
     });
   }
 
-  setFoneNome(cliente) {
+  setFoneNome(cliente: any) {
     cliente.fone_nome = ''.concat(cliente.telefone.concat(' - ').concat(cliente.nome))
   }
 
@@ -232,7 +264,7 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
     this.agendamento = { profissional: {} }
   }
 
-  atualizarStatus(status) {
+  atualizarStatus(status: any) {
     let statusAgendamento = {
       idEvento: this.agendamento.id,
       status: status
@@ -341,7 +373,7 @@ export class DialogoeventoComponent implements OnInit, AfterViewInit {
     this.faturamento.dinheiro = undefined
   }
 
-  toFloat(valor) {
+  toFloat(valor: any) {
     let double = 0
     if (valor) {
       double = parseFloat(valor)

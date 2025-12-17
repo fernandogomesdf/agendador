@@ -1,213 +1,230 @@
-<p-dialog header="Serviços" [(visible)]="displayDialogServicos" [modal]="true" [draggable]="false">
-  <ng-template ngFor let-item [ngForOf]="servicosConsultados" let-i="index">
-    - {{item.nome}} - {{item.valor | currency:'BRL':'symbol':'1.2-2'}}<br />
+<p-dialog header="Serviços Selecionados" [(visible)]="displayDialogServicos" [modal]="true" [draggable]="false" [style]="{width: '400px'}">
+  <div class="servicos-list">
+    <div class="servico-item" *ngFor="let item of servicosConsultados">
+      <span class="servico-nome">{{item.nome}}</span>
+      <span class="servico-valor">{{item.valor | currency:'BRL':'symbol':'1.2-2'}}</span>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <button pButton type="button" label="Fechar" icon="pi pi-check" (click)="fecharServicos()"></button>
   </ng-template>
-  <p-footer>
-    <br />
-    <button pButton type="button" label="Ok" icon="fa fa-check" class="p-button-raised"
-      (click)="fecharServicos()"></button>
-  </p-footer>
 </p-dialog>
 
-<table>
-  <tr>
-    <td><label>Cliente*: </label></td>
-    <td>
-      <p-autoComplete size="53" [(ngModel)]="agendamento.cliente" (completeMethod)="searchCliente($event)"
-        [suggestions]="resultsCliente" field="fone_nome" [forceSelection]="true">
-
+<div class="form-grid">
+  <!-- Cliente -->
+  <div class="form-field">
+    <label class="form-label">Cliente <span class="required">*</span></label>
+    <div class="flex gap-2 align-items-center">
+      <p-autoComplete name="cliente" [(ngModel)]="agendamento.cliente" (completeMethod)="searchCliente($event)"
+        [suggestions]="resultsCliente" field="fone_nome" [forceSelection]="true" [style]="{'width':'100%', 'flex': '1'}">
         <ng-template let-cliente pTemplate="item">
-          <div class="ui-helper-clearfix">
-            <b>{{cliente.telefone}}</b> - {{cliente.nome}}
+          <div class="flex align-items-center gap-2 p-2">
+            <i class="pi pi-user text-primary"></i>
+            <div>
+              <div class="font-medium">{{cliente.nome}}</div>
+              <div class="text-sm text-color-secondary">{{cliente.telefone}}</div>
+            </div>
           </div>
         </ng-template>
+      </p-autoComplete>
+      <button pButton type="button" (click)="abrirNovoCliente()" label="Novo" icon="pi pi-plus" class="p-button-outlined"></button>
+    </div>
+  </div>
 
-      </p-autoComplete>&nbsp;
-      <button pButton type="button" (click)="abrirNovoCliente()" label="Novo" icon="fa fa-plus"
-        class="p-button-raised"></button>
-    </td>
-  </tr>
-  <tr>
-    <td><label>Profissional: </label></td>
-    <td>
-      <p-dropdown #proDD placeholder="Selecione" [options]="profissionais" [(ngModel)]="agendamento.profissional.id"
-        [style]="{'width':'523px'}">
-      </p-dropdown>
-    </td>
-  </tr>
-  <tr>
-    <td><label>Serviço(s)*: </label></td>
-    <td>
-      <p-multiSelect (onChange)="atualizarPrecoAgendamento($event)" defaultLabel="Selecione"
-        selectedItemsLabel="{0} items selecionados" [options]="servicos" [(ngModel)]="agendamento.servicos"
-        [panelStyle]="{minWidth:'k'}" [style]="{'width':'523px'}">
-      </p-multiSelect>&nbsp;
-      <button pButton type="button" label="Ver" icon="fa fa-eye" class="p-button-raised"
+  <!-- Profissional -->
+  <div class="form-field">
+    <label class="form-label">Profissional</label>
+    <p-select #proDD name="profissional" placeholder="Selecione o profissional" [options]="profissionais" 
+      [(ngModel)]="agendamento.profissional.id" [style]="{'width':'100%'}">
+    </p-select>
+  </div>
+
+  <!-- Serviços -->
+  <div class="form-field">
+    <label class="form-label">Serviço(s) <span class="required">*</span></label>
+    <div class="flex gap-2 align-items-center">
+      <p-multiSelect name="servicos" (onChange)="atualizarPrecoAgendamento($event)" 
+        placeholder="Selecione os serviços" selectedItemsLabel="{0} serviços selecionados" 
+        [options]="servicos" [(ngModel)]="agendamento.servicos" [style]="{'width':'100%', 'flex': '1'}">
+      </p-multiSelect>
+      <button pButton type="button" label="Ver" icon="pi pi-eye" class="p-button-outlined"
         *ngIf="agendamento.servicos && agendamento.servicos.length > 0" (click)="verServicos()"></button>
-    </td>
-  </tr>
-  <tr>
-    <td><label>Data*: </label></td>
-    <td>
-      <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="agendamento.dataInicio" [showIcon]="true" [showTime]="true">
-      </p-calendar>
-    </td>
-  </tr>
-  <tr>
-    <td><label>Valor total: </label></td>
-    <td>
-      <div class="p-inputgroup" style="width: 260px;">
+    </div>
+  </div>
+
+  <!-- Data e Valor -->
+  <div class="form-row">
+    <div class="form-field">
+      <label class="form-label">Data e Hora <span class="required">*</span></label>
+      <p-datepicker name="dataInicio" dateFormat="dd/mm/yy" [(ngModel)]="agendamento.dataInicio" 
+        [showIcon]="true" [showTime]="true" [style]="{'width':'100%'}">
+      </p-datepicker>
+    </div>
+    <div class="form-field">
+      <label class="form-label">Valor Total</label>
+      <div class="p-inputgroup">
         <span class="p-inputgroup-addon">R$</span>
-        <input currencyMask [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text"
-          [(ngModel)]="agendamento.valor" pInputText disabled />
+        <input name="valorAgendamento" currencyMask 
+          [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" 
+          type="text" [(ngModel)]="agendamento.valor" pInputText disabled />
       </div>
-    </td>
-  </tr>
-  <tr>
-    <td><label>Duração*: </label></td>
-    <td>
-      <p-inputNumber [(ngModel)]="agendamento.duracao" [min]="1" [max]="3600" [step]="5" [showButtons]="true"
-        spinnerMode="vertical" spinnerMode="vertical"></p-inputNumber>
-      <span *ngIf="agendamento.duracao">
-        minutos -> {{agendamento.duracao / 60 | number}} hora(s)</span>
-    </td>
-  </tr>
-  <tr>
-    <td><label>Observações: </label></td>
-    <td>
-      <p-editor [(ngModel)]="agendamento.observacoes" [style]="{'height':'220px'}">
-        <p-header>
-          <span class="ql-formats">
-            <button class="ql-bold" aria-label="Negrito"></button>
-            <button class="ql-italic" aria-label="Itálico"></button>
-            <button class="ql-underline" aria-label="Sublinhado"></button>
-          </span>
-        </p-header>
-      </p-editor>
-    </td>
-  </tr>
-</table>
+    </div>
+  </div>
+
+  <!-- Duração -->
+  <div class="form-field">
+    <label class="form-label">Duração <span class="required">*</span></label>
+    <div class="flex align-items-center gap-3">
+      <p-inputNumber name="duracao" [(ngModel)]="agendamento.duracao" [min]="1" [max]="3600" [step]="5" 
+        [showButtons]="true" spinnerMode="vertical" suffix=" min" [style]="{'width':'150px'}">
+      </p-inputNumber>
+      <span class="text-color-secondary text-sm" *ngIf="agendamento.duracao">
+        <i class="pi pi-clock"></i> {{agendamento.duracao / 60 | number:'1.0-1'}} hora(s)
+      </span>
+    </div>
+  </div>
+
+  <!-- Observações -->
+  <div class="form-field">
+    <label class="form-label">Observações</label>
+    <p-editor name="observacoes" [(ngModel)]="agendamento.observacoes" [style]="{'height':'150px'}">
+      <ng-template pTemplate="header">
+        <span class="ql-formats">
+          <button class="ql-bold" aria-label="Negrito"></button>
+          <button class="ql-italic" aria-label="Itálico"></button>
+          <button class="ql-underline" aria-label="Sublinhado"></button>
+        </span>
+      </ng-template>
+    </p-editor>
+  </div>
+</div>
 
 <!-- DIALOGO NOVO CLIENTE -->
-
-<p-dialog header="Novo Cliente" [maximizable]="true" [(visible)]="displayDialogNovoCliente"
-  [contentStyle]="{'overflow':'visible'}" [modal]="true" [draggable]="false">
+<p-dialog header="Cadastrar Novo Cliente" [maximizable]="true" [(visible)]="displayDialogNovoCliente"
+  [contentStyle]="{'overflow':'visible'}" [modal]="true" [draggable]="false" [style]="{width: '500px'}">
   <rn-criarcliente></rn-criarcliente>
-  <p-footer>
-    <button pButton (click)="cancelarNovoCliente()" type="button" label="Cancelar" icon="fa fa-ban"
-      class="p-button-raised p-button-secondary"></button>
-    <button pButton (click)="salvarNovoCliente()" type="button" label="Salvar" icon="fa fa-save"
-      class="p-button-raised"></button>
-  </p-footer>
+  <ng-template pTemplate="footer">
+    <button pButton (click)="cancelarNovoCliente()" type="button" label="Cancelar" icon="pi pi-times"
+      class="p-button-secondary"></button>
+    <button pButton (click)="salvarNovoCliente()" type="button" label="Salvar" icon="pi pi-check"></button>
+  </ng-template>
 </p-dialog>
 
-<!-- DIALOGO COMANDA -->
+<!-- DIALOGO COMANDA/FATURAMENTO -->
+<p-dialog header="Fechamento e Pagamento" [modal]="true" [draggable]="false" [(visible)]="displayDialogFaturamento"
+  [contentStyle]="{'overflow':'visible'}" [style]="{width: '480px'}">
+  <div class="payment-grid">
+    <!-- Valor dos Serviços -->
+    <div class="payment-row">
+      <span class="payment-label"><i class="pi pi-shopping-cart"></i> Serviços:</span>
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon">R$</span>
+        <input name="valorServico" [(ngModel)]="agendamento.valor" currencyMask
+          [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" 
+          type="text" pInputText readonly disabled />
+      </div>
+    </div>
 
-<p-dialog header="Comanda" [modal]="true" [draggable]="false" [(visible)]="displayDialogFaturamento"
-  [contentStyle]="{'overflow':'visible'}">
-  <table>
-    <tr>
-      <td><label>Valor do(s) serviço(s) :</label></td>
-      <td>
-        <div class="p-inputgroup" style="width: 260px;">
-          <span class="p-inputgroup-addon">R$</span>
-          <input [(ngModel)]="agendamento.valor" currencyMask
-            [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" size="10" pInputText
-            readonly disabled />
+    <p-divider></p-divider>
+
+    <!-- Dinheiro -->
+    <div class="payment-row">
+      <span class="payment-label"><i class="pi pi-wallet"></i> Dinheiro:</span>
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon">R$</span>
+        <input name="dinheiro" [(ngModel)]="faturamento.dinheiro" currencyMask
+          [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" pInputText />
+        <button pButton type="button" icon="pi pi-arrow-left" class="p-button-outlined"
+          title="Receber tudo em dinheiro" (click)="tudoDinheiro()"></button>
+      </div>
+    </div>
+
+    <!-- Débito -->
+    <div class="payment-row">
+      <span class="payment-label"><i class="pi pi-credit-card"></i> Débito:</span>
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon">R$</span>
+        <input name="debito" [(ngModel)]="faturamento.debito" currencyMask
+          [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" pInputText />
+        <button pButton type="button" icon="pi pi-arrow-left" class="p-button-outlined"
+          title="Receber tudo em débito" (click)="tudoDebito()"></button>
+      </div>
+    </div>
+
+    <!-- Crédito -->
+    <div class="payment-row">
+      <span class="payment-label"><i class="pi pi-credit-card"></i> Crédito:</span>
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon">R$</span>
+        <input name="credito" [(ngModel)]="faturamento.credito" currencyMask
+          [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" pInputText />
+        <button pButton type="button" icon="pi pi-arrow-left" class="p-button-outlined"
+          title="Receber tudo em crédito" (click)="tudoCredito()"></button>
+      </div>
+    </div>
+
+    <p-divider></p-divider>
+
+    <!-- Tipo Desconto -->
+    <div class="payment-row">
+      <span class="payment-label">Tipo Desconto:</span>
+      <div class="flex align-items-center gap-4">
+        <div class="flex align-items-center gap-2">
+          <p-radioButton name="tipoDesconto" [(ngModel)]="faturamento.tipoDesconto" value="PERCENTUAL"></p-radioButton>
+          <label>Percentual (%)</label>
         </div>
-      </td>
-    </tr>
-    <tr>
-      <td>+ <i class="fa fa-money"></i>&nbsp;&nbsp;<label>Dinheiro :</label></td>
-      <td>
-        <div class="p-inputgroup" style="width: 260px;">
-          <span class="p-inputgroup-addon">R$</span>
-          <input [(ngModel)]="faturamento.dinheiro" currencyMask
-            [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" size="10" pInputText />
-          <button pButton type="button" icon="fa fa-arrow-left" class="ui-button"
-            title="Receber tudo nesta forma de pagamento" (click)="tudoDinheiro()"></button>
+        <div class="flex align-items-center gap-2">
+          <p-radioButton name="tipoDesconto" [(ngModel)]="faturamento.tipoDesconto" value="REAL"></p-radioButton>
+          <label>Valor (R$)</label>
         </div>
-      </td>
-    </tr>
-    <tr>
-      <td>+ <i class="fa fa-credit-card"></i>&nbsp;&nbsp;<label>Débito :</label></td>
-      <td>
-        <div class="p-inputgroup" style="width: 260px;">
-          <span class="p-inputgroup-addon">R$</span>
-          <input [(ngModel)]="faturamento.debito" currencyMask
-            [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" size="10" pInputText />
-          <button pButton type="button" icon="fa fa-arrow-left" class="ui-button"
-            title="Receber tudo nesta forma de pagamento" (click)="tudoDebito()"></button>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td>+ <i class="fa fa-credit-card-alt"></i>&nbsp;&nbsp;<label>Crédito :</label></td>
-      <td>
-        <div class="p-inputgroup" style="width: 260px;">
-          <span class="p-inputgroup-addon">R$</span>
-          <input [(ngModel)]="faturamento.credito" currencyMask
-            [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" size="10" pInputText />
-          <button pButton type="button" icon="fa fa-arrow-left" class="ui-button"
-            title="Receber tudo nesta forma de pagamento" (click)="tudoCredito()"></button>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td><label>Tipo do Desconto*: </label></td>
-      <td align="center">
-        <p-radioButton name="tipoDesconto" [(ngModel)]="faturamento.tipoDesconto" value="PERCENTUAL">
-        </p-radioButton>&nbsp;
-        (%)
-        &nbsp;&nbsp;
-        <p-radioButton name="tipoDesconto" [(ngModel)]="faturamento.tipoDesconto" value="REAL"></p-radioButton>
-        &nbsp;(R$)
-      </td>
-    </tr>
-    <tr>
-      <td><label>- Desconto :</label></td>
-      <td>
-        <div class="p-inputgroup" style="width: 260px;">
-          <span class="p-inputgroup-addon">
-            <span *ngIf="faturamento.tipoDesconto == 'PERCENTUAL'">%</span>
-            <span *ngIf="faturamento.tipoDesconto == 'REAL'">R$</span>
-          </span>
-          <input currencyMask [(ngModel)]="faturamento.desconto"
-            [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" size="10" pInputText />
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td><label>= Total recebido :</label></td>
-      <td>
-        <div class="p-inputgroup" style="width: 260px;">
+      </div>
+    </div>
+
+    <!-- Desconto -->
+    <div class="payment-row">
+      <span class="payment-label"><i class="pi pi-percentage"></i> Desconto:</span>
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon">
+          <span *ngIf="faturamento.tipoDesconto == 'PERCENTUAL'">%</span>
+          <span *ngIf="faturamento.tipoDesconto == 'REAL'">R$</span>
+        </span>
+        <input name="desconto" currencyMask [(ngModel)]="faturamento.desconto"
+          [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" pInputText />
+      </div>
+    </div>
+
+    <!-- Total -->
+    <div class="payment-total">
+      <div class="payment-row">
+        <span class="payment-label font-bold"><i class="pi pi-check-circle"></i> Total Recebido:</span>
+        <div class="p-inputgroup">
           <span class="p-inputgroup-addon">R$</span>
           <input #valorRecebido currencyMask [value]="getValorRecebido(true)"
-            [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" size="10" pInputText
-            readonly [style.color]="valorRecebido.value.includes('-') ? 'red' : 'blue'" />
+            [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text" pInputText
+            readonly [ngClass]="{'text-green-600': !valorRecebido.value.includes('-'), 'text-red-600': valorRecebido.value.includes('-')}" />
         </div>
-      </td>
-    </tr>
-    <tr>
-      <td></td>
-      <td>
-        <font size="1">= (dinheiro + débito + crédito) - desconto</font>
-        <br />
-        <br />
-        <span style="color: red;" *ngIf="getValorQueFalta() >= 0.01">falta {{ getValorQueFalta() |
-          currency:'BRL':'symbol':'1.2-2'}}</span>
+      </div>
+      <div class="text-xs text-color-secondary mt-2">
+        <i class="pi pi-info-circle"></i> = (dinheiro + débito + crédito) - desconto
+      </div>
+    </div>
 
-        <span style="color: red;" *ngIf="getValorQueSobra() > 0">cobrando a mais {{ getValorQueSobra() |
-          currency:'BRL':'symbol':'1.2-2'}}</span>
+    <!-- Avisos -->
+    <div class="payment-warning" *ngIf="getValorQueFalta() >= 0.01">
+      <i class="pi pi-exclamation-triangle"></i>
+      <span>Falta receber: {{ getValorQueFalta() | currency:'BRL':'symbol':'1.2-2'}}</span>
+    </div>
 
-      </td>
-    </tr>
-  </table>
+    <div class="payment-warning" style="background: #fefce8; border-color: #fef08a; color: #a16207;" *ngIf="getValorQueSobra() > 0">
+      <i class="pi pi-exclamation-triangle"></i>
+      <span>Cobrando a mais: {{ getValorQueSobra() | currency:'BRL':'symbol':'1.2-2'}}</span>
+    </div>
+  </div>
 
-  <p-footer>
-    <button pButton (click)="cancelarFaturamento()" type="button" label="Cancelar" icon="fa fa-ban"
-      class="p-button-raised p-button-secondary"></button>
-    <button pButton (click)="faturar()" [disabled]="getValorQueFalta() >= 0.01" type="button" label="Faturar"
-      icon="fa fa-money" class="p-button-raised ui-button-green"></button>
-  </p-footer>
+  <ng-template pTemplate="footer">
+    <button pButton (click)="cancelarFaturamento()" type="button" label="Cancelar" icon="pi pi-times"
+      class="p-button-secondary"></button>
+    <button pButton (click)="faturar()" [disabled]="getValorQueFalta() >= 0.01" type="button" label="Confirmar Pagamento"
+      icon="pi pi-check" class="ui-button-green"></button>
+  </ng-template>
 </p-dialog>

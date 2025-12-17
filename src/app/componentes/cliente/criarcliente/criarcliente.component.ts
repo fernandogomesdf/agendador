@@ -1,12 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { EventEmitterService } from 'src/app/service/eventemitter.service';
-import { AppService } from 'src/app/app.service';
+import { EventEmitterService } from '../../../services/eventemitter.service';
+import { AppService } from '../../../app.service';
 import moment from 'moment';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputMaskModule } from 'primeng/inputmask';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { EditorModule } from 'primeng/editor';
 
 @Component({
   selector: 'rn-criarcliente',
   templateUrl: './criarcliente.component.html',
-  styleUrls: ['./criarcliente.component.css']
+  styleUrls: ['./criarcliente.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    InputTextModule,
+    InputMaskModule,
+    RadioButtonModule,
+    EditorModule
+  ]
 })
 export class CriarclienteComponent implements OnInit {
 

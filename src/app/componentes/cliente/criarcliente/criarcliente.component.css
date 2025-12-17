@@ -1,0 +1,50 @@
+/* Criar Cliente Component Styles */
+:host {
+  display: block;
+}
+
+.form-grid {
+  display: grid;
+  gap: 1.25rem;
+  min-width: 400px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.form-label .required {
+  color: #ef4444;
+  margin-left: 2px;
+}
+
+/* Ensure full width inputs */
+:host ::ng-deep .p-inputtext,
+:host ::ng-deep .p-inputmask {
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .form-grid {
+    min-width: auto;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

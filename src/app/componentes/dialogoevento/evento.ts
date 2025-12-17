@@ -1,3 +1,3 @@
 export class Evento {
-    _id: string;
+    _id: string = '';
 }

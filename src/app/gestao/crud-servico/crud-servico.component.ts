@@ -1,27 +1,52 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AppService } from 'src/app/app.service';
-import { ConfirmationService, LazyLoadEvent, SelectItem } from 'primeng/api';
-import { CurrencyPipe } from '@angular/common';
-import { Table } from 'primeng/table';
+import { AppService } from '../../app.service';
+import { ConfirmationService, SelectItem } from 'primeng/api';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { TableModule, Table } from 'primeng/table';
+import { FormsModule } from '@angular/forms';
+import { FieldsetModule } from 'primeng/fieldset';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { Select } from 'primeng/select';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { Textarea } from 'primeng/textarea';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @Component({
   selector: 'app-crud-servico',
   templateUrl: './crud-servico.component.html',
-  styleUrls: ['./crud-servico.component.css']
+  styleUrls: ['./crud-servico.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    TableModule,
+    FieldsetModule,
+    InputTextModule,
+    ButtonModule,
+    DialogModule,
+    Select,
+    RadioButtonModule,
+    InputNumberModule,
+    Textarea,
+    CurrencyMaskModule
+  ]
 })
 export class CrudServicoComponent implements OnInit {
 
-  cols: any[];
-  valores: any[];
+  cols: any[] = [];
+  valores: any[] = [];
   categorias: SelectItem[] = [];
-  totalRecords: number;
-  loading: boolean;
-  displayDialog: boolean;
-  entidade: any;
+  totalRecords: number = 0;
+  loading: boolean = false;
+  displayDialog: boolean = false;
+  entidade: any = {};
   mensagensValidacao: string[] = [];
-  tituloDialog;
+  tituloDialog: string = '';
 
-  @ViewChild("dt", { static: true }) dataTable: Table;
+  @ViewChild("dt", { static: true }) dataTable!: Table;
 
   constructor(private cp: CurrencyPipe, private appService: AppService, private confirmationService: ConfirmationService) { }
 
@@ -38,14 +63,14 @@ export class CrudServicoComponent implements OnInit {
     this.entidade.categoria = {}
     this.entidade.comissao.tipo = 'PERCENTUAL'
 
-    this.appService.requestPost('/categoria/buscar', '{ first: 0, rows: 200 }').subscribe(data => {
-      data.entidade.forEach(element => {
+    this.appService.requestPost('/categoria/buscar', '{ first: 0, rows: 200 }').subscribe((data: any) => {
+      data.entidade.forEach((element: any) => {
         this.categorias.push({ label: element.nome, value: element.id });
       });
     })
   }
 
-  confirmaExcluir(item) {
+  confirmaExcluir(item: any) {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja excluir?',
       accept: () => {
@@ -61,7 +86,7 @@ export class CrudServicoComponent implements OnInit {
     })
   }
 
-  loadValoresLazy(event: LazyLoadEvent) {
+  loadValoresLazy(event: any) {
     this.carregarDados(event)
   }
 
@@ -122,12 +147,12 @@ export class CrudServicoComponent implements OnInit {
     this.displayDialog = false
   }
 
-  selecionaEditar(item) {
+  selecionaEditar(item: any) {
     this.entidade = Object.assign({}, item)
     this.displayDialog = true
   }
 
-  carregarDados(event: LazyLoadEvent) {
+  carregarDados(event: any) {
     this.loading = true;
     this.appService.requestPost('/servico/buscar', event).subscribe(data => {
       this.valores = data.entidade

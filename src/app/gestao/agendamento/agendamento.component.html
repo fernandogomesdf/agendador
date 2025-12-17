@@ -1,59 +1,40 @@
-<input matInput type="hidden" [(ngModel)]="hiddenDatePicker" [matDatepicker]="picker" (dateInput)="onDate($event)" />
-<mat-datepicker #picker></mat-datepicker>
-
-
-<full-calendar #fc [events]="events" [options]="calendarOptions"></full-calendar>
-
-<!--menu de contexto-->
-<div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
-  [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+<div *ngIf="showCalendarOverlay" class="calendar-overlay"
+  [style]="{'position':'fixed', 'top': datePickerTop, 'left': datePickerLeft, 'z-index': '9999', 'background': 'white', 'box-shadow': '0 2px 10px rgba(0,0,0,0.2)', 'border-radius': '6px'}">
+  <p-datepicker #dp name="hiddenDatePicker" [(ngModel)]="hiddenDatePicker" (onSelect)="onDate($event)"
+    [inline]="true"></p-datepicker>
 </div>
-<mat-menu #contextMenu="matMenu">
-  <ng-template matMenuContent>
-    <button mat-menu-item (click)="editarAgendamento()">
-      <mat-icon>edit</mat-icon>
-      <span>Editar agendamento</span>
-    </button>
-    <button mat-menu-item (click)="fecharFaturarContexto()">
-      <mat-icon>payments</mat-icon>
-      <span>Fechar e faturar</span>
-    </button>
-    <button mat-menu-item (click)="atualizarNaoCompareceu()">
-      <mat-icon>clear</mat-icon>
-      <span>Não compareceu</span>
-    </button>
-    <button mat-menu-item (click)="atualizarEmAtendimento()">
-      <mat-icon>work_outline</mat-icon>
-      <span>Em atendimento</span>
-    </button>
-    <button mat-menu-item (click)="confirmaExcluir()">
-      <mat-icon>delete</mat-icon>
-      <span>Excluir agendamento</span>
-    </button>
-  </ng-template>
-</mat-menu>
 
-<!--dialogo de eventos-->
-<p-dialog [header]=[tituloNovoEvento] [maximizable]="true" modal="true" [(visible)]="displayDialogNovoEvento"
-  [contentStyle]="{'overflow':'visible'}">
+<full-calendar #fc [options]="calendarOptions" *ngIf="isBrowserEnv"></full-calendar>
+
+<p-contextMenu #cm [model]="menuItems" [global]="false"></p-contextMenu>
+
+<!-- Diálogo Principal de Agendamento -->
+<p-dialog *ngIf="isBrowserEnv" [header]="tituloNovoEvento" [maximizable]="true" [modal]="true"
+  [(visible)]="displayDialogNovoEvento" [contentStyle]="{'overflow':'visible'}" [style]="{width: '580px'}">
   <rn-criarevento></rn-criarevento>
-  <p-footer>
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer">
+      <!-- Botões de Status (só aparecem ao editar) -->
+      <div class="status-buttons" *ngIf="clicouEvento">
+        <button pButton type="button" (click)="naoCompareceu()" label="Não compareceu"
+          title="Coloca o status do agendamento para 'Não compareceu'" icon="pi pi-times"
+          class="p-button-sm ui-button-gray"></button>
 
-    <button pButton type="button" (click)="naoCompareceu()" label="Não compareceu"
-      title="Coloca o status do agendamento para 'Não compareceu'" icon="fa fa-times"
-      class="p-button-raised ui-button-gray" *ngIf="clicouEvento"></button>
+        <button pButton type="button" (click)="emAtendimento()" label="Em atendimento" icon="pi pi-user"
+          class="p-button-sm ui-button-purple" title="Coloca o status do agendamento para 'Em atendimento'"></button>
 
-    <button pButton type="button" (click)="emAtendimento()" label="Em atendimento" icon="fa fa-briefcase"
-      class="p-button-raised ui-button-purple" title="Coloca o status do agendamento para 'Em atendimento'"
-      *ngIf="clicouEvento"></button>
+        <button pButton type="button" (click)="fecharFaturar()" label="Fechar e faturar"
+          title="Solicita informações de pagamento e coloca o agendamento no status 'Faturado'" icon="pi pi-dollar"
+          class="p-button-sm ui-button-green"></button>
+      </div>
 
-    <button pButton type="button" (click)="fecharFaturar()" label="Fechar e faturar"
-      title="Solicita informações de pagamento e coloca o agendamento no status 'Faturado'" icon="fa fa-money"
-      class="p-button-raised ui-button-green" *ngIf="clicouEvento"></button>
-
-    <button pButton type="button" (click)="cancelarNovoEvento()" title="Fecha sem alterações" label="Cancelar"
-      icon="fa fa-ban" class="p-button-raised p-button-secondary"></button>
-    <button pButton type="button" (click)="salvarNovoEvento()" title="Salva as alterações do agendamento e fecha"
-      label="Salvar" icon="fa fa-save" class="p-button-raised"></button>
-  </p-footer>
+      <!-- Botões de Ação -->
+      <div class="action-buttons">
+        <button pButton type="button" (click)="cancelarNovoEvento()" title="Fecha sem alterações" label="Cancelar"
+          icon="pi pi-times" class="p-button-secondary"></button>
+        <button pButton type="button" (click)="salvarNovoEvento()" title="Salva as alterações do agendamento e fecha"
+          label="Salvar" icon="pi pi-check"></button>
+      </div>
+    </div>
+  </ng-template>
 </p-dialog>

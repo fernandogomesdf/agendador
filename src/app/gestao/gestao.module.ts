@@ -2,98 +2,70 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/cor
 import { CommonModule, CurrencyPipe } from '@angular/common';
 
 import { GestaoRoutingModule } from './gestao-routing.module';
-import { ComponentesModule } from '../componentes/componentes.module';
-
-import { DialogModule } from 'primeng/dialog';
-import { AutoCompleteModule } from 'primeng/autocomplete';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputTextModule } from 'primeng/inputtext';
-import { EditorModule } from 'primeng/editor';
-import { InputMaskModule } from 'primeng/inputmask';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { ButtonModule } from 'primeng/button';
-import { TableModule } from 'primeng/table';
-import { LoginGuard } from '../guards/login.guard';
-import { JwtModule } from '@auth0/angular-jwt';
-import { CrudServicoComponent } from './crud-servico/crud-servico.component';
-import { ConfirmationService } from 'primeng/api';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { FormsModule } from '@angular/forms';
 import { FieldsetModule } from 'primeng/fieldset';
-import { CurrencyMaskModule } from '../componentes/ng2-currency-mask/currency-mask.module';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { OverlayModule } from '@angular/cdk/overlay';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { Textarea } from 'primeng/textarea';
+import { InputTextModule } from 'primeng/inputtext';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { Select } from 'primeng/select';
 import { AgendamentoComponent } from './agendamento/agendamento.component';
-import { MatNativeDateModule } from '@angular/material/core';
-import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { CrudServicoComponent } from './crud-servico/crud-servico.component';
+import { ComponentesModule } from '../componentes/componentes.module';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { ConfirmationService } from 'primeng/api';
+
+import { DatePickerModule } from 'primeng/datepicker';
+import { LoginGuard } from '../guards/login.guard';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { DialogModule } from 'primeng/dialog';
 
 // plugins do calendario
+// Plugins importados diretamente nos componentes conforme necessidade (remoção de registerPlugins para SSR)
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
 import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 
-FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+export const FULLCALENDAR_PLUGINS = [
   dayGridPlugin,
   interactionPlugin,
   timeGridPlugin,
   resourceTimelinePlugin,
   resourceTimeGridPlugin
-]);
-
-// armazenamento do token
-export function getJwtToken(): string {
-  return sessionStorage.getItem('token');
-}
+];
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     GestaoRoutingModule,
-    ComponentesModule,
     FullCalendarModule,
     DialogModule,
-    AutoCompleteModule,
-    MultiSelectModule,
-    DropdownModule,
-    InputTextModule,
-    EditorModule,
-    InputMaskModule,
-    RadioButtonModule,
-    ButtonModule,
-    TableModule,
-    CurrencyMaskModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: getJwtToken,
-        allowedDomains: ['localhost:4200']
-      }
-    }),
     ConfirmDialogModule,
+    ContextMenuModule,
+    ComponentesModule,
     FieldsetModule,
-    InputTextareaModule,
+    TableModule,
+    ButtonModule,
+    Textarea,
+    InputTextModule,
+    RadioButtonModule,
     CurrencyMaskModule,
-    OverlayModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
     InputNumberModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    OverlayPanelModule
+    Select,
+    DatePickerModule,
+    AgendamentoComponent,
+    CrudServicoComponent
   ],
   providers: [LoginGuard, ConfirmationService, CurrencyPipe],
-  declarations: [AgendamentoComponent, CrudServicoComponent],
+  declarations: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class GestaoModule { }

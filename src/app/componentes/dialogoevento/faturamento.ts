@@ -1,3 +1,3 @@
 export class Faturamento {
-    idEvento: string;
+    idEvento: string = '';
 }
