@@ -10,82 +10,12 @@
   box-sizing: border-box;
 }
 
-:root {
-  --primary-color: #10b981;
-  --primary-hover: #059669;
-  --secondary-color: #6366f1;
-  --danger-color: #ef4444;
-  --warning-color: #f59e0b;
-  --success-color: #22c55e;
-  --info-color: #3b82f6;
-  --text-color: #1e293b;
-  --text-muted: #64748b;
-  --border-color: #e2e8f0;
-  --bg-light: #f8fafc;
-  --bg-card: #ffffff;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-}
-
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   line-height: 1.6;
   color: var(--text-color);
   min-height: 100vh;
   background-color: var(--bg-light);
-}
-
-// ========================================
-// DIALOG STYLES - Padronização Global
-// ========================================
-.p-dialog {
-  border-radius: var(--radius-lg) !important;
-  box-shadow: var(--shadow-lg) !important;
-  border: none !important;
-  overflow: hidden;
-
-  .p-dialog-header {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #059669 100%) !important;
-    color: white !important;
-    padding: 1rem 1.5rem !important;
-    border-bottom: none !important;
-    
-    .p-dialog-title {
-      font-weight: 600 !important;
-      font-size: 1.125rem !important;
-    }
-    
-    .p-dialog-header-icons {
-      .p-dialog-header-icon {
-        color: white !important;
-        opacity: 0.8;
-        
-        &:hover {
-          opacity: 1;
-          background: rgba(255, 255, 255, 0.1) !important;
-        }
-      }
-    }
-  }
-  
-  .p-dialog-content {
-    padding: 1.5rem !important;
-    background: var(--bg-card) !important;
-  }
-  
-  .p-dialog-footer {
-    padding: 1rem 1.5rem !important;
-    background: var(--bg-light) !important;
-    border-top: 1px solid var(--border-color) !important;
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
 }
 
 // ========================================
@@ -112,243 +42,13 @@ body {
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-color);
-  
+
   .required {
     color: var(--danger-color);
     margin-left: 2px;
   }
 }
 
-// ========================================
-// INPUT STYLES
-// ========================================
-.p-inputtext,
-.p-select,
-.p-multiselect,
-.p-autocomplete-input,
-.p-datepicker-input,
-.p-inputmask,
-.p-inputnumber-input {
-  border-radius: var(--radius-md) !important;
-  border: 1px solid var(--border-color) !important;
-  padding: 0.625rem 0.875rem !important;
-  font-size: 0.875rem !important;
-  transition: all 0.2s ease !important;
-  
-  &:hover {
-    border-color: #cbd5e1 !important;
-  }
-  
-  &:focus {
-    border-color: var(--primary-color) !important;
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
-    outline: none !important;
-  }
-}
-
-.p-inputgroup {
-  .p-inputgroup-addon {
-    background: var(--bg-light) !important;
-    border: 1px solid var(--border-color) !important;
-    color: var(--text-muted) !important;
-    font-weight: 500 !important;
-    padding: 0.625rem 0.875rem !important;
-    
-    &:first-child {
-      border-radius: var(--radius-md) 0 0 var(--radius-md) !important;
-      border-right: none !important;
-    }
-  }
-  
-  .p-inputtext {
-    border-radius: 0 var(--radius-md) var(--radius-md) 0 !important;
-  }
-}
-
-// ========================================
-// BUTTON STYLES
-// ========================================
-.p-button {
-  border-radius: var(--radius-md) !important;
-  padding: 0.625rem 1.25rem !important;
-  font-weight: 500 !important;
-  font-size: 0.875rem !important;
-  transition: all 0.2s ease !important;
-  gap: 0.5rem !important;
-  
-  &.p-button-raised {
-    box-shadow: var(--shadow-sm) !important;
-  }
-  
-  // Primary (verde)
-  &:not(.p-button-secondary):not(.ui-button-gray):not(.ui-button-purple):not(.ui-button-green):not(.p-button-danger):not(.p-button-warning) {
-    background: var(--primary-color) !important;
-    border-color: var(--primary-color) !important;
-    
-    &:hover:not(:disabled) {
-      background: var(--primary-hover) !important;
-      border-color: var(--primary-hover) !important;
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-md) !important;
-    }
-    
-    &:active {
-      transform: translateY(0);
-    }
-  }
-  
-  // Secondary
-  &.p-button-secondary {
-    background: #f1f5f9 !important;
-    border-color: #e2e8f0 !important;
-    color: var(--text-color) !important;
-    
-    &:hover:not(:disabled) {
-      background: #e2e8f0 !important;
-      border-color: #cbd5e1 !important;
-    }
-  }
-  
-  // Status buttons
-  &.ui-button-gray {
-    background: #64748b !important;
-    border-color: #64748b !important;
-    color: white !important;
-    
-    &:hover:not(:disabled) {
-      background: #475569 !important;
-    }
-  }
-  
-  &.ui-button-purple {
-    background: var(--secondary-color) !important;
-    border-color: var(--secondary-color) !important;
-    color: white !important;
-    
-    &:hover:not(:disabled) {
-      background: #4f46e5 !important;
-    }
-  }
-  
-  &.ui-button-green {
-    background: var(--success-color) !important;
-    border-color: var(--success-color) !important;
-    color: white !important;
-    
-    &:hover:not(:disabled) {
-      background: #16a34a !important;
-    }
-  }
-  
-  &:disabled {
-    opacity: 0.5 !important;
-    cursor: not-allowed !important;
-  }
-}
-
-// ========================================
-// SELECT / DROPDOWN
-// ========================================
-.p-select,
-.p-multiselect {
-  border-radius: var(--radius-md) !important;
-  
-  .p-select-label,
-  .p-multiselect-label {
-    padding: 0.625rem 0.875rem !important;
-    font-size: 0.875rem !important;
-  }
-}
-
-// ========================================
-// AUTOCOMPLETE
-// ========================================
-.p-autocomplete {
-  .p-autocomplete-input {
-    border-radius: var(--radius-md) !important;
-  }
-  
-  .p-autocomplete-panel {
-    border-radius: var(--radius-md) !important;
-    box-shadow: var(--shadow-lg) !important;
-    border: 1px solid var(--border-color) !important;
-  }
-}
-
-// ========================================
-// DATEPICKER
-// ========================================
-.p-datepicker {
-  border-radius: var(--radius-md) !important;
-  box-shadow: var(--shadow-lg) !important;
-  border: 1px solid var(--border-color) !important;
-  
-  .p-datepicker-header {
-    background: var(--bg-light) !important;
-    border-bottom: 1px solid var(--border-color) !important;
-    padding: 0.75rem !important;
-  }
-  
-  .p-datepicker-calendar td > span.p-highlight {
-    background: var(--primary-color) !important;
-    color: white !important;
-  }
-}
-
-// ========================================
-// EDITOR (Quill)
-// ========================================
-.p-editor-container {
-  border-radius: var(--radius-md) !important;
-  overflow: hidden;
-  border: 1px solid var(--border-color) !important;
-  
-  .p-editor-toolbar {
-    background: var(--bg-light) !important;
-    border-bottom: 1px solid var(--border-color) !important;
-    padding: 0.5rem !important;
-  }
-  
-  .p-editor-content {
-    background: white !important;
-    
-    .ql-editor {
-      font-family: 'Inter', sans-serif !important;
-      font-size: 0.875rem !important;
-      min-height: 120px !important;
-    }
-  }
-}
-
-// ========================================
-// RADIO BUTTON
-// ========================================
-.p-radiobutton {
-  .p-radiobutton-box {
-    border-radius: 50% !important;
-    border: 2px solid var(--border-color) !important;
-    
-    &.p-highlight {
-      background: var(--primary-color) !important;
-      border-color: var(--primary-color) !important;
-    }
-  }
-}
-
-// ========================================
-// INPUT NUMBER
-// ========================================
-.p-inputnumber {
-  .p-inputnumber-button {
-    background: var(--bg-light) !important;
-    border-color: var(--border-color) !important;
-    color: var(--text-color) !important;
-    
-    &:hover {
-      background: #e2e8f0 !important;
-    }
-  }
-}
 
 // ========================================
 // DIALOG SERVIÇOS LIST
@@ -357,23 +57,23 @@ body {
   list-style: none;
   padding: 0;
   margin: 0;
-  
+
   .servico-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0.75rem 1rem;
     border-bottom: 1px solid var(--border-color);
-    
+
     &:last-child {
       border-bottom: none;
     }
-    
+
     .servico-nome {
       font-weight: 500;
       color: var(--text-color);
     }
-    
+
     .servico-valor {
       color: var(--primary-color);
       font-weight: 600;
@@ -394,14 +94,14 @@ body {
   grid-template-columns: 140px 1fr;
   align-items: center;
   gap: 1rem;
-  
+
   .payment-label {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     font-size: 0.875rem;
     color: var(--text-muted);
-    
+
     i {
       width: 20px;
       text-align: center;
@@ -414,15 +114,15 @@ body {
   padding: 1rem;
   border-radius: var(--radius-md);
   margin-top: 0.5rem;
-  
+
   .total-value {
     font-size: 1.25rem;
     font-weight: 700;
-    
+
     &.positive {
       color: var(--success-color);
     }
-    
+
     &.negative {
       color: var(--danger-color);
     }
@@ -448,38 +148,38 @@ body {
 // ========================================
 .fc {
   font-family: 'Inter', sans-serif !important;
-  
+
   .fc-toolbar-title {
     font-size: 1.25rem !important;
     font-weight: 600 !important;
     color: var(--text-color) !important;
   }
-  
+
   .fc-button {
     border-radius: var(--radius-md) !important;
     font-weight: 500 !important;
     padding: 0.5rem 1rem !important;
-    
+
     &.fc-button-primary {
       background: var(--primary-color) !important;
       border-color: var(--primary-color) !important;
-      
+
       &:hover {
         background: var(--primary-hover) !important;
       }
     }
   }
-  
+
   .fc-event {
     border-radius: 4px !important;
     font-size: 0.75rem !important;
     padding: 2px 6px !important;
   }
-  
+
   .fc-timegrid-slot {
     height: 2.5rem !important;
   }
-  
+
   .fc-col-header-cell {
     padding: 0.75rem 0 !important;
     background: var(--bg-light) !important;
@@ -497,4 +197,3 @@ body {
   border: 1px solid var(--border-color) !important;
   overflow: hidden;
 }
-

@@ -31,11 +31,11 @@
           </ng-template>
         </td>
         <td>
-          <div class="action-buttons">
-            <button type="button" (click)="selecionaEditar(rowData)" pButton icon="pi pi-pencil"
-              class="p-button-rounded p-button-text" title="Editar"></button>
-            <button type="button" (click)="confirmaExcluir(rowData)" pButton
-              icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger" title="Excluir"></button>
+          <div class="action-buttons flex gap-2 justify-content-center">
+            <button type="button" (click)="selecionaEditar(rowData)" pButton icon="pi pi-pencil" [rounded]="true"
+              [text]="true" severity="secondary" title="Editar"></button>
+            <button type="button" (click)="confirmaExcluir(rowData)" pButton icon="pi pi-trash" [rounded]="true"
+              [text]="true" severity="danger" title="Excluir"></button>
           </div>
         </td>
       </tr>
@@ -63,8 +63,9 @@
     <!-- Categoria -->
     <div class="form-field">
       <label class="form-label">Categoria <span class="required">*</span></label>
-      <p-select name="categoria" placeholder="Selecione a categoria" [filter]="true" emptyFilterMessage="Nada encontrado"
-        [style]="{'width':'100%'}" [options]="categorias" [(ngModel)]="entidade.categoria.id">
+      <p-select name="categoria" placeholder="Selecione a categoria" [filter]="true"
+        emptyFilterMessage="Nada encontrado" [style]="{'width':'100%'}" [options]="categorias"
+        [(ngModel)]="entidade.categoria.id">
       </p-select>
     </div>
 
@@ -73,8 +74,8 @@
       <label class="form-label">Valor <span class="required">*</span></label>
       <div class="p-inputgroup">
         <span class="p-inputgroup-addon">R$</span>
-        <input name="valor" currencyMask [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }" type="text"
-          [(ngModel)]="entidade.valor" pInputText placeholder="0,00" />
+        <input name="valor" currencyMask [options]="{ align :'left', prefix : '', thousands: '.', decimal: ',' }"
+          type="text" [(ngModel)]="entidade.valor" pInputText placeholder="0,00" />
       </div>
     </div>
 
@@ -110,8 +111,8 @@
     <div class="form-field">
       <label class="form-label">Duração <span class="required">*</span></label>
       <div class="flex align-items-center gap-3">
-        <p-inputNumber name="duracao" [(ngModel)]="entidade.duracao" [min]="1" [max]="3600" [step]="5" [showButtons]="true"
-          suffix=" min" [style]="{'width':'150px'}">
+        <p-inputNumber name="duracao" [(ngModel)]="entidade.duracao" [min]="1" [max]="3600" [step]="5"
+          [showButtons]="true" suffix=" min" [style]="{'width':'150px'}">
         </p-inputNumber>
         <span class="text-color-secondary text-sm" *ngIf="entidade.duracao">
           <i class="pi pi-clock"></i> {{entidade.duracao / 60 | number:'1.0-1'}} hora(s)
@@ -122,11 +123,11 @@
     <!-- Descrição -->
     <div class="form-field">
       <label class="form-label">Descrição</label>
-      <textarea name="descricao" pInputTextarea [rows]="4" [(ngModel)]="entidade.descricao" 
+      <textarea name="descricao" pInputTextarea [rows]="4" [(ngModel)]="entidade.descricao"
         placeholder="Descrição do serviço (opcional)" [style]="{'width':'100%'}"></textarea>
     </div>
   </div>
-  
+
   <ng-template pTemplate="footer">
     <button pButton (click)="cancelar()" type="button" label="Cancelar" icon="pi pi-times"
       class="p-button-secondary"></button>

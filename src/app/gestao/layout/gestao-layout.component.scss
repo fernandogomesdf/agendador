@@ -1,0 +1,12 @@
+.layout-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+:host ::ng-deep .p-panelmenu .p-panelmenu-header-action {
+    background: transparent;
+    border: none;
+}
+:host ::ng-deep .p-panelmenu .p-menuitem-text {
+    font-weight: 500;
+}

@@ -1,0 +1,54 @@
+<div class="card flex justify-content-center">
+    <!-- Sidebar / Drawer -->
+    <p-drawer [(visible)]="sidebarVisible" [modal]="true" styleClass="!w-20rem">
+        <ng-template pTemplate="header">
+            <div class="flex align-items-center gap-2">
+                <i class="pi pi-calendar-plus text-2xl text-primary"></i>
+                <span class="font-bold text-xl">Agendador</span>
+            </div>
+        </ng-template>
+
+        <div class="flex flex-column h-full justify-content-between overflow-hidden">
+            <div class="flex-grow-1 overflow-y-auto overflow-x-hidden">
+                <p-panelMenu [model]="menuItems" styleClass="w-full border-none" [multiple]="false"></p-panelMenu>
+            </div>
+
+            <div class="mt-auto pt-3 border-top-1 surface-border">
+                <div
+                    class="flex align-items-center gap-2 p-2 hover:surface-100 cursor-pointer border-round transition-duration-150 transition-colors w-full">
+                    <p-avatar label="{{userName.charAt(0).toUpperCase()}}" styleClass="flex-shrink-0" size="large"
+                        shape="circle"></p-avatar>
+                    <div class="flex flex-column overflow-hidden">
+                        <span
+                            class="font-bold text-900 white-space-nowrap overflow-hidden text-overflow-ellipsis">{{userName}}</span>
+                        <span class="text-sm text-600">Logado</span>
+                    </div>
+                    <button pButton icon="pi pi-sign-out"
+                        class="p-button-rounded p-button-text p-button-danger ml-auto flex-shrink-0" (click)="logout()"
+                        pTooltip="Sair" tooltipPosition="left"></button>
+                </div>
+            </div>
+        </div>
+    </p-drawer>
+
+    <!-- Main Content Area -->
+    <div class="layout-wrapper w-full">
+        <!-- Top Bar (Toggle) -->
+        <div class="surface-100 p-3 flex align-items-center shadow-1 gap-3 relative z-2" style="height: 60px;">
+            <p-button (onClick)="sidebarVisible = true" icon="pi pi-bars" [rounded]="true" [text]="true"
+                severity="secondary"
+                styleClass="w-3rem h-3rem p-0 flex align-items-center justify-content-center"></p-button>
+            <span class="text-xl font-bold text-800">Agendador de Tarefas</span>
+
+            <div class="ml-auto hidden md:flex align-items-center gap-2">
+                <span class="text-600">Bem vindo, {{userName}}</span>
+                <p-avatar label="{{userName.charAt(0).toUpperCase()}}" shape="circle"></p-avatar>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="p-4" style="min-height: calc(100vh - 60px);">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
